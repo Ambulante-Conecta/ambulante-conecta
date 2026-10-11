@@ -246,12 +246,17 @@ definitivo/
 │   │   │   ├── pontos.js
 │   │   │   └── solicitacoes.js
 │   │   └── utils/
-│   │       └── validacoes.js
+│   │   │     └── validacoes.js
+│   │   │── test-api.js
+│   │    │── test-avaliacao.js
+│   │    │── test-mensagens.js
+│   │    │── test-painel.js
+│   │    └── test-tudo.js
+│   │   
 │   ├── .env.example
 │   ├── api.md
 │   ├── package.json
-│   ├── server.js
-│   └── testar-*.js
+│   └── server.js
 │
 ├── database/
 │   ├── migracoes/
