@@ -7,10 +7,10 @@ const erroLogin = document.getElementById("erroLogin");
 const botao = document.getElementById("entrar");
 const digitos = (v) => String(v ?? "").replace(/\D/g, "");
 
-// Só aceita voltar para uma página do próprio site (ex.: situacao.html)
+// Só aceita voltar para uma página do próprio site (ex.: situacao.html ou situacao.html?ponto=5#nova)
 function destino() {
   const voltar = new URLSearchParams(location.search).get("voltar");
-  return voltar && /^[a-z]+\.html$/.test(voltar) ? voltar : "index.html";
+  return voltar && /^[a-z]+\.html(\?ponto=\d{1,9})?(#[a-z]+)?$/.test(voltar) ? voltar : "index.html";
 }
 
 if (Sessao.token()) location.replace(destino());

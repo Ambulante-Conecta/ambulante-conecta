@@ -181,7 +181,7 @@ Como o sistema trata dados pessoais, sua operação e evolução devem observar 
 | Banco de dados | PostgreSQL |
 | Dados geográficos | PostGIS |
 | Driver do PostgreSQL | `pg` |
-| Mapa | Estrutura preparada para Leaflet ou Google Maps, conforme a integração configurada |
+| Mapa | Leaflet + OpenStreetMap com os pontos de `GET /api/pontos`, cor por status e atalho para solicitar o ponto |
 | Testes de API | Scripts automatizados em JavaScript e testes manuais com Thunder Client |
 | Versionamento | Git e GitHub |
 | Integração contínua/deploy | GitHub Actions, conforme configuração do workflow |

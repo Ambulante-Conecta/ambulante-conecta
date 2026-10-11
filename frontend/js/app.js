@@ -70,7 +70,8 @@ function protegerPagina() {
     return true;
   }
   if (!usuario || !Sessao.token()) {
-    location.replace("login.html?voltar=" + encodeURIComponent(paginaAtual + ".html"));
+    // Leva junto o ponto escolhido no mapa (situacao.html?ponto=5#nova), para não se perder no login
+    location.replace("login.html?voltar=" + encodeURIComponent(paginaAtual + ".html" + location.search + location.hash));
     return false;
   }
   if (exigido !== "qualquer" && usuario.perfil !== exigido) {

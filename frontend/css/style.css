@@ -255,3 +255,26 @@ body[data-pagina="situacao"] .btn-ghost {
   .dialogo{padding:18px}
   .dialogo .form-actions .btn{flex:1}
 }
+
+/* ===== Mapa (Leaflet + OpenStreetMap) ===== */
+/* Os painéis do Leaflet usam z-index até 1000: o isolation impede que passem por cima do topo e do menu inferior */
+.map-slot{position:relative;z-index:0;isolation:isolate}
+.map-slot.leaflet-container{border:0;background:#dfe7ee;font:inherit}
+.map-card{padding:12px}
+.mapa-estado .vazio{margin-top:12px}
+.mapa-legenda{display:grid;gap:2px;background:#fff;padding:8px 10px;border-radius:10px;box-shadow:0 1px 4px rgba(0,0,0,.25);font-size:12px;font-weight:700}
+.ponto-cor{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:6px;vertical-align:-1px;border:2px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.25)}
+.leaflet-popup-content{font-size:14px;line-height:1.45;margin:12px 14px}
+.leaflet-popup-content .status{margin-top:6px}
+.popup-acao{margin-top:10px}
+.leaflet-container a.btn-primary{color:#fff}
+.filtro-mapa{border:0;padding:0;margin:0 0 12px;min-width:0}
+.filtro-mapa legend{font-size:13px;font-weight:800;margin-bottom:6px;padding:0}
+@media(max-width:760px){
+  .map-slot-grande{height:420px}
+}
+@media(max-width:390px){
+  .map-slot{height:300px}
+  .map-slot-grande{height:360px}
+  .filtro-mapa .choices label{flex:1;justify-content:center;padding:11px 8px}
+}
