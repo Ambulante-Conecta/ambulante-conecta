@@ -9,6 +9,14 @@ if (!process.env.TESTE_GESTOR_CPF || !process.env.TESTE_GESTOR_SENHA) {
   console.error("Defina TESTE_GESTOR_CPF e TESTE_GESTOR_SENHA antes de rodar.");
   process.exit(1);
 }
+// Antes de tudo, confere se a API está ligada (senão os 4 roteiros falham com ECONNREFUSED e o relatório não vale)
+const BASE = process.env.API || "http://localhost:3000/api";
+const ligada = spawnSync(process.execPath, ["-e", `fetch(${JSON.stringify(BASE + "/pontos")}).then(() => process.exit(0), () => process.exit(1))`]);
+if (ligada.status !== 0) {
+  console.error(`A API não respondeu em ${BASE}. Ligue o servidor (npm start) em outro terminal e rode de novo.`);
+  process.exit(1);
+}
+
 const roteiros = ["testar-api.js", "testar-avaliacao.js", "testar-mensagens.js", "testar-painel.js"];
 const agora = new Date();
 let relatorio = `Teste completo da API - ${agora.toLocaleString("pt-BR")}\n`;

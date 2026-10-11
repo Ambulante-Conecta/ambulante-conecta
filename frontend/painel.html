@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Painel do gestor — Ambulante Conecta</title>
+  <link rel="icon" href="img/logo.png">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsivo.css">
+</head>
+<body data-pagina="painel" data-exige-login="gestor">
+  <a class="skip" href="#conteudo">Ir para o conteúdo</a>
+  <div class="app">
+    <aside class="sidebar">
+      <a class="brand" href="index.html" aria-label="Ambulante Conecta, página inicial">
+        <img class="logo" src="img/logo.png" alt="Ambulante Conecta">
+      </a>
+      <nav class="nav" aria-label="Principal" id="nav"></nav>
+      <p class="sidebar-footer">Seus dados pessoais são tratados conforme a LGPD.</p>
+    </aside>
+    <div class="main">
+      <header class="topbar">
+        <img class="topbar-logo" src="img/logo.png" alt="Ambulante Conecta">
+        <h1 class="topbar-title">Painel</h1>
+      </header>
+      <main class="content" id="conteudo">
+
+        <div class="section-title page-head"><div><h2>Painel do gestor</h2><p class="muted">Avalie os pedidos de ponto e responda às mensagens dos ambulantes.</p></div></div>
+
+        <!-- Números de GET /api/painel (montados por renderResumo, em app.js) -->
+        <section aria-label="Resumo">
+          <ul class="grid grid-4 stats" id="stats"></ul>
+        </section>
+
+        <section class="mt" id="pendentes" aria-labelledby="t-pendentes">
+          <div class="section-title"><h2 id="t-pendentes">Solicitações pendentes</h2></div>
+          <p class="muted-note">Ao aprovar um pedido, o ponto fica ocupado e os outros pedidos pendentes para o mesmo ponto são recusados automaticamente.</p>
+          <div class="mt" id="listaPendentes" aria-live="polite">
+            <p class="vazio">Carregando solicitações...</p>
+          </div>
+        </section>
+
+        <section class="mt" id="mensagens" aria-labelledby="t-mensagens">
+          <div class="section-title"><h2 id="t-mensagens">Mensagens</h2></div>
+          <div class="conversas-grid">
+            <div id="listaConversas" aria-live="polite">
+              <p class="vazio">Carregando conversas...</p>
+            </div>
+            <div class="card" id="conversa" tabindex="-1" aria-labelledby="t-conversa">
+              <h3 id="t-conversa">Escolha uma conversa</h3>
+              <p class="muted" id="conversaDica">Selecione um ambulante na lista para ler e responder.</p>
+              <div class="msg-list" id="conversaMensagens" aria-live="polite"></div>
+
+              <form id="formResposta" class="mt" novalidate hidden>
+                <div class="field">
+                  <label for="resp-assunto">Assunto *</label>
+                  <input id="resp-assunto" name="assunto" maxlength="120" aria-describedby="erro-resp-assunto">
+                  <small class="msg-erro" id="erro-resp-assunto" role="alert"></small>
+                </div>
+                <div class="field">
+                  <label for="resp-texto">Resposta *</label>
+                  <textarea id="resp-texto" name="texto" rows="4" maxlength="1000" aria-describedby="dica-resp erro-resp-texto"></textarea>
+                  <small class="muted-note" id="dica-resp">Até 1000 caracteres.</small>
+                  <small class="msg-erro" id="erro-resp-texto" role="alert"></small>
+                </div>
+                <div class="form-actions"><button class="btn btn-primary" type="submit" id="btnResponder">Enviar resposta</button></div>
+              </form>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- Aprovar: confirma e avisa da recusa automática dos outros pedidos do mesmo ponto -->
+  <dialog class="dialogo" id="dlgAprovar" aria-labelledby="t-aprovar">
+    <form id="formAprovar" novalidate>
+      <h3 id="t-aprovar">Aprovar solicitação?</h3>
+      <p class="mt" id="aprovarResumo"></p>
+      <div class="notice notice-alerta mt" id="aprovarAviso"><div><p id="aprovarAvisoTexto"></p></div></div>
+      <small class="msg-erro" id="erro-aprovar" role="alert"></small>
+      <div class="form-actions mt">
+        <button class="btn btn-ghost" type="button" data-fechar>Cancelar</button>
+        <button class="btn btn-primary" type="submit" id="btnConfirmarAprovar">Aprovar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Recusar: RN04, justificativa obrigatória (5 a 500 caracteres) -->
+  <dialog class="dialogo" id="dlgRecusar" aria-labelledby="t-recusar">
+    <form id="formRecusar" novalidate>
+      <h3 id="t-recusar">Recusar solicitação</h3>
+      <p class="mt" id="recusarResumo"></p>
+      <div class="field mt">
+        <label for="justificativa">Justificativa *</label>
+        <textarea id="justificativa" name="justificativa" rows="4" maxlength="500" aria-describedby="dica-justificativa erro-justificativa"></textarea>
+        <small class="muted-note" id="dica-justificativa">O ambulante vai ver este motivo. De 5 a 500 caracteres (<span id="contaJustificativa">0</span>/500).</small>
+        <small class="msg-erro" id="erro-justificativa" role="alert"></small>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-ghost" type="button" data-fechar>Cancelar</button>
+        <button class="btn btn-primary" type="submit" id="btnConfirmarRecusar">Recusar pedido</button>
+      </div>
+    </form>
+  </dialog>
+
+  <nav class="mobile-nav" aria-label="Principal (celular)" id="mobileNav"></nav>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="js/api.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/painel.js"></script>
+</body>
+</html>

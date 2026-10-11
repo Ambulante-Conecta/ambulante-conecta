@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/responsivo.css">
 </head>
-<body data-pagina="comunicacao">
+<body data-pagina="comunicacao" data-exige-login="ambulante">
   <a class="skip" href="#conteudo">Ir para o conteúdo</a>
   <div class="app">
     <aside class="sidebar">
@@ -25,30 +25,35 @@
       </header>
       <main class="content" id="conteudo">
 
-        <div class="section-title page-head"><div><h2>Mensagens</h2><p class="muted">Converse com a prefeitura ou com o sindicato.</p></div><button class="btn btn-primary" id="btnNova" type="button" aria-expanded="false" aria-controls="formMsgCard">Nova mensagem</button></div>
+        <div class="section-title page-head"><div><h2>Mensagens</h2><p class="muted">Converse com a prefeitura e receba os avisos sobre os seus pedidos.</p></div><button class="btn btn-primary" id="btnNova" type="button" aria-expanded="false" aria-controls="formMsgCard">Nova mensagem</button></div>
 
         <div class="card form-card" id="formMsgCard" hidden>
+          <h3>Nova mensagem</h3>
+          <p class="muted-note">Para: Prefeitura de Manaus</p>
           <form id="formMsg" novalidate>
-            <div class="field">
-              <label for="dest">Para *</label>
-              <select id="dest" name="dest"><option>Prefeitura de Manaus</option><option>Sindicato dos Ambulantes</option></select>
-            </div>
-            <div class="field">
+            <div class="field mt">
               <label for="assunto">Assunto *</label>
-              <input id="assunto" name="assunto" maxlength="80" aria-describedby="erro-assunto">
+              <input id="assunto" name="assunto" maxlength="120" aria-describedby="erro-assunto">
               <small class="msg-erro" id="erro-assunto" role="alert"></small>
             </div>
             <div class="field">
               <label for="texto">Mensagem *</label>
-              <textarea id="texto" name="texto" rows="4" maxlength="500" aria-describedby="erro-texto"></textarea>
+              <textarea id="texto" name="texto" rows="4" maxlength="1000" aria-describedby="dica-texto erro-texto"></textarea>
+              <small class="muted-note" id="dica-texto">Até 1000 caracteres.</small>
               <small class="msg-erro" id="erro-texto" role="alert"></small>
             </div>
-            <div class="form-actions"><button class="btn btn-ghost" type="button" id="cancelaMsg">Cancelar</button><button class="btn btn-primary" type="submit">Enviar mensagem</button></div>
+            <div class="form-actions"><button class="btn btn-ghost" type="button" id="cancelaMsg">Cancelar</button><button class="btn btn-primary" type="submit" id="btnEnviar">Enviar mensagem</button></div>
           </form>
         </div>
 
-        <section class="mt" aria-labelledby="t-rec"><h3 id="t-rec">Recebidas</h3><div class="msg-list" id="recebidas"></div></section>
-        <section class="mt" aria-labelledby="t-env"><h3 id="t-env">Enviadas</h3><div class="msg-list" id="enviadas"></div></section>
+        <div id="caixa" aria-live="polite">
+          <p class="vazio">Carregando suas mensagens...</p>
+        </div>
+
+        <div id="listas" hidden>
+          <section class="mt" aria-labelledby="t-rec"><h3 id="t-rec">Recebidas</h3><div class="msg-list" id="recebidas"></div></section>
+          <section class="mt" aria-labelledby="t-env"><h3 id="t-env">Enviadas</h3><div class="msg-list" id="enviadas"></div></section>
+        </div>
       </main>
     </div>
   </div>
@@ -56,6 +61,6 @@
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
   <script src="js/api.js"></script>
   <script src="js/app.js"></script>
-  <script src="js/paginas.js"></script>
+  <script src="js/comunicacao.js"></script>
 </body>
 </html>

@@ -9,8 +9,7 @@ const estadoPadrao = () => ({
   perfil: null,
   formalizacao: { mei: false, licenca: false },
   docs: [],
-  solicitacao: null,
-  mensagens: []
+  solicitacao: null
 });
 
 function lerEstado() {
@@ -20,11 +19,6 @@ function lerEstado() {
 function salvarEstado(e) {
   try { localStorage.setItem(CHAVE_ESTADO, JSON.stringify(e)); } catch (_) {}
 }
-function addMensagem(e, { de, assunto, texto, enviada = false }) {
-  e.mensagens.unshift({ id: String(Date.now()) + Math.floor(Math.random() * 1e4), de, assunto, texto,
-    data: new Date().toISOString(), enviada, lida: enviada });
-}
-const naoLidas = (e) => e.mensagens.filter((m) => !m.lida && !m.enviada).length;
 
 /* ---------- Menu por perfil ---------- */
 // Todos os itens possíveis. "movel" é o rótulo curto do menu inferior (celular).
@@ -65,11 +59,16 @@ const escHtml = (t) => String(t ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;
 
 /* ---------- Sessão e acesso às páginas ---------- */
 // Para exigir login numa página: <body data-exige-login="ambulante"> (ou "gestor", ou "qualquer").
+// "visitante" faz o contrário: a página é só para quem não entrou (ex.: cadastro).
 // É só conveniência da tela: quem protege os dados de verdade é a API.
 function protegerPagina() {
   const exigido = document.body.dataset.exigeLogin;
   if (!exigido) return true;
   const usuario = Sessao.usuario();
+  if (exigido === "visitante") {
+    if (usuario && Sessao.token()) { location.replace("index.html"); return false; }
+    return true;
+  }
   if (!usuario || !Sessao.token()) {
     location.replace("login.html?voltar=" + encodeURIComponent(paginaAtual + ".html"));
     return false;
@@ -153,7 +152,7 @@ async function renderResumo() {
     try { p = await chamarApi("/painel"); } catch (_) {}
     const n = (valor) => (p ? valor : "—");
     cards = [
-      { rotulo: "Solicitações pendentes", valor: n(p?.solicitacoes.pendentes), status: "Aguardando decisão", cor: p?.solicitacoes.pendentes ? "orange" : "gray", icone: "◷", href: "painel.html" },
+      { rotulo: "Solicitações pendentes", valor: n(p?.solicitacoes.pendentes), status: "Aguardando decisão", cor: p?.solicitacoes.pendentes ? "orange" : "gray", icone: "◷", href: "painel.html#pendentes" },
       { rotulo: "Pontos disponíveis", valor: n(p?.pontos.disponiveis), status: "Para novas solicitações", cor: "green", icone: "⌖", href: "mapa.html" },
       { rotulo: "Ambulantes", valor: n(p?.ambulantes.total), status: p ? `${p.ambulantes.com_mei} com MEI` : "", cor: "blue", icone: "☷" },
       { rotulo: "Mensagens", valor: n(p?.mensagens_nao_lidas), status: "Não lidas", cor: p?.mensagens_nao_lidas ? "red" : "gray", icone: "✉", href: "painel.html#mensagens" }

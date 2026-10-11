@@ -163,3 +163,95 @@ details.msg time{grid-row:1/3;grid-column:2;font-size:12px;color:var(--muted);al
 details.msg.nova{border-color:var(--blue)}
 details.msg.nova .msg-assunto{font-weight:900}
 details.msg p{padding:0 16px 16px;color:var(--muted);white-space:pre-wrap}
+/* ===== Solicitação de ponto (ligada à API) — colar no FIM de css/style.css ===== */
+
+.solic-lista { display: grid; gap: 14px; margin-top: 10px; }
+.solic-card .solic-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+.solic-card .solic-top h3 { font-size: 17px; margin: 0; }
+.solic-card .detalhes { margin-top: 12px; }
+.solic-card .notice { margin-top: 14px; }
+
+/* Variações do aviso (as cores usam as variáveis do projeto, com valor de reserva) */
+.notice-alerta { background: var(--orange-soft, #fff4e0); border-color: #f1d3a0; margin-bottom: 14px; }
+.notice-info   { background: var(--blue-soft, #eaf2ff);   border-color: #c5d9f7; }
+.notice-ok     { background: var(--green-soft, #e6f4ea);  border-color: #bfe6d0; }
+.notice-recusa { background: var(--red-soft, #fdecea);    border-color: #f5c2c0; }
+.notice p { margin: 4px 0 0; }
+
+/* Estado de erro de carregamento */
+.estado-erro { color: var(--red, #b3261e); }
+
+/* Campo com erro */
+select.invalido { border-color: var(--red, #b3261e); }
+
+/* Itens usados só nesta página, com escopo para não afetar as outras */
+body[data-pagina="situacao"] .btn-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+body[data-pagina="situacao"] .muted-note { color: #55635c; font-size: 14px; margin: 4px 0 0; }
+body[data-pagina="situacao"] .btn-ghost {
+  background: transparent; color: var(--primary, #1f6f4a);
+  border: 1px solid var(--primary, #1f6f4a); border-radius: 10px;
+  min-height: 44px; padding: 10px 16px; font-weight: 600; cursor: pointer;
+}
+
+/* Celular */
+@media (max-width: 390px) {
+  .solic-card .solic-top { flex-direction: column; }
+  body[data-pagina="situacao"] .btn-row .btn { width: 100%; }
+}
+/* Tablet em diante: dois cartões por linha */
+@media (min-width: 768px) {
+  .solic-lista { grid-template-columns: repeat(2, 1fr); }
+}
+[hidden] { display: none !important; }
+/* ===== Painel do gestor ===== */
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+/* Pendentes: tabela no computador */
+.tabela-card{padding:0;overflow-x:auto}
+.tabela{width:100%;border-collapse:collapse;font-size:14px}
+.tabela caption{text-align:left;padding:14px 16px 0}
+.tabela th{text-align:left;font-size:12px;color:var(--muted);padding:12px 16px;border-bottom:1px solid var(--line)}
+.tabela td{padding:14px 16px;border-bottom:1px solid var(--line);vertical-align:top}
+.tabela tr:last-child td{border-bottom:0}
+.tabela td .status{margin-top:6px}
+.tabela td.acoes{white-space:nowrap}
+.tabela td.acoes .btn + .btn{margin-left:8px}
+
+/* Pendentes: no celular e no tablet em pé a mesma tabela vira cartões */
+@media(max-width:767px){
+  .tabela-card{background:none;border:0;padding:0;overflow:visible}
+  .tabela caption{padding:0 0 10px}
+  .tabela thead{display:none}
+  .tabela,.tabela tbody,.tabela tr,.tabela td{display:block;width:100%}
+  .tabela tr{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 16px;margin-bottom:12px}
+  .tabela td,.tabela tr:last-child td{border:0;padding:6px 0;display:grid;grid-template-columns:110px minmax(0,1fr);gap:8px;overflow-wrap:anywhere}
+  .tabela td::before{content:attr(data-label);font-size:13px;color:var(--muted)}
+  .tabela td.acoes{display:flex;gap:10px;padding-top:12px;white-space:normal}
+  .tabela td.acoes::before{display:none}
+  .tabela td.acoes .btn{flex:1}
+  .tabela td.acoes .btn + .btn{margin-left:0}
+}
+@media(max-width:390px){
+  .tabela td,.tabela tr:last-child td{grid-template-columns:1fr;gap:0}
+}
+
+/* Mensagens: lista de conversas ao lado da conversa aberta */
+.conversas-grid{display:grid;gap:18px;grid-template-columns:300px minmax(0,1fr);align-items:start}
+.conversa-lista{display:grid;gap:8px}
+.conversa-item{width:100%;min-height:44px;text-align:left;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:4px 10px;padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:#fff;color:var(--ink)}
+.conversa-item strong{overflow-wrap:anywhere}
+.conversa-item .muted{grid-column:1/-1;font-size:12px}
+.conversa-item:hover,.conversa-item[aria-current="true"]{border-color:var(--blue);background:var(--blue-soft)}
+#conversa h3{overflow-wrap:anywhere}
+@media(max-width:1023px){
+  .conversas-grid{grid-template-columns:1fr}
+}
+
+/* Diálogos de aprovar e recusar */
+.dialogo{width:min(520px,calc(100% - 32px));border:0;border-radius:var(--radius);padding:24px;color:var(--ink)}
+.dialogo::backdrop{background:rgba(17,24,39,.55)}
+.dialogo h3{font-size:19px}
+@media(max-width:480px){
+  .dialogo{padding:18px}
+  .dialogo .form-actions .btn{flex:1}
+}
