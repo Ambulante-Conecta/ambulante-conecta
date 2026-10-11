@@ -1,6 +1,7 @@
 require('dotenv').config(); // carrega o .env antes de qualquer outra coisa
 const express = require('express');
 const cors = require('cors');
+const listEndpoints = require('express-list-endpoints');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -37,7 +38,11 @@ app.use((err, req, res, next) => {
   res.status(500).json({ erro: 'Erro interno do servidor.' });
 });
 
-// 5. Iniciar o servidor
+// 5. Iniciar o servidor e exibir a tabela de rotas automaticamente
 app.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT}`);
+
+  // Exibe a tabela automática no terminal assim que o servidor arranca
+  console.log("\n📌 TABELA AUTOMÁTICA DE ROTAS DA API:");
+  console.table(listEndpoints(app));
 });

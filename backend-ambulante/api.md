@@ -14,24 +14,26 @@ Rotas protegidas exigem o cabeçalho `Authorization: Bearer <token>` (token do l
 
 ## Rotas
 
-| Método e rota | Perfil | Função | Requisito |
-|---|---|---|---|
-| `POST /ambulantes` | público | Cadastra o ambulante, cria o acesso e registra o consentimento LGPD | RF01, RN05 |
-| `POST /auth/login` | público | Entra com CPF e senha e recebe o token | RN01 |
-| `GET /auth/me` | logado | Dados do usuário logado | RN01 |
-| `GET /pontos` | público | Pontos de venda em GeoJSON (`?status=`, `?bairro=`) | RF03 |
-| `POST /solicitacoes` | ambulante | Solicita um ponto (`{ponto_id}`); exige MEI e ponto disponível | RF04, RN01 a RN03 |
-| `GET /solicitacoes/minhas` | ambulante | Lista as próprias solicitações | RF04 |
-| `GET /solicitacoes` | gestor | Lista todas, com CPF mascarado (`?status=`) | RF06, RN06 |
-| `PATCH /solicitacoes/:id` | gestor | Aprova ou recusa; recusa exige justificativa | RF06, RN04 |
-| `GET /mensagens` | ambulante, gestor | Conversa (gestor informa `?ambulante_id=`) | RF05 |
-| `POST /mensagens` | ambulante, gestor | Envia mensagem (gestor informa `ambulante_id`) | RF05 |
-| `GET /mensagens/conversas` | gestor | Caixa de entrada com não lidas | RF05 |
-| `GET /mensagens/nao-lidas` | ambulante, gestor | Contador de não lidas | RF05 |
-| `PATCH /mensagens/:id/lida` | ambulante, gestor | Marca uma mensagem recebida como lida | RF05 |
-| `PATCH /mensagens/lidas` | ambulante, gestor | Marca a conversa como lida | RF05 |
-| `GET /painel` | gestor | Números agregados, sem dados pessoais | RF07, RN06 |
+# 📋 Inventário de Rotas da API — Ambulante Conecta
 
+| # | Método | Caminho da Rota | Autenticação | Campos do Corpo (Body JSON) | Respostas Principais |
+|---|:---:|:---|:---|:---|:---|
+| 1 | `GET` | `/` | Pública | Nenhum | `200` (Servidor no ar) |
+| 2 | `POST` | `/api/ambulantes` | Pública | `nome_completo`, `cpf`, `data_nascimento`, `telefone`, `tipo_atividade`, `possui_mei`, `cnpj_mei`, `local_pretendido`, `senha`, `consentimento` | `201` (Criado), `400` (Erro validação/LGPD), `409` (CPF duplicado) |
+| 3 | `POST` | `/api/auth/login` | Pública | `cpf`, `senha` | `200` (Retorna token JWT), `401` (Credenciais inválidas) |
+| 4 | `GET` | `/api/auth/me` | Bearer Token | Nenhum | `200` (Dados do usuário logado), `401` (Sem token) |
+| 5 | `GET` | `/api/pontos` | Pública | Nenhum *(Filtros query: `?status=disponivel`, `?bairro=Centro`)* | `200` (Lista pontos em GeoJSON) |
+| 6 | `POST` | `/api/solicitacoes` | Bearer (Ambulante) | `ponto_id` | `201` (Criada), `403` (Gestor não solicita), `422` (Sem MEI), `409` (Ocupado) |
+| 7 | `GET` | `/api/solicitacoes/minhas` | Bearer (Ambulante) | Nenhum | `200` (Lista pedidos do ambulante), `403` (Gestor bloqueado) |
+| 8 | `GET` | `/api/solicitacoes` | Bearer (Gestor) | Nenhum *(Filtro query: `?status=Pendente`)* | `200` (Lista todas do sistema), `403` (Ambulante bloqueado) |
+| 9 | `PATCH` | `/api/solicitacoes/:id` | Bearer (Gestor) | `status` ("Aprovada"/"Recusada"), `justificativa` *(se recusado)* | `200` (Avaliado), `400` (Sem justificativa), `409` (Já avaliado) |
+| 10 | `POST` | `/api/mensagens` | Bearer Token | `assunto`, `texto`, `ambulante_id` *(opcional, se gestor responder)* | `201` (Enviada), `400` (Falta dados), `401` (Sem login) |
+| 11 | `GET` | `/api/mensagens` | Bearer Token | Nenhum *(Query opcional para gestor: `?ambulante_id=X`)* | `200` (Lista conversa), `401` (Sem login) |
+| 12 | `GET` | `/api/mensagens/conversas` | Bearer (Gestor) | Nenhum | `200` (Lista todas conversas), `403` (Ambulante bloqueado) |
+| 13 | `GET` | `/api/mensagens/nao-lidas` | Bearer Token | Nenhum | `200` (Retorna total não lidas) |
+| 14 | `PATCH` | `/api/mensagens/:id/lida` | Bearer Token | Nenhum | `200` (Marca mensagem como lida), `404` (Não encontrada) |
+| 15 | `PATCH` | `/api/mensagens/lidas` | Bearer (Gestor) | `ambulante_id` | `200` (Marca conversas de um ambulante como lidas) |
+| 16 | `GET` | `/api/painel` | Bearer (Gestor) | Nenhum | `200` (Métricas do painel administrativo), `403` (Bloqueado) |
 ## Códigos de resposta
 
 `200` ou `201` sucesso · `400` dados inválidos (a lista `campos` indica o campo) · `401` sem login ou sessão expirada ·
@@ -59,3 +61,4 @@ token JWT com validade, CPF nunca devolvido por completo, credenciais fora do c�
 `testar-api.js` (cadastro, login, permissões, solicitação), `testar-avaliacao.js` (aprovação e recusa),
 `testar-mensagens.js` (conversas e isolamento), `testar-painel.js` (painel agregado) e `testar-tudo.js`
 (roda todos e salva o relatório em `resultados-testes/`).
+
