@@ -1,17 +1,14 @@
 {
   "info": {
     "name": "Ambulante Conecta - API",
-    "_postman_id": "bba906fc-87c7-4b02-884f-697d517fec8c",
-    "description": "Roteiro de testes manuais da API. Importe também o ambiente 'Ambulante Conecta - Local'. Rode as pastas em ordem, de 00 a 09.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [
     {
       "name": "00 Preparação",
-      "description": "Confirma que o servidor está no ar.",
       "item": [
         {
-          "name": "00.01 Servidor no ar → 200",
+          "name": "00.01 Servidor no ar -> 200",
           "event": [
             {
               "listen": "test",
@@ -31,18 +28,20 @@
               "host": [
                 "{{url}}"
               ],
-              "path": []
+              "path": [
+                ""
+              ]
             }
-          }
+          },
+          "response": []
         }
       ]
     },
     {
       "name": "01 Cadastro (RF01)",
-      "description": "Rode `npm run demo` antes: o banco precisa estar limpo para o 201.",
       "item": [
         {
-          "name": "01.01 Cadastrar ambulante A (com MEI) → 201",
+          "name": "01.01 Cadastrar ambulante A (com MEI) -> 201",
           "event": [
             {
               "listen": "test",
@@ -60,7 +59,8 @@
             "header": [
               {
                 "key": "Content-Type",
-                "value": "application/json"
+                "value": "application/json",
+                "type": "text"
               }
             ],
             "url": {
@@ -82,10 +82,11 @@
                 }
               }
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "01.02 Cadastro repetido (mesmo CPF) → 409",
+          "name": "01.02 Cadastro repetido (mesmo CPF) -> 409",
           "event": [
             {
               "listen": "test",
@@ -102,7 +103,8 @@
             "header": [
               {
                 "key": "Content-Type",
-                "value": "application/json"
+                "value": "application/json",
+                "type": "text"
               }
             ],
             "url": {
@@ -124,10 +126,11 @@
                 }
               }
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "01.03 CPF inválido → 400",
+          "name": "01.03 CPF inválido -> 400",
           "event": [
             {
               "listen": "test",
@@ -144,7 +147,8 @@
             "header": [
               {
                 "key": "Content-Type",
-                "value": "application/json"
+                "value": "application/json",
+                "type": "text"
               }
             ],
             "url": {
@@ -166,10 +170,11 @@
                 }
               }
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "01.04 Sem senha → 400",
+          "name": "01.04 Sem senha -> 400",
           "event": [
             {
               "listen": "test",
@@ -186,7 +191,8 @@
             "header": [
               {
                 "key": "Content-Type",
-                "value": "application/json"
+                "value": "application/json",
+                "type": "text"
               }
             ],
             "url": {
@@ -208,10 +214,11 @@
                 }
               }
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "01.05 Senha fraca (só letras) → 400",
+          "name": "01.05 Senha fraca (só letras) -> 400",
           "event": [
             {
               "listen": "test",
@@ -228,7 +235,8 @@
             "header": [
               {
                 "key": "Content-Type",
-                "value": "application/json"
+                "value": "application/json",
+                "type": "text"
               }
             ],
             "url": {
@@ -250,10 +258,11 @@
                 }
               }
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "01.06 Sem consentimento LGPD → 400",
+          "name": "01.06 Sem consentimento LGPD -> 400",
           "event": [
             {
               "listen": "test",
@@ -270,7 +279,8 @@
             "header": [
               {
                 "key": "Content-Type",
-                "value": "application/json"
+                "value": "application/json",
+                "type": "text"
               }
             ],
             "url": {
@@ -292,10 +302,11 @@
                 }
               }
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "01.07 Menor de 18 anos → 400",
+          "name": "01.07 Menor de 18 anos -> 400",
           "event": [
             {
               "listen": "test",
@@ -312,7 +323,8 @@
             "header": [
               {
                 "key": "Content-Type",
-                "value": "application/json"
+                "value": "application/json",
+                "type": "text"
               }
             ],
             "url": {
@@ -334,10 +346,11 @@
                 }
               }
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "01.08 Ano com 5 dígitos → 400",
+          "name": "01.08 Ano com 5 dígitos -> 400",
           "event": [
             {
               "listen": "test",
@@ -354,7 +367,8 @@
             "header": [
               {
                 "key": "Content-Type",
-                "value": "application/json"
+                "value": "application/json",
+                "type": "text"
               }
             ],
             "url": {
@@ -376,10 +390,11 @@
                 }
               }
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "01.09 MEI 'sim' sem CNPJ → 400",
+          "name": "01.09 MEI 'sim' sem CNPJ -> 400",
           "event": [
             {
               "listen": "test",
@@ -396,7 +411,8 @@
             "header": [
               {
                 "key": "Content-Type",
-                "value": "application/json"
+                "value": "application/json",
+                "type": "text"
               }
             ],
             "url": {
@@ -418,10 +434,11 @@
                 }
               }
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "01.10 Cadastrar ambulante B (com MEI) → 201",
+          "name": "01.10 Cadastrar ambulante B (com MEI) -> 201",
           "event": [
             {
               "listen": "test",
@@ -439,7 +456,8 @@
             "header": [
               {
                 "key": "Content-Type",
-                "value": "application/json"
+                "value": "application/json",
+                "type": "text"
               }
             ],
             "url": {
@@ -461,10 +479,11 @@
                 }
               }
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "01.11 Cadastrar ambulante C (sem MEI) → 201",
+          "name": "01.11 Cadastrar ambulante C (sem MEI) -> 201",
           "event": [
             {
               "listen": "test",
@@ -482,7 +501,8 @@
             "header": [
               {
                 "key": "Content-Type",
-                "value": "application/json"
+                "value": "application/json",
+                "type": "text"
               }
             ],
             "url": {
@@ -504,16 +524,16 @@
                 }
               }
             }
-          }
+          },
+          "response": []
         }
       ]
     },
     {
       "name": "02 Autenticação",
-      "description": "Limite: 20 tentativas de login a cada 15 minutos (reinicie o servidor para zerar).",
       "item": [
         {
-          "name": "02.01 Login com senha errada → 401",
+          "name": "02.01 Login com senha errada -> 401",
           "event": [
             {
               "listen": "test",
@@ -530,7 +550,8 @@
             "header": [
               {
                 "key": "Content-Type",
-                "value": "application/json"
+                "value": "application/json",
+                "type": "text"
               }
             ],
             "url": {
@@ -553,10 +574,11 @@
                 }
               }
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "02.02 Login com CPF inexistente → 401",
+          "name": "02.02 Login com CPF inexistente -> 401",
           "event": [
             {
               "listen": "test",
@@ -573,7 +595,8 @@
             "header": [
               {
                 "key": "Content-Type",
-                "value": "application/json"
+                "value": "application/json",
+                "type": "text"
               }
             ],
             "url": {
@@ -596,10 +619,11 @@
                 }
               }
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "02.03 Login com CPF incompleto → 400",
+          "name": "02.03 Login com CPF incompleto -> 400",
           "event": [
             {
               "listen": "test",
@@ -616,7 +640,8 @@
             "header": [
               {
                 "key": "Content-Type",
-                "value": "application/json"
+                "value": "application/json",
+                "type": "text"
               }
             ],
             "url": {
@@ -639,10 +664,11 @@
                 }
               }
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "02.04 Login do ambulante A → 200",
+          "name": "02.04 Login do ambulante A -> 200",
           "event": [
             {
               "listen": "test",
@@ -660,7 +686,8 @@
             "header": [
               {
                 "key": "Content-Type",
-                "value": "application/json"
+                "value": "application/json",
+                "type": "text"
               }
             ],
             "url": {
@@ -683,10 +710,11 @@
                 }
               }
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "02.05 Login do ambulante B → 200",
+          "name": "02.05 Login do ambulante B -> 200",
           "event": [
             {
               "listen": "test",
@@ -704,7 +732,8 @@
             "header": [
               {
                 "key": "Content-Type",
-                "value": "application/json"
+                "value": "application/json",
+                "type": "text"
               }
             ],
             "url": {
@@ -727,10 +756,11 @@
                 }
               }
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "02.06 Login do ambulante C (sem MEI) → 200",
+          "name": "02.06 Login do ambulante C (sem MEI) -> 200",
           "event": [
             {
               "listen": "test",
@@ -748,7 +778,8 @@
             "header": [
               {
                 "key": "Content-Type",
-                "value": "application/json"
+                "value": "application/json",
+                "type": "text"
               }
             ],
             "url": {
@@ -771,10 +802,11 @@
                 }
               }
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "02.07 Login do gestor → 200",
+          "name": "02.07 Login do gestor -> 200",
           "event": [
             {
               "listen": "test",
@@ -792,7 +824,8 @@
             "header": [
               {
                 "key": "Content-Type",
-                "value": "application/json"
+                "value": "application/json",
+                "type": "text"
               }
             ],
             "url": {
@@ -815,10 +848,11 @@
                 }
               }
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "02.08 Quem sou eu, sem token → 401",
+          "name": "02.08 Quem sou eu, sem token -> 401",
           "event": [
             {
               "listen": "test",
@@ -844,10 +878,11 @@
                 "me"
               ]
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "02.09 Quem sou eu, com token → 200",
+          "name": "02.09 Quem sou eu, com token -> 200",
           "event": [
             {
               "listen": "test",
@@ -883,10 +918,11 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "02.10 Token adulterado → 401",
+          "name": "02.10 Token adulterado -> 401",
           "event": [
             {
               "listen": "test",
@@ -922,16 +958,16 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         }
       ]
     },
     {
       "name": "03 Pontos de venda (RF03)",
-      "description": "Rode `npm run demo` antes: os pontos 3 e 4 viram o 2º e o 3º disponíveis.",
       "item": [
         {
-          "name": "03.01 Listar todos os pontos → 200",
+          "name": "03.01 Listar todos os pontos -> 200",
           "event": [
             {
               "listen": "test",
@@ -956,10 +992,11 @@
                 "pontos"
               ]
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "03.02 Só os disponíveis → 200",
+          "name": "03.02 Só os disponíveis -> 200",
           "event": [
             {
               "listen": "test",
@@ -992,10 +1029,11 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "03.03 Só os ocupados → 200",
+          "name": "03.03 Só os ocupados -> 200",
           "event": [
             {
               "listen": "test",
@@ -1026,10 +1064,11 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "03.04 Filtro por bairro → 200",
+          "name": "03.04 Filtro por bairro -> 200",
           "event": [
             {
               "listen": "test",
@@ -1060,10 +1099,11 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "03.05 Status inválido → 400",
+          "name": "03.05 Status inválido -> 400",
           "event": [
             {
               "listen": "test",
@@ -1094,10 +1134,11 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "03.06 Tentativa de injeção de SQL no bairro → 200",
+          "name": "03.06 Tentativa de injeção de SQL no bairro -> 200",
           "event": [
             {
               "listen": "test",
@@ -1113,7 +1154,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{url}}/api/pontos?bairro=Centro' OR '1'='1",
+              "raw": "{{url}}/api/pontos?bairro=Centro%27%20OR%20%271%27%3D%271",
               "host": [
                 "{{url}}"
               ],
@@ -1124,20 +1165,20 @@
               "query": [
                 {
                   "key": "bairro",
-                  "value": "Centro' OR '1'='1"
+                  "value": "Centro%27%20OR%20%271%27%3D%271"
                 }
               ]
             }
-          }
+          },
+          "response": []
         }
       ]
     },
     {
       "name": "04 Solicitações do ambulante (RF04)",
-      "description": "Cobre RN01, RN02 e RN03.",
       "item": [
         {
-          "name": "04.01 Solicitar sem login (RN01) → 401",
+          "name": "04.01 Solicitar sem login (RN01) -> 401",
           "event": [
             {
               "listen": "test",
@@ -1154,7 +1195,8 @@
             "header": [
               {
                 "key": "Content-Type",
-                "value": "application/json"
+                "value": "application/json",
+                "type": "text"
               }
             ],
             "url": {
@@ -1176,10 +1218,11 @@
                 }
               }
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "04.02 Gestor não solicita → 403",
+          "name": "04.02 Gestor não solicita -> 403",
           "event": [
             {
               "listen": "test",
@@ -1196,7 +1239,8 @@
             "header": [
               {
                 "key": "Content-Type",
-                "value": "application/json"
+                "value": "application/json",
+                "type": "text"
               }
             ],
             "url": {
@@ -1228,10 +1272,11 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "04.03 Ambulante sem MEI (RN02) → 422",
+          "name": "04.03 Ambulante sem MEI (RN02) -> 422",
           "event": [
             {
               "listen": "test",
@@ -1248,7 +1293,8 @@
             "header": [
               {
                 "key": "Content-Type",
-                "value": "application/json"
+                "value": "application/json",
+                "type": "text"
               }
             ],
             "url": {
@@ -1280,10 +1326,11 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "04.04 Sem ponto_id → 400",
+          "name": "04.04 Sem ponto_id -> 400",
           "event": [
             {
               "listen": "test",
@@ -1300,7 +1347,8 @@
             "header": [
               {
                 "key": "Content-Type",
-                "value": "application/json"
+                "value": "application/json",
+                "type": "text"
               }
             ],
             "url": {
@@ -1332,10 +1380,11 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "04.05 Ponto inexistente → 404",
+          "name": "04.05 Ponto inexistente -> 404",
           "event": [
             {
               "listen": "test",
@@ -1352,7 +1401,8 @@
             "header": [
               {
                 "key": "Content-Type",
-                "value": "application/json"
+                "value": "application/json",
+                "type": "text"
               }
             ],
             "url": {
@@ -1384,10 +1434,11 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "04.06 A solicita o ponto (RN03) → 201",
+          "name": "04.06 A solicita o ponto (RN03) -> 201",
           "event": [
             {
               "listen": "test",
@@ -1405,7 +1456,8 @@
             "header": [
               {
                 "key": "Content-Type",
-                "value": "application/json"
+                "value": "application/json",
+                "type": "text"
               }
             ],
             "url": {
@@ -1437,10 +1489,11 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "04.07 A repete o mesmo pedido → 409",
+          "name": "04.07 A repete o mesmo pedido -> 409",
           "event": [
             {
               "listen": "test",
@@ -1457,7 +1510,8 @@
             "header": [
               {
                 "key": "Content-Type",
-                "value": "application/json"
+                "value": "application/json",
+                "type": "text"
               }
             ],
             "url": {
@@ -1489,10 +1543,11 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "04.08 B disputa o mesmo ponto → 201",
+          "name": "04.08 B disputa o mesmo ponto -> 201",
           "event": [
             {
               "listen": "test",
@@ -1510,7 +1565,8 @@
             "header": [
               {
                 "key": "Content-Type",
-                "value": "application/json"
+                "value": "application/json",
+                "type": "text"
               }
             ],
             "url": {
@@ -1542,10 +1598,11 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "04.09 B pede um segundo ponto → 201",
+          "name": "04.09 B pede um segundo ponto -> 201",
           "event": [
             {
               "listen": "test",
@@ -1563,7 +1620,8 @@
             "header": [
               {
                 "key": "Content-Type",
-                "value": "application/json"
+                "value": "application/json",
+                "type": "text"
               }
             ],
             "url": {
@@ -1595,10 +1653,11 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "04.10 Minhas solicitações (A) → 200",
+          "name": "04.10 Minhas solicitações (A) -> 200",
           "event": [
             {
               "listen": "test",
@@ -1634,10 +1693,11 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "04.11 Gestor não usa 'minhas' → 403",
+          "name": "04.11 Gestor não usa 'minhas' -> 403",
           "event": [
             {
               "listen": "test",
@@ -1673,10 +1733,11 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "04.12 Aviso automático da RN03 → 200",
+          "name": "04.12 Aviso automático da RN03 -> 200",
           "event": [
             {
               "listen": "test",
@@ -1711,16 +1772,16 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         }
       ]
     },
     {
       "name": "05 Avaliação pelo gestor (RF06)",
-      "description": "Cobre RN04 e RN06. A aprovação ocupa o ponto e recusa os outros pedidos pendentes dele.",
       "item": [
         {
-          "name": "05.01 Listar sem login → 401",
+          "name": "05.01 Listar sem login -> 401",
           "event": [
             {
               "listen": "test",
@@ -1745,10 +1806,11 @@
                 "solicitacoes"
               ]
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "05.02 Ambulante não lista todas → 403",
+          "name": "05.02 Ambulante não lista todas -> 403",
           "event": [
             {
               "listen": "test",
@@ -1783,10 +1845,11 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "05.03 Gestor lista todas → 200",
+          "name": "05.03 Gestor lista todas -> 200",
           "event": [
             {
               "listen": "test",
@@ -1821,10 +1884,11 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "05.04 Filtrar pendentes → 200",
+          "name": "05.04 Filtrar pendentes -> 200",
           "event": [
             {
               "listen": "test",
@@ -1865,10 +1929,11 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "05.05 Filtro inválido → 400",
+          "name": "05.05 Filtro inválido -> 400",
           "event": [
             {
               "listen": "test",
@@ -1909,10 +1974,11 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "05.06 Ambulante tenta aprovar → 403",
+          "name": "05.06 Ambulante tenta aprovar -> 403",
           "event": [
             {
               "listen": "test",
@@ -1929,7 +1995,8 @@
             "header": [
               {
                 "key": "Content-Type",
-                "value": "application/json"
+                "value": "application/json",
+                "type": "text"
               }
             ],
             "url": {
@@ -1962,10 +2029,11 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "05.07 Status inválido → 400",
+          "name": "05.07 Status inválido -> 400",
           "event": [
             {
               "listen": "test",
@@ -1982,7 +2050,8 @@
             "header": [
               {
                 "key": "Content-Type",
-                "value": "application/json"
+                "value": "application/json",
+                "type": "text"
               }
             ],
             "url": {
@@ -2015,10 +2084,11 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "05.08 Recusar sem justificativa (RN04) → 400",
+          "name": "05.08 Recusar sem justificativa (RN04) -> 400",
           "event": [
             {
               "listen": "test",
@@ -2035,7 +2105,8 @@
             "header": [
               {
                 "key": "Content-Type",
-                "value": "application/json"
+                "value": "application/json",
+                "type": "text"
               }
             ],
             "url": {
@@ -2068,10 +2139,11 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "05.09 Solicitação inexistente → 404",
+          "name": "05.09 Solicitação inexistente -> 404",
           "event": [
             {
               "listen": "test",
@@ -2088,7 +2160,8 @@
             "header": [
               {
                 "key": "Content-Type",
-                "value": "application/json"
+                "value": "application/json",
+                "type": "text"
               }
             ],
             "url": {
@@ -2121,10 +2194,11 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "05.10 Recusar com justificativa → 200",
+          "name": "05.10 Recusar com justificativa -> 200",
           "event": [
             {
               "listen": "test",
@@ -2141,7 +2215,8 @@
             "header": [
               {
                 "key": "Content-Type",
-                "value": "application/json"
+                "value": "application/json",
+                "type": "text"
               }
             ],
             "url": {
@@ -2174,10 +2249,11 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "05.11 Aprovar a solicitação de A → 200",
+          "name": "05.11 Aprovar a solicitação de A -> 200",
           "event": [
             {
               "listen": "test",
@@ -2194,7 +2270,8 @@
             "header": [
               {
                 "key": "Content-Type",
-                "value": "application/json"
+                "value": "application/json",
+                "type": "text"
               }
             ],
             "url": {
@@ -2227,10 +2304,11 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "05.12 Avaliar de novo → 409",
+          "name": "05.12 Avaliar de novo -> 409",
           "event": [
             {
               "listen": "test",
@@ -2247,7 +2325,8 @@
             "header": [
               {
                 "key": "Content-Type",
-                "value": "application/json"
+                "value": "application/json",
+                "type": "text"
               }
             ],
             "url": {
@@ -2280,10 +2359,11 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "05.13 B vê as decisões → 200",
+          "name": "05.13 B vê as decisões -> 200",
           "event": [
             {
               "listen": "test",
@@ -2319,10 +2399,11 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "05.14 Ponto aprovado ficou ocupado → 200",
+          "name": "05.14 Ponto aprovado ficou ocupado -> 200",
           "event": [
             {
               "listen": "test",
@@ -2353,10 +2434,11 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "05.15 Pedir ponto ocupado → 409",
+          "name": "05.15 Pedir ponto ocupado -> 409",
           "event": [
             {
               "listen": "test",
@@ -2373,7 +2455,8 @@
             "header": [
               {
                 "key": "Content-Type",
-                "value": "application/json"
+                "value": "application/json",
+                "type": "text"
               }
             ],
             "url": {
@@ -2405,16 +2488,16 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         }
       ]
     },
     {
       "name": "06 Mensagens (RF05)",
-      "description": "Cada conversa pertence a um ambulante.",
       "item": [
         {
-          "name": "06.01 Enviar sem login → 401",
+          "name": "06.01 Enviar sem login -> 401",
           "event": [
             {
               "listen": "test",
@@ -2431,7 +2514,8 @@
             "header": [
               {
                 "key": "Content-Type",
-                "value": "application/json"
+                "value": "application/json",
+                "type": "text"
               }
             ],
             "url": {
@@ -2453,10 +2537,11 @@
                 }
               }
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "06.02 Sem assunto → 400",
+          "name": "06.02 Sem assunto -> 400",
           "event": [
             {
               "listen": "test",
@@ -2473,7 +2558,8 @@
             "header": [
               {
                 "key": "Content-Type",
-                "value": "application/json"
+                "value": "application/json",
+                "type": "text"
               }
             ],
             "url": {
@@ -2505,10 +2591,11 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "06.03 Sem texto → 400",
+          "name": "06.03 Sem texto -> 400",
           "event": [
             {
               "listen": "test",
@@ -2525,7 +2612,8 @@
             "header": [
               {
                 "key": "Content-Type",
-                "value": "application/json"
+                "value": "application/json",
+                "type": "text"
               }
             ],
             "url": {
@@ -2557,10 +2645,11 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "06.04 Ambulante envia → 201",
+          "name": "06.04 Ambulante envia -> 201",
           "event": [
             {
               "listen": "test",
@@ -2578,7 +2667,8 @@
             "header": [
               {
                 "key": "Content-Type",
-                "value": "application/json"
+                "value": "application/json",
+                "type": "text"
               }
             ],
             "url": {
@@ -2610,10 +2700,11 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "06.05 Ambulante não vê a caixa de entrada → 403",
+          "name": "06.05 Ambulante não vê a caixa de entrada -> 403",
           "event": [
             {
               "listen": "test",
@@ -2649,10 +2740,11 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "06.06 Gestor vê a caixa de entrada → 200",
+          "name": "06.06 Gestor vê a caixa de entrada -> 200",
           "event": [
             {
               "listen": "test",
@@ -2688,10 +2780,11 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "06.07 Gestor sem ambulante_id → 400",
+          "name": "06.07 Gestor sem ambulante_id -> 400",
           "event": [
             {
               "listen": "test",
@@ -2726,10 +2819,11 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "06.08 Gestor lê a conversa de A → 200",
+          "name": "06.08 Gestor lê a conversa de A -> 200",
           "event": [
             {
               "listen": "test",
@@ -2770,10 +2864,11 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "06.09 Contador do gestor → 200",
+          "name": "06.09 Contador do gestor -> 200",
           "event": [
             {
               "listen": "test",
@@ -2809,10 +2904,11 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "06.10 Gestor responde sem ambulante_id → 400",
+          "name": "06.10 Gestor responde sem ambulante_id -> 400",
           "event": [
             {
               "listen": "test",
@@ -2829,7 +2925,8 @@
             "header": [
               {
                 "key": "Content-Type",
-                "value": "application/json"
+                "value": "application/json",
+                "type": "text"
               }
             ],
             "url": {
@@ -2861,10 +2958,11 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "06.11 Gestor responde a ambulante inexistente → 404",
+          "name": "06.11 Gestor responde a ambulante inexistente -> 404",
           "event": [
             {
               "listen": "test",
@@ -2881,7 +2979,8 @@
             "header": [
               {
                 "key": "Content-Type",
-                "value": "application/json"
+                "value": "application/json",
+                "type": "text"
               }
             ],
             "url": {
@@ -2913,10 +3012,11 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "06.12 Gestor responde a A → 201",
+          "name": "06.12 Gestor responde a A -> 201",
           "event": [
             {
               "listen": "test",
@@ -2934,7 +3034,8 @@
             "header": [
               {
                 "key": "Content-Type",
-                "value": "application/json"
+                "value": "application/json",
+                "type": "text"
               }
             ],
             "url": {
@@ -2966,10 +3067,11 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "06.13 Contador do ambulante → 200",
+          "name": "06.13 Contador do ambulante -> 200",
           "event": [
             {
               "listen": "test",
@@ -3005,10 +3107,11 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "06.14 Ambulante lê a conversa → 200",
+          "name": "06.14 Ambulante lê a conversa -> 200",
           "event": [
             {
               "listen": "test",
@@ -3043,10 +3146,11 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "06.15 Ambulante marca a própria mensagem → 404",
+          "name": "06.15 Ambulante marca a própria mensagem -> 404",
           "event": [
             {
               "listen": "test",
@@ -3083,10 +3187,11 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "06.16 Ambulante marca a resposta → 200",
+          "name": "06.16 Ambulante marca a resposta -> 200",
           "event": [
             {
               "listen": "test",
@@ -3123,10 +3228,11 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "06.17 Gestor marca a conversa → 200",
+          "name": "06.17 Gestor marca a conversa -> 200",
           "event": [
             {
               "listen": "test",
@@ -3143,7 +3249,8 @@
             "header": [
               {
                 "key": "Content-Type",
-                "value": "application/json"
+                "value": "application/json",
+                "type": "text"
               }
             ],
             "url": {
@@ -3176,10 +3283,11 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "06.18 C não vê mensagens de A → 200",
+          "name": "06.18 C não vê mensagens de A -> 200",
           "event": [
             {
               "listen": "test",
@@ -3214,10 +3322,11 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "06.19 C não marca mensagem de A → 404",
+          "name": "06.19 C não marca mensagem de A -> 404",
           "event": [
             {
               "listen": "test",
@@ -3254,16 +3363,16 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         }
       ]
     },
     {
       "name": "07 Painel do gestor (RF07)",
-      "description": "Números agregados, sem dados pessoais (RN06).",
       "item": [
         {
-          "name": "07.01 Painel sem login → 401",
+          "name": "07.01 Painel sem login -> 401",
           "event": [
             {
               "listen": "test",
@@ -3288,10 +3397,11 @@
                 "painel"
               ]
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "07.02 Ambulante não acessa → 403",
+          "name": "07.02 Ambulante não acessa -> 403",
           "event": [
             {
               "listen": "test",
@@ -3326,10 +3436,11 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "07.03 Gestor acessa → 200",
+          "name": "07.03 Gestor acessa -> 200",
           "event": [
             {
               "listen": "test",
@@ -3364,16 +3475,16 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         }
       ]
     },
     {
       "name": "08 Segurança e erros",
-      "description": "Bom para mostrar à banca como a API se defende.",
       "item": [
         {
-          "name": "08.01 Rota inexistente → 404",
+          "name": "08.01 Rota inexistente -> 404",
           "event": [
             {
               "listen": "test",
@@ -3398,10 +3509,11 @@
                 "rota-que-nao-existe"
               ]
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "08.02 JSON malformado → 400",
+          "name": "08.02 JSON malformado -> 400",
           "event": [
             {
               "listen": "test",
@@ -3418,7 +3530,8 @@
             "header": [
               {
                 "key": "Content-Type",
-                "value": "application/json"
+                "value": "application/json",
+                "type": "text"
               }
             ],
             "url": {
@@ -3440,10 +3553,11 @@
                 }
               }
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "08.03 Injeção de SQL no login → 400",
+          "name": "08.03 Injeção de SQL no login -> 400",
           "event": [
             {
               "listen": "test",
@@ -3460,7 +3574,8 @@
             "header": [
               {
                 "key": "Content-Type",
-                "value": "application/json"
+                "value": "application/json",
+                "type": "text"
               }
             ],
             "url": {
@@ -3483,16 +3598,16 @@
                 }
               }
             }
-          }
+          },
+          "response": []
         }
       ]
     },
     {
       "name": "09 Demonstração ao vivo",
-      "description": "Rode `npm run demo` e coloque a senha impressa em demoSenha. Roteiro de uns 5 minutos.",
       "item": [
         {
-          "name": "09.01 Login de João (com MEI) → 200",
+          "name": "09.01 Login de João (com MEI) -> 200",
           "event": [
             {
               "listen": "test",
@@ -3510,7 +3625,8 @@
             "header": [
               {
                 "key": "Content-Type",
-                "value": "application/json"
+                "value": "application/json",
+                "type": "text"
               }
             ],
             "url": {
@@ -3533,10 +3649,11 @@
                 }
               }
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "09.02 Login de Maria (sem MEI) → 200",
+          "name": "09.02 Login de Maria (sem MEI) -> 200",
           "event": [
             {
               "listen": "test",
@@ -3554,7 +3671,8 @@
             "header": [
               {
                 "key": "Content-Type",
-                "value": "application/json"
+                "value": "application/json",
+                "type": "text"
               }
             ],
             "url": {
@@ -3577,10 +3695,11 @@
                 }
               }
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "09.03 Login do gestor → 200",
+          "name": "09.03 Login do gestor -> 200",
           "event": [
             {
               "listen": "test",
@@ -3598,7 +3717,8 @@
             "header": [
               {
                 "key": "Content-Type",
-                "value": "application/json"
+                "value": "application/json",
+                "type": "text"
               }
             ],
             "url": {
@@ -3621,10 +3741,11 @@
                 }
               }
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "09.04 Mapa: pontos disponíveis → 200",
+          "name": "09.04 Mapa: pontos disponíveis -> 200",
           "event": [
             {
               "listen": "test",
@@ -3656,10 +3777,11 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "09.05 Maria tenta solicitar (RN02) → 422",
+          "name": "09.05 Maria tenta solicitar (RN02) -> 422",
           "event": [
             {
               "listen": "test",
@@ -3676,7 +3798,8 @@
             "header": [
               {
                 "key": "Content-Type",
-                "value": "application/json"
+                "value": "application/json",
+                "type": "text"
               }
             ],
             "url": {
@@ -3708,10 +3831,11 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "09.06 João solicita o ponto (RN03) → 201",
+          "name": "09.06 João solicita o ponto (RN03) -> 201",
           "event": [
             {
               "listen": "test",
@@ -3729,7 +3853,8 @@
             "header": [
               {
                 "key": "Content-Type",
-                "value": "application/json"
+                "value": "application/json",
+                "type": "text"
               }
             ],
             "url": {
@@ -3761,10 +3886,11 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "09.07 Gestor vê as pendentes → 200",
+          "name": "09.07 Gestor vê as pendentes -> 200",
           "event": [
             {
               "listen": "test",
@@ -3805,10 +3931,11 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "09.08 Gestor recusa sem justificativa (RN04) → 400",
+          "name": "09.08 Gestor recusa sem justificativa (RN04) -> 400",
           "event": [
             {
               "listen": "test",
@@ -3825,7 +3952,8 @@
             "header": [
               {
                 "key": "Content-Type",
-                "value": "application/json"
+                "value": "application/json",
+                "type": "text"
               }
             ],
             "url": {
@@ -3858,10 +3986,11 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "09.09 Gestor aprova → 200",
+          "name": "09.09 Gestor aprova -> 200",
           "event": [
             {
               "listen": "test",
@@ -3878,7 +4007,8 @@
             "header": [
               {
                 "key": "Content-Type",
-                "value": "application/json"
+                "value": "application/json",
+                "type": "text"
               }
             ],
             "url": {
@@ -3911,10 +4041,11 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "09.10 João vê o resultado → 200",
+          "name": "09.10 João vê o resultado -> 200",
           "event": [
             {
               "listen": "test",
@@ -3950,10 +4081,11 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "09.11 João vê os avisos → 200",
+          "name": "09.11 João vê os avisos -> 200",
           "event": [
             {
               "listen": "test",
@@ -3988,10 +4120,11 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "09.12 Mapa: ponto ocupado → 200",
+          "name": "09.12 Mapa: ponto ocupado -> 200",
           "event": [
             {
               "listen": "test",
@@ -4022,10 +4155,11 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "09.13 Painel do gestor → 200",
+          "name": "09.13 Painel do gestor -> 200",
           "event": [
             {
               "listen": "test",
@@ -4060,10 +4194,11 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "09.14 Maria tenta ver o painel → 403",
+          "name": "09.14 Maria tenta ver o painel -> 403",
           "event": [
             {
               "listen": "test",
@@ -4098,10 +4233,11 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "09.15 Caixa de entrada do gestor → 200",
+          "name": "09.15 Caixa de entrada do gestor -> 200",
           "event": [
             {
               "listen": "test",
@@ -4138,10 +4274,11 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": "09.16 Gestor responde a Maria → 201",
+          "name": "09.16 Gestor responde a Maria -> 201",
           "event": [
             {
               "listen": "test",
@@ -4158,7 +4295,8 @@
             "header": [
               {
                 "key": "Content-Type",
-                "value": "application/json"
+                "value": "application/json",
+                "type": "text"
               }
             ],
             "url": {
@@ -4190,7 +4328,8 @@
                 }
               ]
             }
-          }
+          },
+          "response": []
         }
       ]
     }
