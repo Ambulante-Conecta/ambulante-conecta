@@ -25,7 +25,7 @@ for (const roteiro of roteiros) {
 }
 
 relatorio += `\nResumo: ${totalOk} verificações corretas, ${totalFalhas} problema(s)\n`;
-const pasta = path.join(__dirname, "resultados-testes");
+const pasta = path.join(__dirname, "..", "resultados-testes"); // fica na raiz do back-end, junto dos relatórios antigos
 fs.mkdirSync(pasta, { recursive: true });
 const nome = `${agora.toISOString().slice(0, 16).replace(/[:T]/g, "-")}.txt`;
 fs.writeFileSync(path.join(pasta, nome), relatorio, "utf8");
