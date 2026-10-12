@@ -121,7 +121,7 @@
     botao.textContent = "Enviando...";
     try {
       await chamarApi(`/solicitacoes/${Number(pedidoAtual.id)}`, { metodo: "PATCH", corpo: { status, justificativa } });
-      mostrarAviso(status === "Aprovada" ? "Pedido aprovado. O ambulante foi avisado." : "Pedido recusado. O ambulante foi avisado.");
+      mostrarAviso(status === "Aprovada" ? "Pedido aprovado. O aviso foi enviado em Mensagens." : "Pedido recusado. O aviso foi enviado em Mensagens.");
       recarregarTudo();
       return true;
     } catch (erro) {

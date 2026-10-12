@@ -1,9 +1,5 @@
-/* Ambulante Conecta — cadastro em etapas, ligado à API */
-
-// Em desenvolvimento usa a API local. Ao publicar o back-end, troque a segunda URL.
-const API_URL = ["localhost", "127.0.0.1"].includes(location.hostname)
-  ? "http://localhost:3000/api"
-  : "https://SEU-BACKEND-PUBLICADO/api";
+/* Ambulante Conecta — cadastro em etapas, ligado à API.
+   Depende de js/api.js e js/app.js (carregue-os antes). O endereço da API fica só em api.js (API_BASE). */
 
 const form = document.getElementById("cadastroForm");
 const paineis = [...form.querySelectorAll(".step-panel")];
@@ -247,30 +243,21 @@ form.addEventListener("submit", async (e) => {
   botao.disabled = true;
   botao.textContent = "Enviando...";
   try {
-    const resposta = await fetch(`${API_URL}/ambulantes`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(dados)
-    });
-    const corpo = await resposta.json().catch(() => ({}));
-
-    if (resposta.ok) {
-      try { localStorage.removeItem(CHAVE_RASCUNHO); } catch (_) {}
-      document.getElementById("cadastroCard").hidden = true;
-      const ok = document.getElementById("sucesso");
-      ok.hidden = false;
-      ok.focus();
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    } else if (resposta.status === 409) {
-      mostrarErrosDaApi({ cpf: "Este CPF já está cadastrado." });
-    } else if (resposta.status === 400 && corpo.campos && mostrarErrosDaApi(corpo.campos)) {
+    await chamarApi("/ambulantes", { metodo: "POST", corpo: dados });
+    try { localStorage.removeItem(CHAVE_RASCUNHO); } catch (_) {}
+    document.getElementById("cadastroCard").hidden = true;
+    const ok = document.getElementById("sucesso");
+    ok.hidden = false;
+    ok.focus();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  } catch (erro) {
+    if (erro.status === 409) {
+      mostrarErrosDaApi({ cpf: "Este CPF já está cadastrado. Se a conta é sua, use Entrar." });
+    } else if (erro.status === 400 && mostrarErrosDaApi(erro.campos)) {
       // erros já exibidos nos campos
     } else {
-      mostrarAviso(corpo.erro || "Não foi possível concluir o cadastro. Tente novamente.");
+      mostrarAviso(erro.message); // inclui a falta de conexão (status 0), com a mensagem do api.js
     }
-  } catch (erro) {
-    console.error("Erro de conexão com a API:", erro);
-    mostrarAviso("Não foi possível conectar ao servidor. Verifique se a API está rodando.");
   } finally {
     botao.disabled = false;
     botao.textContent = "Enviar cadastro";
