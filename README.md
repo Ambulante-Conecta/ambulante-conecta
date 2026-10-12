@@ -6,6 +6,9 @@ O **Ambulante Conecta** é um projeto de Trabalho de Conclusão de Curso (TCC) d
 
 > **Status do projeto:** funcionalidades descritas neste README implementadas e testadas, incluindo testes automatizados e testes manuais da API.
 
+**Acesse:** [site publicado](https://ambulante-conecta.github.io/ambulante-conecta/) · [API](https://ambulante-conecta.onrender.com/api/pontos) · [repositório](https://github.com/Ambulante-Conecta/ambulante-conecta)  
+<sub>A API roda no plano gratuito do Render: a primeira chamada depois de 15 minutos parada pode levar cerca de 1 minuto.</sub>
+
 ---
 
 ## 📌 Sumário
@@ -310,8 +313,8 @@ definitivo/
 Clone o repositório:
 
 ```bash
-git clone <https://franksbjr4-eng.github.io/ambulante-conecta/>
-cd definitivo
+git clone https://github.com/Ambulante-Conecta/ambulante-conecta.git
+cd ambulante-conecta
 ```
 
 

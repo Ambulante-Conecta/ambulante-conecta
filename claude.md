@@ -1,5 +1,7 @@
 # Ambulante Conecta (TCC) — contexto para o Claude Code
 
+Repositório: https://github.com/Ambulante-Conecta/ambulante-conecta (organização do grupo, transferida em 12/10). Site: https://ambulante-conecta.github.io/ambulante-conecta/ · API: https://ambulante-conecta.onrender.com/api · Banco: Neon.
+
 Sistema web que ajuda a prefeitura a mapear e gerir vendedores ambulantes: formalização (MEI/CNPJ), solicitação e concessão de pontos de venda em vias públicas. TCC de Análise e Desenvolvimento de Sistemas, de Manaus/AM.
 
 **Prazo crítico: pré-banca em 30/10/2026.** Hoje é 11/10/2026. A segunda 12/10 é feriado.
