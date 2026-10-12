@@ -4,6 +4,9 @@ const cors = require('cors');
 const listEndpoints = require('express-list-endpoints');
 
 const app = express();
+// Atrás do proxy do Render, o IP real do visitante vem no cabeçalho X-Forwarded-For.
+// Sem isto, o limite de 20 logins por 15 minutos seria contado para todos os visitantes juntos.
+if (process.env.NODE_ENV === 'production') app.set('trust proxy', 1);
 const PORT = process.env.PORT || 3000;
 
 // 1. Banco de dados: conexão única, definida em src/config/database.js (credenciais no .env)

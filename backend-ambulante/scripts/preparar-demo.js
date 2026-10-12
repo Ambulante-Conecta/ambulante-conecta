@@ -7,13 +7,16 @@ const bcrypt = require("bcryptjs");
 const pool = require("../src/config/database");
 
 const HOSTS_LOCAIS = ["localhost", "127.0.0.1", "::1"];
-const host = process.env.DB_HOST || "localhost";
+// Com DATABASE_URL (banco publicado), o endereço real está na URL, não em DB_HOST
+const host = process.env.DATABASE_URL
+  ? (() => { try { return new URL(process.env.DATABASE_URL).hostname; } catch (_) { return "desconhecido"; } })()
+  : process.env.DB_HOST || "localhost";
 
 // CPF e CNPJ fictícios, porém válidos
 const DEMOS = [
-  { nome: "João Demo Silva",    cpf: "52998224725", nasc: "1985-05-12", tel: "92991112222", atividade: "Alimentação", mei: true,  cnpj: "11222333000181" },
-  { nome: "Maria Demo Oliveira", cpf: "11144477735", nasc: "1990-08-20", tel: "92988887777", atividade: "Artesanato",  mei: false, cnpj: null },
-  { nome: "Ana Demo Souza",      cpf: "93541134780", nasc: "1992-03-03", tel: "92977776666", atividade: "Vestuário",   mei: true,  cnpj: "11444777000161" },
+  { nome: "João Demo Silva",    cpf: "52998224725", nasc: "1985-05-12", tel: "92991112222", atividade: "Alimentação", mei: true,  cnpj: "11222333000181", turno: "Manhã" },
+  { nome: "Maria Demo Oliveira", cpf: "11144477735", nasc: "1990-08-20", tel: "92988887777", atividade: "Artesanato",  mei: false, cnpj: null,             turno: "Tarde" },
+  { nome: "Ana Demo Souza",      cpf: "93541134780", nasc: "1992-03-03", tel: "92977776666", atividade: "Vestuário",   mei: true,  cnpj: "11444777000161", turno: "Dia todo" },
 ];
 const CPF_LIVRE_PARA_CADASTRO_AO_VIVO = "404.147.996-74";
 
@@ -55,9 +58,9 @@ async function main() {
     for (const d of DEMOS) {
       const a = await client.query(
         `INSERT INTO ambulantes (nome_completo, cpf, data_nascimento, telefone, tipo_atividade, possui_mei, cnpj_mei,
-                                 local_pretendido, criado_em, consentimento_em)
-         VALUES ($1, $2, $3, $4, $5, $6, $7, 'Centro', NOW(), NOW()) RETURNING id`,
-        [d.nome, d.cpf, d.nasc, d.tel, d.atividade, d.mei, d.cnpj]
+                                 local_pretendido, turno, criado_em, consentimento_em)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, 'Centro', $8, NOW(), NOW()) RETURNING id`,
+        [d.nome, d.cpf, d.nasc, d.tel, d.atividade, d.mei, d.cnpj, d.turno]
       );
       await client.query("INSERT INTO usuarios (cpf, senha_hash, perfil, ambulante_id) VALUES ($1, $2, 'ambulante', $3)", [d.cpf, hash, a.rows[0].id]);
       ids.push(a.rows[0].id);
