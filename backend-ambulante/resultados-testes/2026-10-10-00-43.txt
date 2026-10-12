@@ -1,0 +1,47 @@
+Teste completo da API - 09/10/2026, 20:43:39
+
+===== testar-api.js =====
+--- Cadastro ---
+OK    cadastro válido (esperado 201, veio 201)
+OK    CPF duplicado (esperado 409, veio 409)
+OK    CPF inválido (esperado 400, veio 400)
+OK    sem senha (esperado 400, veio 400)
+OK    senha fraca (só letras) (esperado 400, veio 400)
+OK    sem consentimento LGPD (esperado 400, veio 400)
+OK    cadastro sem MEI (esperado 201, veio 201)
+--- Login ---
+FALHA login com senha errada (esperado 401, veio 429)
+FALHA login com CPF inexistente (esperado 401, veio 429)
+FALHA login correto (esperado 200, veio 429)
+OK    /auth/me sem token (esperado 401, veio 401)
+FALHA /auth/me com token (esperado 200, veio 401)
+     perfil: undefined
+OK    token adulterado (esperado 401, veio 401)
+--- Permissões ---
+FALHA ambulante não lista solicitações (só gestor) (esperado 403, veio 401)
+OK    solicitar sem login (esperado 401, veio 401)
+--- Pontos e solicitações ---
+OK    lista de pontos (GeoJSON) (esperado 200, veio 200)
+     pontos disponíveis: 5
+FALHA RN02: sem MEI não solicita (esperado 422, veio 401)
+FALHA RN03: solicitação criada como Pendente (esperado 201, veio 401)
+C:\Users\vmath\OneDrive\Documentos\estudos\projeto_final\definitivo\backend-ambulante\testar-api.js:68
+    conferir("RN03: aviso de solicitação em análise", msgs.dados.some((m) => m.assunto === "Solicitação recebida"), true);
+                                                                 ^
+
+TypeError: msgs.dados.some is not a function
+    at C:\Users\vmath\OneDrive\Documentos\estudos\projeto_final\definitivo\backend-ambulante\testar-api.js:68:66
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Node.js v24.21.0
+
+===== testar-avaliacao.js =====
+Login do gestor falhou: confira CPF e senha.
+
+===== testar-mensagens.js =====
+Login do gestor falhou: confira CPF e senha.
+
+===== testar-painel.js =====
+Login do gestor falhou: confira CPF e senha.
+
+Resumo: 11 verificações corretas, 8 problema(s)

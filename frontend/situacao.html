@@ -6,8 +6,9 @@
   <title>Solicitação — Ambulante Conecta</title>
   <link rel="icon" href="img/logo.png">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsivo.css">
 </head>
-<body data-pagina="situacao">
+<body data-pagina="situacao" data-exige-login="ambulante">
   <a class="skip" href="#conteudo">Ir para o conteúdo</a>
   <div class="app">
     <aside class="sidebar">
@@ -24,67 +25,48 @@
       </header>
       <main class="content" id="conteudo">
 
-        <div class="section-title page-head"><div><h2>Solicitação de ponto</h2><p class="muted">Peça um ponto de venda e acompanhe o andamento por aqui.</p></div></div>
+        <div class="section-title page-head"><div><h2>Solicitação de ponto</h2><p class="muted">Escolha um ponto de venda disponível e acompanhe o andamento por aqui.</p></div></div>
 
-        <div class="card" id="semCadastro" hidden>
-          <p class="help">Para solicitar um ponto, complete seu cadastro primeiro.</p>
-          <div class="btn-row"><a class="btn btn-primary" href="cadastro.html">Fazer meu cadastro</a></div>
+        <!-- RN02: aparece quando a API responde 422 (ambulante sem MEI) -->
+        <div class="card notice notice-alerta" id="avisoMei" role="alert" hidden>
+          <span class="icon-circle orange" aria-hidden="true">!</span>
+          <div>
+            <strong>Para pedir um ponto, você precisa ter o MEI ativo.</strong>
+            <p class="muted">Se você já tem MEI, informe o CNPJ na Formalização. Se ainda não tem, lá também mostramos como tirar.</p>
+            <div class="btn-row"><a class="btn btn-primary" href="formalizacao.html#mei">Informar meu MEI</a></div>
+          </div>
         </div>
 
-        <div class="card form-card" id="nova" hidden>
+        <div class="card form-card" id="nova">
           <h3>Nova solicitação</h3>
           <form id="formSolicitacao" novalidate>
-            <div class="grid grid-2 mt">
-              <div class="field">
-                <label for="local">Bairro ou região *</label>
-                <input id="local" name="local" placeholder="Ex.: Centro" aria-describedby="erro-local">
-                <small class="msg-erro" id="erro-local" role="alert"></small>
-              </div>
-              <div class="field">
-                <label for="turno">Turno de trabalho *</label>
-                <select id="turno" name="turno" aria-describedby="erro-turno">
-                  <option value="">Selecione</option><option>Manhã</option><option>Tarde</option><option>Noite</option><option>Dia todo</option>
-                </select>
-                <small class="msg-erro" id="erro-turno" role="alert"></small>
-              </div>
+            <div class="field mt">
+              <label for="ponto">Ponto de venda disponível *</label>
+              <select id="ponto" name="ponto" aria-describedby="erro-ponto" disabled>
+                <option value="">Carregando pontos...</option>
+              </select>
+              <small class="msg-erro" id="erro-ponto" role="alert"></small>
             </div>
-            <div class="form-actions"><button class="btn btn-primary" type="submit">Enviar solicitação</button></div>
+            <p class="muted-note">Os pontos que já têm dono não aparecem aqui. Você pode ter só um pedido pendente por ponto.</p>
+            <div class="form-actions">
+              <button class="btn btn-primary" type="submit" id="btnEnviar" disabled>Enviar solicitação</button>
+            </div>
           </form>
         </div>
 
-        <div id="andamento" hidden>
-          <div class="card">
-            <div class="notice"><span class="icon-circle blue" aria-hidden="true">◷</span><div><strong>Solicitação enviada</strong><p class="muted">Seu pedido foi registrado e aguarda análise da equipe responsável.</p></div></div>
-            <ol class="progress mt" aria-label="Andamento da solicitação">
-              <li class="current" aria-current="step"><span class="bubble">1</span><span class="bubble-label">Solicitada</span></li>
-              <li><span class="bubble">2</span><span class="bubble-label">Em análise</span></li>
-              <li><span class="bubble">3</span><span class="bubble-label">Aprovada</span></li>
-              <li><span class="bubble">4</span><span class="bubble-label">Liberada</span></li>
-            </ol>
+        <section class="mt" aria-labelledby="t-minhas">
+          <div class="section-title"><h2 id="t-minhas">Minhas solicitações</h2></div>
+          <div class="solic-lista" id="minhas" aria-live="polite">
+            <p class="vazio">Carregando suas solicitações...</p>
           </div>
-          <div class="grid grid-2 mt">
-            <div class="card">
-              <h3>Detalhes</h3>
-              <dl class="detalhes">
-                <div><dt>Data da solicitação</dt><dd id="d-data"></dd></div>
-                <div><dt>Local solicitado</dt><dd id="d-local"></dd></div>
-                <div><dt>Turno</dt><dd id="d-turno"></dd></div>
-              </dl>
-              <div class="btn-row"><button class="btn btn-ghost" id="cancelar" type="button">Cancelar solicitação</button></div>
-            </div>
-            <div class="card">
-              <h3>Próximo retorno</h3>
-              <p class="muted">Você receberá um aviso na página Comunicação quando houver atualização.</p>
-              <div class="btn-row"><a class="btn btn-primary" href="comunicacao.html">Ver mensagens</a></div>
-            </div>
-          </div>
-        </div>
+        </section>
       </main>
     </div>
   </div>
   <nav class="mobile-nav" aria-label="Principal (celular)" id="mobileNav"></nav>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="js/api.js"></script>
   <script src="js/app.js"></script>
-  <script src="js/paginas.js"></script>
+  <script src="js/situacao.js"></script>
 </body>
 </html>

@@ -1,0 +1,114 @@
+Teste completo da API - 09/10/2026, 00:41:06
+
+===== testar-api.js =====
+--- Cadastro ---
+OK    cadastro válido (esperado 201, veio 201)
+OK    CPF duplicado (esperado 409, veio 409)
+OK    CPF inválido (esperado 400, veio 400)
+OK    sem senha (esperado 400, veio 400)
+OK    senha fraca (só letras) (esperado 400, veio 400)
+OK    sem consentimento LGPD (esperado 400, veio 400)
+OK    cadastro sem MEI (esperado 201, veio 201)
+--- Login ---
+OK    login com senha errada (esperado 401, veio 401)
+OK    login com CPF inexistente (esperado 401, veio 401)
+OK    login correto (esperado 200, veio 200)
+OK    /auth/me sem token (esperado 401, veio 401)
+OK    /auth/me com token (esperado 200, veio 200)
+     perfil: ambulante
+OK    token adulterado (esperado 401, veio 401)
+--- Permissões ---
+OK    ambulante não lista solicitações (só gestor) (esperado 403, veio 403)
+OK    solicitar sem login (esperado 401, veio 401)
+--- Pontos e solicitações ---
+OK    lista de pontos (GeoJSON) (esperado 200, veio 200)
+     pontos disponíveis: 4
+OK    RN02: sem MEI não solicita (esperado 422, veio 422)
+OK    RN03: solicitação criada como Pendente (esperado 201, veio 201)
+     status: Pendente
+OK    solicitação pendente duplicada (esperado 409, veio 409)
+--- Gestor ---
+OK    login do gestor (esperado 200, veio 200)
+OK    gestor lista solicitações (esperado 200, veio 200)
+OK    gestor não cria solicitação (esperado 403, veio 403)
+
+Todos os testes passaram
+
+===== testar-avaliacao.js =====
+--- Permissões ---
+OK    ambulante não avalia (esperado 403, veio 403)
+OK    sem login não avalia (esperado 401, veio 401)
+OK    gestor não usa 'minhas' (esperado 403, veio 403)
+--- Validações (RN04) ---
+OK    status inválido (esperado 400, veio 400)
+OK    recusa sem justificativa (esperado 400, veio 400)
+OK    solicitação inexistente (esperado 404, veio 404)
+--- Avaliação ---
+OK    gestor recusa com justificativa (esperado 200, veio 200)
+OK    gestor aprova (esperado 200, veio 200)
+OK    avaliar de novo é bloqueado (esperado 409, veio 409)
+--- Efeitos ---
+OK    A vê a sua como Aprovada (esperado Aprovada, veio Aprovada)
+OK    C: pedido concorrente recusado automaticamente (esperado Recusada, veio Recusada)
+OK    C: recusa traz a justificativa (esperado true, veio true)
+OK    ponto aprovado ficou ocupado (esperado true, veio true)
+OK    novo pedido no ponto ocupado (esperado 409, veio 409)
+--- Listagem do gestor ---
+OK    filtro por status (esperado 200, veio 200)
+OK    CPF vem mascarado (esperado true, veio true)
+OK    filtro inválido (esperado 400, veio 400)
+
+Todos os testes passaram
+
+===== testar-mensagens.js =====
+--- Envio pelo ambulante ---
+OK    enviar sem login (esperado 401, veio 401)
+OK    sem assunto (esperado 400, veio 400)
+OK    texto grande demais (esperado 400, veio 400)
+OK    ambulante envia (esperado 201, veio 201)
+OK    remetente registrado como ambulante (esperado ambulante, veio ambulante)
+--- Caixa de entrada do gestor ---
+OK    ambulante não vê conversas do gestor (esperado 403, veio 403)
+OK    gestor sem ambulante_id (esperado 400, veio 400)
+OK    gestor lista conversas (esperado 200, veio 200)
+OK    conversa do ambulante aparece com 1 não lida (esperado 1, veio 1)
+OK    gestor lê a conversa (esperado true, veio true)
+--- Resposta do gestor ---
+OK    gestor sem ambulante_id ao responder (esperado 400, veio 400)
+OK    ambulante inexistente (esperado 404, veio 404)
+OK    gestor responde (esperado 201, veio 201)
+OK    remetente registrado como gestor (esperado gestor, veio gestor)
+--- Leitura pelo ambulante ---
+OK    ambulante tem 1 não lida (esperado 1, veio 1)
+OK    ambulante vê a resposta (esperado true, veio true)
+OK    ambulante não marca a própria como lida (esperado 404, veio 404)
+OK    marca a resposta como lida (esperado 200, veio 200)
+OK    contador zera (esperado 0, veio 0)
+--- Isolamento entre ambulantes ---
+OK    B não vê mensagens de A (esperado 0, veio 0)
+OK    B não marca mensagem de A (esperado 404, veio 404)
+--- Leitura pelo gestor ---
+OK    gestor marca a conversa como lida (esperado 1, veio 1)
+OK    conversa sem não lidas (esperado 0, veio 0)
+
+Todos os testes passaram
+
+===== testar-painel.js =====
+--- Permissões ---
+OK    sem login (esperado 401, veio 401)
+OK    ambulante não acessa o painel (esperado 403, veio 403)
+--- Conteúdo ---
+OK    gestor acessa o painel (esperado 200, veio 200)
+OK    por_atividade soma o total de ambulantes (esperado 36, veio 36)
+OK    por_bairro soma o total de pontos (esperado 6, veio 6)
+OK    disponíveis + ocupados não passam do total (esperado true, veio true)
+OK    status das solicitações não passam do total (esperado true, veio true)
+OK    nenhum dado pessoal no painel (RN06) (esperado false, veio false)
+--- O painel acompanha os dados ---
+OK    cadastro de teste criado (esperado 201, veio 201)
+OK    total de ambulantes subiu 1 (esperado 37, veio 37)
+OK    atividade 'Vestuário' subiu 1 (esperado 4, veio 4)
+
+Todos os testes passaram
+
+Resumo: 73 verificações corretas, 0 problema(s)

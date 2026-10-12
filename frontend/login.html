@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Entrar — Ambulante Conecta</title>
+  <link rel="icon" href="img/logo.png">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsivo.css">
+</head>
+<body class="login-page">
+  <main class="card login-card" id="conteudo">
+    <a href="index.html" aria-label="Ambulante Conecta, página inicial">
+      <img class="logo" src="img/logo.png" alt="Ambulante Conecta">
+    </a>
+    <h1>Entrar</h1>
+    <p class="muted">Use o CPF e a senha do seu cadastro.</p>
+    <p class="help" id="avisoSessao" hidden>Sua sessão expirou. Entre novamente para continuar.</p>
+
+    <form id="loginForm" novalidate>
+      <div class="field">
+        <label for="cpf">CPF</label>
+        <input id="cpf" name="cpf" inputmode="numeric" autocomplete="username" placeholder="000.000.000-00" maxlength="14">
+      </div>
+      <div class="field">
+        <label for="senha">Senha</label>
+        <div class="senha-wrap">
+          <input id="senha" name="senha" type="password" autocomplete="current-password" maxlength="128">
+          <button type="button" class="btn btn-ghost btn-sm" id="verSenha" aria-pressed="false">Mostrar</button>
+        </div>
+      </div>
+      <p class="msg-erro" id="erroLogin" role="alert"></p>
+      <button class="btn btn-primary btn-bloco" type="submit" id="entrar">Entrar</button>
+    </form>
+
+    <p class="login-rodape">Ainda não tem conta? <a href="cadastro.html">Faça seu cadastro</a></p>
+  </main>
+
+  <script src="js/api.js"></script>
+  <script src="js/login.js"></script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+/* Responsividade, topo com usuário e tela de login. Carregue depois de style.css */
+
+html{-webkit-text-size-adjust:100%}
+img{max-width:100%;height:auto}
+.muted{color:var(--muted)}
+
+/* Áreas de toque de pelo menos 44 px */
+.btn{min-height:44px}
+.btn-sm{min-height:40px;padding:8px 14px;font-size:14px}
+.btn-bloco{width:100%}
+.nav a,.choices label{min-height:44px}
+.check input{width:20px;height:20px}
+
+/* Texto longo não estoura a tela */
+.review dd,.msg-assunto,details.msg p,.stat-number,.topbar-title{overflow-wrap:anywhere}
+
+/* Topo: usuário e botão Entrar ou Sair */
+.topbar-user{display:flex;align-items:center;gap:12px;min-width:0}
+.topbar-nome{font-weight:700;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* Tela de login */
+.login-page{min-height:100vh;display:grid;place-items:center;padding:24px 16px;background:var(--bg)}
+.login-card{width:100%;max-width:420px;padding:28px}
+.login-card .logo{max-width:130px;margin:0 auto 12px}
+.login-card h1{font-size:24px;margin:8px 0 4px;text-align:center}
+.login-card .muted{text-align:center;margin-bottom:18px}
+.senha-wrap{position:relative}
+.senha-wrap input{padding-right:100px}
+.senha-wrap .btn{position:absolute;right:4px;top:50%;transform:translateY(-50%)}
+.login-rodape{margin-top:18px;text-align:center;color:var(--muted)}
+.login-rodape a{color:var(--blue);font-weight:800}
+
+/* Até 900 px: menu lateral vira menu inferior (antes só mudava em 760 px) */
+@media(max-width:900px){
+  .sidebar{display:none}
+  .main{margin-left:0}
+  .topbar{height:64px;padding:0 16px;gap:12px}
+  .topbar-logo{display:block}
+  .content{padding:16px 16px calc(96px + env(safe-area-inset-bottom,0px))}
+  .mobile-nav{display:flex;position:fixed;inset:auto 0 0 0;height:calc(64px + env(safe-area-inset-bottom,0px));padding-bottom:env(safe-area-inset-bottom,0px);background:#fff;border-top:1px solid var(--line);z-index:30}
+  .mobile-nav a{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:48px;font-size:11px;font-weight:800;color:var(--muted)}
+  .mobile-nav a span{font-size:20px}
+  .mobile-nav a[aria-current="page"]{color:var(--blue)}
+  .toast{bottom:calc(84px + env(safe-area-inset-bottom,0px))}
+}
+
+@media(max-width:760px){
+  .hero-actions{width:100%}
+  .hero-actions .btn{flex:1 1 100%}
+  .section-title{flex-wrap:wrap}
+}
+
+@media(max-width:480px){
+  .content{padding:12px 12px calc(96px + env(safe-area-inset-bottom,0px))}
+  .card{padding:16px}
+  .topbar-nome{display:none}
+  .section-title{flex-direction:column;align-items:flex-start}
+  .form-actions .btn{flex:1}
+  .hero h2{font-size:22px}
+  .login-card{padding:22px 18px}
+}

@@ -1,0 +1,144 @@
+Teste completo da API - 09/10/2026, 00:27:50
+
+===== testar-api.js =====
+--- Cadastro ---
+node:internal/process/promises:394
+    triggerUncaughtException(err, true /* fromPromise */);
+    ^
+
+[TypeError: fetch failed] {
+  [cause]: AggregateError [ECONNREFUSED]: 
+      at internalConnectMultiple (node:net:1430:18)
+      at afterConnectMultiple (node:net:2099:7) {
+    code: 'ECONNREFUSED',
+    [errors]: [
+      Error: connect ECONNREFUSED ::1:3000
+          at createConnectionError (node:net:2062:14)
+          at afterConnectMultiple (node:net:2092:16) {
+        errno: -4078,
+        code: 'ECONNREFUSED',
+        syscall: 'connect',
+        address: '::1',
+        port: 3000
+      },
+      Error: connect ECONNREFUSED 127.0.0.1:3000
+          at createConnectionError (node:net:2062:14)
+          at afterConnectMultiple (node:net:2092:16) {
+        errno: -4078,
+        code: 'ECONNREFUSED',
+        syscall: 'connect',
+        address: '127.0.0.1',
+        port: 3000
+      }
+    ]
+  }
+}
+
+Node.js v24.21.0
+
+===== testar-avaliacao.js =====
+node:internal/process/promises:394
+    triggerUncaughtException(err, true /* fromPromise */);
+    ^
+
+[TypeError: fetch failed] {
+  [cause]: AggregateError [ECONNREFUSED]: 
+      at internalConnectMultiple (node:net:1430:18)
+      at afterConnectMultiple (node:net:2099:7) {
+    code: 'ECONNREFUSED',
+    [errors]: [
+      Error: connect ECONNREFUSED ::1:3000
+          at createConnectionError (node:net:2062:14)
+          at afterConnectMultiple (node:net:2092:16) {
+        errno: -4078,
+        code: 'ECONNREFUSED',
+        syscall: 'connect',
+        address: '::1',
+        port: 3000
+      },
+      Error: connect ECONNREFUSED 127.0.0.1:3000
+          at createConnectionError (node:net:2062:14)
+          at afterConnectMultiple (node:net:2092:16) {
+        errno: -4078,
+        code: 'ECONNREFUSED',
+        syscall: 'connect',
+        address: '127.0.0.1',
+        port: 3000
+      }
+    ]
+  }
+}
+
+Node.js v24.21.0
+
+===== testar-mensagens.js =====
+node:internal/process/promises:394
+    triggerUncaughtException(err, true /* fromPromise */);
+    ^
+
+[TypeError: fetch failed] {
+  [cause]: AggregateError [ECONNREFUSED]: 
+      at internalConnectMultiple (node:net:1430:18)
+      at afterConnectMultiple (node:net:2099:7) {
+    code: 'ECONNREFUSED',
+    [errors]: [
+      Error: connect ECONNREFUSED ::1:3000
+          at createConnectionError (node:net:2062:14)
+          at afterConnectMultiple (node:net:2092:16) {
+        errno: -4078,
+        code: 'ECONNREFUSED',
+        syscall: 'connect',
+        address: '::1',
+        port: 3000
+      },
+      Error: connect ECONNREFUSED 127.0.0.1:3000
+          at createConnectionError (node:net:2062:14)
+          at afterConnectMultiple (node:net:2092:16) {
+        errno: -4078,
+        code: 'ECONNREFUSED',
+        syscall: 'connect',
+        address: '127.0.0.1',
+        port: 3000
+      }
+    ]
+  }
+}
+
+Node.js v24.21.0
+
+===== testar-painel.js =====
+node:internal/process/promises:394
+    triggerUncaughtException(err, true /* fromPromise */);
+    ^
+
+[TypeError: fetch failed] {
+  [cause]: AggregateError [ECONNREFUSED]: 
+      at internalConnectMultiple (node:net:1430:18)
+      at afterConnectMultiple (node:net:2099:7) {
+    code: 'ECONNREFUSED',
+    [errors]: [
+      Error: connect ECONNREFUSED ::1:3000
+          at createConnectionError (node:net:2062:14)
+          at afterConnectMultiple (node:net:2092:16) {
+        errno: -4078,
+        code: 'ECONNREFUSED',
+        syscall: 'connect',
+        address: '::1',
+        port: 3000
+      },
+      Error: connect ECONNREFUSED 127.0.0.1:3000
+          at createConnectionError (node:net:2062:14)
+          at afterConnectMultiple (node:net:2092:16) {
+        errno: -4078,
+        code: 'ECONNREFUSED',
+        syscall: 'connect',
+        address: '127.0.0.1',
+        port: 3000
+      }
+    ]
+  }
+}
+
+Node.js v24.21.0
+
+Resumo: 0 verificações corretas, 4 problema(s)

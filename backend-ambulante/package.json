@@ -4,16 +4,25 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js",
+    "test": "node src/testar-tudo.js",
+    "demo": "node scripts/preparar-demo.js --sim"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
+  "engines": {
+    "node": ">=20"
+  },
   "dependencies": {
+    "bcryptjs": "^3.0.3",
     "cors": "^2.8.6",
     "dotenv": "^18.0.6",
     "express": "^5.2.1",
+    "express-list-endpoints": "^7.1.1",
+    "express-rate-limit": "^8.7.1",
+    "jsonwebtoken": "^9.0.3",
     "pg": "^8.23.1"
   }
 }

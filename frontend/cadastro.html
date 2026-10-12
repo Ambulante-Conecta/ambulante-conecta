@@ -4,10 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Cadastro — Ambulante Conecta</title>
-    <link rel="icon" href="logo.png">
+  <link rel="icon" href="img/logo.png">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsivo.css">
 </head>
-<body>
+<body data-pagina="cadastro" data-exige-login="visitante">
   <a class="skip" href="#conteudo">Ir para o conteúdo</a>
 
   <div class="app">
@@ -46,14 +47,14 @@
                 </div>
                 <div class="field">
                   <label for="nascimento">Data de nascimento *</label>
-                  <input id="nascimento" name="nascimento" type="date" autocomplete="bday" aria-describedby="erro-nascimento">
+                  <input id="nascimento" name="nascimento" type="date" min="1900-01-01" autocomplete="bday" aria-describedby="erro-nascimento">
                   <small class="msg-erro" id="erro-nascimento" role="alert"></small>
                 </div>
               </div>
             </fieldset>
 
-            <fieldset class="step-panel" data-titulo="Contato" data-campos="telefone,email" hidden>
-              <legend>Contato</legend>
+            <fieldset class="step-panel" data-titulo="Contato" data-campos="telefone,email,senha,confirmarSenha" hidden>
+              <legend>Contato e acesso</legend>
               <div class="grid grid-2">
                 <div class="field">
                   <label for="telefone">Telefone com DDD *</label>
@@ -66,10 +67,23 @@
                   <small class="msg-erro" id="erro-email" role="alert"></small>
                 </div>
               </div>
-              <p class="muted-note">Usamos seu contato apenas para avisar sobre a sua solicitação.</p>
+              <div class="grid grid-2">
+                <div class="field">
+                  <label for="senha">Crie uma senha *</label>
+                  <input id="senha" name="senha" type="password" autocomplete="new-password" maxlength="72" aria-describedby="ajuda-senha erro-senha">
+                  <small class="muted-note" id="ajuda-senha">Mínimo de 8 caracteres, com letras e números.</small>
+                  <small class="msg-erro" id="erro-senha" role="alert"></small>
+                </div>
+                <div class="field">
+                  <label for="confirmarSenha">Confirme a senha *</label>
+                  <input id="confirmarSenha" name="confirmarSenha" type="password" autocomplete="new-password" maxlength="72" aria-describedby="erro-confirmarSenha">
+                  <small class="msg-erro" id="erro-confirmarSenha" role="alert"></small>
+                </div>
+              </div>
+              <p class="muted-note">Usamos seu contato apenas para avisar sobre a sua solicitação. Para entrar no sistema, você usará o CPF e esta senha.</p>
             </fieldset>
 
-            <fieldset class="step-panel" data-titulo="Atividade" data-campos="atividade,mei" hidden>
+            <fieldset class="step-panel" data-titulo="Atividade" data-campos="atividade,mei,cnpj" hidden>
               <legend>Sua atividade</legend>
               <div class="field">
                 <label for="atividade">Tipo de atividade *</label>
@@ -91,6 +105,11 @@
                   <label><input type="radio" name="mei" value="Não"> Não</label>
                 </div>
                 <small class="msg-erro" id="erro-mei" role="alert"></small>
+              </div>
+              <div class="field" id="campoCnpj" hidden>
+                <label for="cnpj">CNPJ do MEI *</label>
+                <input id="cnpj" name="cnpj" inputmode="numeric" placeholder="00.000.000/0000-00" maxlength="18" aria-describedby="erro-cnpj">
+                <small class="msg-erro" id="erro-cnpj" role="alert"></small>
               </div>
             </fieldset>
 
@@ -130,9 +149,9 @@
         <div class="card sucesso" id="sucesso" hidden tabindex="-1">
           <div class="icon-circle green" aria-hidden="true">✓</div>
           <h2>Cadastro enviado</h2>
-          <p>Recebemos seus dados. Você será avisada em Comunicação quando houver novidades.</p>
+          <p>Recebemos seus dados. Os avisos sobre seus pedidos aparecem em Comunicação.</p>
           <div class="hero-actions">
-            <a class="btn btn-primary" href="situacao.html">Ver minha situação</a>
+            <a class="btn btn-primary" href="login.html">Entrar na minha conta</a>
             <a class="btn btn-ghost" href="index.html">Voltar ao início</a>
           </div>
         </div>
@@ -143,6 +162,7 @@
   <nav class="mobile-nav" aria-label="Principal (celular)" id="mobileNav"></nav>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
+  <script src="js/api.js"></script>
   <script src="js/app.js"></script>
   <script src="js/cadastro.js"></script>
 </body>

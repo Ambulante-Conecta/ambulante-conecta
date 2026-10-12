@@ -1,111 +1,51 @@
+require('dotenv').config(); // carrega o .env antes de qualquer outra coisa
 const express = require('express');
 const cors = require('cors');
-const { Pool } = require('pg');
-require('dotenv').config(); // Carrega as variáveis do arquivo .env
+const listEndpoints = require('express-list-endpoints');
 
-// 1. Inicializa o Express
 const app = express();
+// Atrás do proxy do Render, o IP real do visitante vem no cabeçalho X-Forwarded-For.
+// Sem isto, o limite de 20 logins por 15 minutos seria contado para todos os visitantes juntos.
+if (process.env.NODE_ENV === 'production') app.set('trust proxy', 1);
 const PORT = process.env.PORT || 3000;
 
-// 2. Middlewares (Configurações iniciais)
-app.use(cors());
-app.use(express.json());
+// 1. Banco de dados: conexão única, definida em src/config/database.js (credenciais no .env)
+const pool = require('./src/config/database');
 
-// 3. Conexão com o banco de dados PostgreSQL
-const pool = new Pool({
-  host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME
-});
+// 2. Middlewares
+// CORS: só as origens do front. Para liberar outra (ex.: GitHub Pages), use CORS_ORIGINS no .env, separadas por vírgula.
+const origens = [
+  'http://localhost:5500',
+  'http://127.0.0.1:5500',
+  ...(process.env.CORS_ORIGINS ? process.env.CORS_ORIGINS.split(',').map((s) => s.trim()) : [])
+];
+app.use(cors({ origin: origens }));
+app.use(express.json({ limit: '100kb' })); // transforma o corpo JSON em req.body (precisa vir antes das rotas)
 
-// Importar o controller (ajuste o caminho se necessário)
+// 3. Rotas
 const { getSolicitacoesComDetalhes } = require('./src/controllers/solicitacaoController');
+const { autenticar, exigirPerfil } = require('./src/middlewares/auth');
 
-// 4. Rotas da API
-app.get('/api/solicitacoes', getSolicitacoesComDetalhes);
-
-// Rota de teste básica
 app.get('/', (req, res) => {
   res.json({ mensagem: 'API do Ambulante Conecta rodando com sucesso!' });
 });
-// Rota para cadastrar um novo ambulante e seu ponto de venda
-app.post('/api/cadastrar-ambulante', async (req, res) => {
-    try {
-        console.log("Dados recebidos do front-end:", req.body);
+app.get('/api/solicitacoes', autenticar, exigirPerfil('gestor'), getSolicitacoesComDetalhes);
+app.use('/api', require('./src/routes')(pool)); // cadastro, pontos e criação de solicitações
 
-        // Mapeamento exato com base no objeto impresso pelo console.log
-        const nome_completo = req.body.nome || req.body.nome_completo || req.body.nomeCompleto;
-        const cpf = req.body.cpf;
-        const data_nascimento = req.body.nascimento || req.body.data_nascimento || req.body.dataNascimento;
-        const telefone = req.body.telefone || null;
-        const email = req.body.email || null;
-        const tipo_atividade = req.body.atividade || req.body.tipo_atividade || req.body.tipoAtividade;
-        
-        // Converte o campo 'mei' ("Não" / "Sim") para booleano (true/false)
-        let possui_mei = false;
-        if (req.body.mei === 'Sim' || req.body.possui_mei === true || req.body.possuiMei === true) {
-            possui_mei = true;
-        }
-        
-        const cnpj_mei = req.body.cnpj_mei || req.body.cnpjMei || null;
-        const descricao_local = req.body.local || req.body.descricao_local || null;
-        const bairro = req.body.bairro || null;
-
-        // Validação básica de segurança
-        if (!nome_completo || !cpf || !data_nascimento) {
-            return res.status(400).json({ 
-                sucesso: false, 
-                erro: 'Os campos Nome, CPF e Data de Nascimento são obrigatórios.' 
-            });
-        }
-
-        // 1. Inserir os dados na tabela ambulantes
-        const queryAmbulante = `
-            INSERT INTO ambulantes (nome_completo, cpf, data_nascimento, telefone, email, tipo_atividade, possui_mei, cnpj_mei)
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
-            RETURNING id;
-        `;
-        
-        const valuesAmbulante = [
-            nome_completo, 
-            cpf, 
-            data_nascimento, 
-            telefone, 
-            email, 
-            tipo_atividade, 
-            possui_mei, 
-            cnpj_mei
-        ];
-
-        const resultadoAmbulante = await pool.query(queryAmbulante, valuesAmbulante);
-        const ambulanteId = resultadoAmbulante.rows[0].id;
-
-        // 2. Se houver dados de local, inserir na tabela pontos_venda
-        if (descricao_local || bairro) {
-            const queryPonto = `
-                INSERT INTO pontos_venda (ambulante_id, descricao_local, bairro)
-                VALUES ($1, $2, $3);
-            `;
-            await pool.query(queryPonto, [ambulanteId, descricao_local, bairro]);
-        }
-
-        return res.status(201).json({ 
-            sucesso: true, 
-            mensagem: 'Ambulante cadastrado com sucesso!',
-            id: ambulanteId 
-        });
-
-    } catch (erro) {
-        console.error('Erro ao cadastrar ambulante:', erro);
-        return res.status(500).json({ 
-            sucesso: false, 
-            erro: 'Erro interno ao salvar no banco de dados.' 
-        });
-    }
+// 4. Rota inexistente e tratamento de erros (sempre respondem em JSON)
+app.use('/api', (req, res) => res.status(404).json({ erro: 'Rota não encontrada.' }));
+app.use((err, req, res, next) => {
+  if (err.type === 'entity.parse.failed') return res.status(400).json({ erro: 'JSON inválido no corpo da requisição.' });
+  if (err.type === 'entity.too.large') return res.status(413).json({ erro: 'Corpo da requisição grande demais.' });
+  console.error('Erro não tratado:', err.message);
+  res.status(500).json({ erro: 'Erro interno do servidor.' });
 });
-// 5. Iniciar o Servidor
+
+// 5. Iniciar o servidor e exibir a tabela de rotas automaticamente
 app.listen(PORT, () => {
-  console.log(`Servidor a rodar na porta ${PORT}`);
+  console.log(`Servidor rodando na porta ${PORT}`);
+
+  // Exibe a tabela automática no terminal assim que o servidor arranca
+  console.log("\n📌 TABELA AUTOMÁTICA DE ROTAS DA API:");
+  console.table(listEndpoints(app));
 });

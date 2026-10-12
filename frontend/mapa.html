@@ -5,7 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Pontos de venda — Ambulante Conecta</title>
   <link rel="icon" href="img/logo.png">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsivo.css">
 </head>
 <body data-pagina="mapa">
   <a class="skip" href="#conteudo">Ir para o conteúdo</a>
@@ -25,16 +27,31 @@
       <main class="content" id="conteudo">
 
         <div class="section-title page-head"><div><h2>Pontos de venda</h2><p class="muted">Veja onde há pontos em Manaus e peça o local que combina com sua atividade.</p></div><a class="btn btn-primary" href="situacao.html#nova">Solicitar ponto</a></div>
+        <fieldset class="filtro-mapa" id="filtroStatus">
+          <legend class="label">Mostrar</legend>
+          <div class="choices">
+            <label><input type="radio" name="status" value="todos" checked> Todos</label>
+            <label><input type="radio" name="status" value="disponivel"> Disponíveis</label>
+            <label><input type="radio" name="status" value="ocupado"> Ocupados</label>
+          </div>
+        </fieldset>
         <div class="card map-card">
-          <!-- Espaço reservado para o Google Maps: inicialize a API dentro de #map -->
-          <div class="map-slot map-slot-grande" id="map" role="region" aria-label="Mapa de pontos de venda"></div>
+          <!-- Leaflet + OpenStreetMap, montado por js/mapa.js -->
+          <div class="map-slot map-slot-grande" id="map" role="region" aria-label="Mapa de pontos de venda. A mesma informação está na lista abaixo."></div>
         </div>
+
+        <section class="mt" aria-labelledby="t-lista">
+          <div class="section-title"><h2 id="t-lista">Lista de pontos</h2></div>
+          <div class="solic-lista" id="listaPontos"></div>
+        </section>
       </main>
     </div>
   </div>
   <nav class="mobile-nav" aria-label="Principal (celular)" id="mobileNav"></nav>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="js/api.js"></script>
   <script src="js/app.js"></script>
-  <script src="js/paginas.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="js/mapa.js"></script>
 </body>
 </html>

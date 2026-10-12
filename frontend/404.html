@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>
+    // O GitHub Pages mostra esta página em qualquer endereço que não existe, até dentro de subpastas.
+    // Lá, a <base> (/ambulante-conecta/) faz o CSS, os scripts e os links funcionarem. Fora dele, os caminhos relativos bastam.
+    (function () {
+      var partes = location.pathname.split("/").filter(Boolean);
+      if (!/\.github\.io$/.test(location.hostname) || !partes.length) return;
+      var base = document.createElement("base");
+      base.href = "/" + partes[0] + "/";
+      document.head.appendChild(base);
+    })();
+  </script>
+  <title>Página não encontrada — Ambulante Conecta</title>
+  <link rel="icon" href="img/logo.png">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsivo.css">
+</head>
+<body data-pagina="404">
+  <a class="skip" href="#conteudo">Ir para o conteúdo</a>
+  <div class="app">
+    <aside class="sidebar">
+      <a class="brand" href="index.html" aria-label="Ambulante Conecta, página inicial">
+        <img class="logo" src="img/logo.png" alt="Ambulante Conecta">
+      </a>
+      <nav class="nav" aria-label="Principal" id="nav"></nav>
+      <p class="sidebar-footer">Seus dados pessoais são tratados conforme a LGPD.</p>
+    </aside>
+    <div class="main">
+      <header class="topbar">
+        <img class="topbar-logo" src="img/logo.png" alt="Ambulante Conecta">
+        <h1 class="topbar-title">Página não encontrada</h1>
+      </header>
+      <main class="content" id="conteudo">
+        <div class="card sucesso">
+          <div class="icon-circle orange" aria-hidden="true">?</div>
+          <h2>Não encontramos esta página</h2>
+          <p>O endereço pode estar errado ou a página mudou de lugar. Use um dos atalhos abaixo.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="index.html">Ir para o início</a>
+            <a class="btn btn-ghost" href="mapa.html">Ver pontos de venda</a>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+  <nav class="mobile-nav" aria-label="Principal (celular)" id="mobileNav"></nav>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="js/api.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
