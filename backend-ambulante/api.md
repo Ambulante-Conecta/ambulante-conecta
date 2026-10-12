@@ -34,6 +34,8 @@ Rotas protegidas exigem o cabeçalho `Authorization: Bearer <token>` (token do l
 | 14 | `PATCH` | `/api/mensagens/:id/lida` | Bearer Token | Nenhum | `200` (Marca mensagem como lida), `404` (Não encontrada) |
 | 15 | `PATCH` | `/api/mensagens/lidas` | Bearer (Gestor) | `ambulante_id` | `200` (Marca conversas de um ambulante como lidas) |
 | 16 | `GET` | `/api/painel` | Bearer (Gestor) | Nenhum | `200` (Métricas do painel administrativo), `403` (Bloqueado) |
+| 17 | `GET` | `/api/ambulantes/me` | Bearer (Ambulante) | Nenhum | `200` (`id`, `nome_completo`, `possui_mei`, `cnpj_mei`; sem CPF), `403` (Gestor bloqueado) |
+| 18 | `PATCH` | `/api/ambulantes/me` | Bearer (Ambulante) | `cnpj_mei` (com ou sem máscara) | `200` (`possui_mei` passa a `true`), `400` (CNPJ inválido, em `campos.cnpj_mei`), `403` (Gestor bloqueado) |
 ## Códigos de resposta
 
 `200` ou `201` sucesso · `400` dados inválidos (a lista `campos` indica o campo) · `401` sem login ou sessão expirada ·
@@ -45,7 +47,7 @@ Rotas protegidas exigem o cabeçalho `Authorization: Bearer <token>` (token do l
 | Regra | Onde |
 |---|---|
 | RN01 solicitar exige login de ambulante | `POST /solicitacoes` usa o ambulante do token |
-| RN02 só quem tem MEI com CNPJ válido solicita | cadastro valida o CNPJ; solicitação confere `possui_mei` e `cnpj_mei` |
+| RN02 só quem tem MEI com CNPJ válido solicita | cadastro e `PATCH /ambulantes/me` validam o CNPJ (módulo 11); solicitação confere `possui_mei` e `cnpj_mei` |
 | RN03 a solicitação nasce Pendente | `POST /solicitacoes` |
 | RN04 recusa exige justificativa | `PATCH /solicitacoes/:id` |
 | RN05 consentimento LGPD registrado | `ambulantes.consentimento_em` |
@@ -59,6 +61,7 @@ token JWT com validade, CPF nunca devolvido por completo, credenciais fora do c�
 ## Testes automatizados
 
 `testar-api.js` (cadastro, login, permissões, solicitação), `testar-avaliacao.js` (aprovação e recusa),
-`testar-mensagens.js` (conversas e isolamento), `testar-painel.js` (painel agregado) e `testar-tudo.js`
+`testar-mensagens.js` (conversas e isolamento), `testar-painel.js` (painel agregado), `testar-formalizacao.js`
+(MEI pela Formalização: 422 antes, 201 depois) e `testar-tudo.js`
 (roda todos e salva o relatório em `resultados-testes/`).
 

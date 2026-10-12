@@ -1,6 +1,6 @@
 /* Ambulante Conecta — código compartilhado: sessão, menu por perfil, topo e resumo da página inicial.
-   Depende de js/api.js (carregue-o antes). O estado local (localStorage) ficou só para a Formalização,
-   que ainda não tem API; cadastro, login, solicitações e mensagens usam a API. */
+   Depende de js/api.js (carregue-o antes). O estado local (localStorage) ficou só para a licença municipal
+   e os documentos da Formalização; o MEI, o cadastro, o login, as solicitações e as mensagens usam a API. */
 
 const CHAVE_ESTADO = "ambulante.estado";
 
@@ -55,6 +55,11 @@ const perfilAtual = () => Sessao.usuario()?.perfil || "visitante";
 const paginaAtual = (location.pathname.split("/").pop() || "index.html").replace(".html", "") || "index";
 let totalNaoLidas = 0; // vem da API quando há usuário logado
 
+// Link para o login que volta para a página atual depois de entrar (no início, no login e no cadastro não precisa)
+const linkLogin = () => ["index", "login", "cadastro"].includes(paginaAtual)
+  ? "login.html"
+  : "login.html?voltar=" + encodeURIComponent(paginaAtual + ".html");
+
 const escHtml = (t) => String(t ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
 /* ---------- Sessão e acesso às páginas ---------- */
@@ -103,7 +108,7 @@ function renderTopo() {
   caixa.className = "topbar-user";
   caixa.innerHTML = usuario
     ? `<span class="topbar-nome">${escHtml(usuario.nome)}</span><button type="button" class="btn btn-ghost btn-sm" id="btnSair">Sair</button>`
-    : `<a class="btn btn-primary btn-sm" href="login.html">Entrar</a>`;
+    : `<a class="btn btn-primary btn-sm" href="${linkLogin()}">Entrar</a>`;
   topo.appendChild(caixa);
   document.getElementById("btnSair")?.addEventListener("click", sairDaConta);
 }
@@ -125,7 +130,8 @@ function renderMenu() {
   if (movel) {
     movel.innerHTML = idsMovel.map((id) => {
       const m = itensMenu[id];
-      return `<a href="${m.href}"${atual(m.href)}><span aria-hidden="true">${m.icone}</span>${m.movel}</a>`;
+      const href = id === "login" ? linkLogin() : m.href;
+      return `<a href="${href}"${atual(m.href)}><span aria-hidden="true">${m.icone}</span>${m.movel}</a>`;
     }).join("");
   }
 }

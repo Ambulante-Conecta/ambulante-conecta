@@ -17,7 +17,7 @@ if (ligada.status !== 0) {
   process.exit(1);
 }
 
-const roteiros = ["testar-api.js", "testar-avaliacao.js", "testar-mensagens.js", "testar-painel.js"];
+const roteiros = ["testar-api.js", "testar-avaliacao.js", "testar-mensagens.js", "testar-painel.js", "testar-formalizacao.js"];
 const agora = new Date();
 let relatorio = `Teste completo da API - ${agora.toLocaleString("pt-BR")}\n`;
 let totalOk = 0, totalFalhas = 0;

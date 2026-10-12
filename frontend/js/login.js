@@ -10,7 +10,9 @@ const digitos = (v) => String(v ?? "").replace(/\D/g, "");
 // Só aceita voltar para uma página do próprio site (ex.: situacao.html ou situacao.html?ponto=5#nova)
 function destino() {
   const voltar = new URLSearchParams(location.search).get("voltar");
-  return voltar && /^[a-z]+\.html(\?ponto=\d{1,9})?(#[a-z]+)?$/.test(voltar) ? voltar : "index.html";
+  const valido = voltar && /^[a-z]+\.html(\?ponto=\d{1,9})?(#[a-z]+)?$/.test(voltar);
+  // login.html criaria um laço (logado no login vai para o destino); cadastro.html é só para quem não entrou
+  return valido && !/^(login|cadastro)\.html/.test(voltar) ? voltar : "index.html";
 }
 
 if (Sessao.token()) location.replace(destino());

@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node server.js",
     "test": "node src/testar-tudo.js",
     "demo": "node scripts/preparar-demo.js --sim"
   },

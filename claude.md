@@ -30,7 +30,7 @@ backend-ambulante/  server.js, api.md, package.json, scripts/ (preparar-demo.js,
 database/           schema.sql, seed.sql, migracoes/ (001, 002, 003)
 frontend/           index, mapa, formalizacao, cadastro, login, situacao, comunicacao .html
                     css/style.css, css/responsivo.css
-                    js/api.js, app.js, login.js, cadastro.js, paginas.js, situacao.js
+                    js/api.js, app.js, login.js, cadastro.js, situacao.js, comunicacao.js, painel.js, mapa.js, formalizacao.js
                     img/logo.png
 ```
 
@@ -48,7 +48,7 @@ Atenção ao nome dos arquivos e das pastas: sem acento nem espaço (`situacao.j
 
 **Decisão pendente do usuário:** a numeração das RNs está inconsistente. O artigo usa RN03 = pendente + aviso, RN05 = LGPD (consentimento) e RN06 = painel/CPF mascarado. O contexto do projeto chama a concorrência de RN05. Sugestão: tratar o artigo como referência e registrar a concorrência como RN07, ajustando README e `api.md`. Não renumere nada sem perguntar.
 
-## API: 15 rotas em `/api` mais `GET /`
+## API: 17 rotas em `/api` mais `GET /`
 
 | Rota | Quem | Observações |
 |---|---|---|
@@ -66,6 +66,8 @@ Atenção ao nome dos arquivos e das pastas: sem acento nem espaço (`situacao.j
 | `GET /api/mensagens/nao-lidas` | logado | devolve `{total}` |
 | `PATCH /api/mensagens/:id/lida` | logado | |
 | `PATCH /api/mensagens/lidas` | gestor | `{ambulante_id}` |
+| `GET /api/ambulantes/me` | ambulante | `{id, nome_completo, possui_mei, cnpj_mei}`, sem CPF |
+| `PATCH /api/ambulantes/me` | ambulante | `{cnpj_mei}` (módulo 11); 200 com `possui_mei: true`, 400 com `campos.cnpj_mei`. CNPJ repetido entre ambulantes **não** é bloqueado (o cadastro também não bloqueia) |
 | `GET /api/painel` | gestor | usado hoje: `solicitacoes.pendentes`, `pontos.disponiveis`, `ambulantes.total`, `ambulantes.com_mei`, `mensagens_nao_lidas` |
 
 **Não confie só nesta tabela para mensagens e painel.** Leia `src/routes/mensagens.js` e `src/routes/painel.js` para ver os nomes exatos dos campos e os limites (tamanho do texto, limite de envios) antes de ligar as telas.
@@ -79,7 +81,7 @@ Atenção ao nome dos arquivos e das pastas: sem acento nem espaço (`situacao.j
 - Classes de CSS que existem: `card`, `form-card`, `section-title`, `page-head`, `field`, `msg-erro`, `btn btn-primary`, `btn btn-ghost`, `btn-row`, `status green|orange|red|gray`, `notice`, `detalhes`, `msg-list`, `details.msg(.nova)`, `vazio`, `mt`, `muted`. Os estilos de `situacao` (cartões `solic-card`, avisos `notice-*`) estão no fim do `style.css`.
 - `style.css` precisa ter `[hidden]{display:none !important}` (o `.notice` com `display:flex` anulava o atributo `hidden`). **Confirme que a linha existe.**
 - Todo estado de tela é tratado: carregando, vazio e erro com botão "Tentar de novo".
-- `paginas.js` ainda guarda os protótipos de **formalização** e **comunicação** em `localStorage`. A comunicação precisa sair dali (ver Semana 1).
+- `paginas.js` foi removido. Só a licença municipal e a lista de documentos da Formalização continuam em `localStorage` (`js/formalizacao.js`).
 
 ## Contas de teste
 
@@ -123,6 +125,7 @@ Sem código: termo de consentimento simples, questionário SUS e 3 tarefas dos t
 ### Semana 2 (19 a 23/10)
 - [x] **Feito em 11/10 (adiantado), testado pelo usuário:** `js/mapa.js` com Leaflet 1.9.4 (SRI), filtro, legenda, lista acessível e login que preserva `?ponto=`. Google Maps removido do site e do README (falta no artigo).
 - Seg 19: **mapa Leaflet** (index e `mapa.html`) com `GET /api/pontos`, cor por status e botão "Solicitar este ponto" levando a `situacao.html?ponto=ID#nova` (a `situacao.js` já lê o parâmetro `ponto`). Tirar as menções a Google Maps do site.
+- [x] **Formalização com API feita em 11/10 (adiantada), testada pelo usuário:** `GET`/`PATCH /api/ambulantes/me`, `js/formalizacao.js`, `testar-formalizacao.js` (16 verificações OK), `npm start` criado. Os botões "Entrar" do topo e do menu do celular voltam para a página atual depois do login.
 - Ter 20: **formalização mínima com API**: `PATCH /api/ambulantes/me` (valida o CNPJ com módulo 11, atualiza `possui_mei` e `cnpj_mei`) e campo de CNPJ na Formalização. Hoje marcar a etapa só grava no navegador, então o 422 continua, o que deixa um beco sem saída na demonstração. Tarde: melhorias de front (estados de tela, 404, mostrar regras da senha, aviso de CPF já existente, revisão do português).
 - Qua 21: **deploy em 1 dia só** (back-end e banco em serviço gratuito, front no GitHub Pages ou Vercel). No fim do dia, decidir: se não subiu, os testes e a demonstração são locais. Antes: `app.set('trust proxy', 1)` no Express, endereço do front em `CORS_ORIGINS`, `API_BASE` real em `api.js`, `deploy.yml` em `.github/workflows/`, e conferir se o serviço escolhido tem PostGIS (a API usa `ST_AsGeoJSON`).
 - Qui 22 e sex 23: testes de usabilidade e Lighthouse (evidência do RNF06 no artigo).

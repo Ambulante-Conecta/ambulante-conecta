@@ -25,15 +25,45 @@
       </header>
       <main class="content" id="conteudo">
 
-        <div class="section-title page-head"><div><h2>Formalização</h2><p class="muted">Dois caminhos para regularizar sua atividade. Marque cada etapa quando concluir.</p></div><span class="status gray" id="contagem">0 de 2 etapas</span></div>
+        <div class="section-title page-head"><div><h2>Formalização</h2><p class="muted">Duas etapas para regularizar sua atividade. Com o MEI informado aqui, você já pode pedir um ponto de venda.</p></div><span class="status gray" id="contagem">0 de 2 etapas</span></div>
         <div class="grid grid-2">
-          <article class="card etapa">
+          <article class="card etapa" id="mei">
             <div class="etapa-top"><span class="icon-circle blue" aria-hidden="true">1</span><span class="status gray" id="status-mei">Não iniciada</span></div>
             <h3>MEI Federal</h3>
-            <p>Registro do seu negócio como Microempreendedor Individual, feito no portal do governo federal.</p>
+            <p>Registro do seu negócio como Microempreendedor Individual, feito no portal do governo federal. Depois, informe aqui o CNPJ do seu MEI.</p>
             <div class="btn-row">
-              <a class="btn btn-primary" href="https://www.gov.br/empresas-e-negocios/pt-br/empreendedor" target="_blank" rel="noopener">Abrir Portal do Empreendedor</a>
-              <button class="btn btn-ghost" id="toggle-mei" type="button">Marcar como concluída</button>
+              <a class="btn btn-ghost" href="https://www.gov.br/empresas-e-negocios/pt-br/empreendedor" target="_blank" rel="noopener">Abrir Portal do Empreendedor<span class="sr-only"> (abre em outra aba)</span></a>
+            </div>
+
+            <!-- Estados do MEI, controlados por js/formalizacao.js (RF02, PATCH /api/ambulantes/me) -->
+            <div class="mt" id="meiEstado" aria-live="polite"></div>
+
+            <p class="notice mt" id="meiVisitante" hidden>
+              <span><a class="btn btn-primary btn-sm" href="login.html?voltar=formalizacao.html%23mei">Entrar</a> para informar o CNPJ do seu MEI.</span>
+            </p>
+
+            <form class="mt" id="formMei" novalidate hidden>
+              <div class="field">
+                <label for="cnpj_mei">CNPJ do seu MEI *</label>
+                <input id="cnpj_mei" name="cnpj_mei" inputmode="numeric" autocomplete="off" maxlength="18" placeholder="00.000.000/0000-00" aria-describedby="dica-cnpj erro-cnpj_mei">
+                <small class="muted-note" id="dica-cnpj">Está no Certificado da Condição de Microempreendedor Individual (CCMEI).</small>
+                <small class="msg-erro" id="erro-cnpj_mei" role="alert"></small>
+              </div>
+              <div class="form-actions">
+                <button class="btn btn-ghost" type="button" id="cancelaMei" hidden>Cancelar</button>
+                <button class="btn btn-primary" type="submit" id="btnMei">Salvar CNPJ</button>
+              </div>
+            </form>
+
+            <div class="notice notice-ok mt" id="meiOk" hidden>
+              <div>
+                <strong>MEI registrado</strong>
+                <p class="muted">CNPJ <span id="meiCnpj"></span>. Você já pode pedir um ponto de venda.</p>
+                <div class="btn-row">
+                  <a class="btn btn-primary btn-sm" href="situacao.html#nova">Solicitar ponto</a>
+                  <button class="btn btn-ghost btn-sm" type="button" id="corrigirMei">Corrigir CNPJ</button>
+                </div>
+              </div>
             </div>
           </article>
           <article class="card etapa">
@@ -58,6 +88,6 @@
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
   <script src="js/api.js"></script>
   <script src="js/app.js"></script>
-  <script src="js/paginas.js"></script>
+  <script src="js/formalizacao.js"></script>
 </body>
 </html>

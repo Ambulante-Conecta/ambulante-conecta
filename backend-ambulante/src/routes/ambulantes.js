@@ -2,6 +2,7 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
 const { soDigitos, cpfValido, cnpjValido, dataValida, maiorDeIdade, paraBooleano } = require("../utils/validacoes");
+const { autenticar, exigirPerfil } = require("../middlewares/auth");
 
 const senhaValida = (s) => s.length >= 8 && s.length <= 72 && /[A-Za-z]/.test(s) && /\d/.test(s);
 
@@ -61,6 +62,41 @@ module.exports = (pool) => {
       res.status(500).json({ erro: "Erro interno ao cadastrar." });
     } finally {
       client.release();
+    }
+  });
+
+  // RF02 — Formalização: o ambulante consulta e informa o próprio MEI (o id vem do token, nunca do corpo)
+  // GET /api/ambulantes/me
+  router.get("/ambulantes/me", autenticar, exigirPerfil("ambulante"), async (req, res) => {
+    try {
+      const r = await pool.query(
+        "SELECT id, nome_completo, possui_mei, cnpj_mei FROM ambulantes WHERE id = $1",
+        [req.usuario.ambulante_id]
+      );
+      if (!r.rowCount) return res.status(404).json({ erro: "Ambulante não encontrado." });
+      res.json(r.rows[0]);
+    } catch (e) {
+      console.error("Erro ao consultar ambulante:", e.message);
+      res.status(500).json({ erro: "Erro interno." });
+    }
+  });
+
+  // PATCH /api/ambulantes/me  { cnpj_mei }   (CNPJ válido pelo módulo 11 -> possui_mei = true; libera o pedido de ponto, RN02)
+  router.patch("/ambulantes/me", autenticar, exigirPerfil("ambulante"), async (req, res) => {
+    const cnpj = soDigitos(req.body?.cnpj_mei);
+    if (!cnpjValido(cnpj)) {
+      return res.status(400).json({ erro: "Dados inválidos.", campos: { cnpj_mei: "Informe um CNPJ válido do MEI (14 números)." } });
+    }
+    try {
+      const r = await pool.query(
+        "UPDATE ambulantes SET possui_mei = TRUE, cnpj_mei = $1 WHERE id = $2 RETURNING id, nome_completo, possui_mei, cnpj_mei",
+        [cnpj, req.usuario.ambulante_id]
+      );
+      if (!r.rowCount) return res.status(404).json({ erro: "Ambulante não encontrado." });
+      res.json(r.rows[0]);
+    } catch (e) {
+      console.error("Erro ao atualizar o MEI:", e.message);
+      res.status(500).json({ erro: "Erro interno ao salvar o MEI." });
     }
   });
 
