@@ -33,6 +33,12 @@ for (const roteiro of roteiros) {
 }
 
 relatorio += `\nResumo: ${totalOk} verificações corretas, ${totalFalhas} problema(s)\n`;
+
+// Logins que passam a falhar no meio da suíte costumam ser o limite de 20 logins a cada 15 minutos (429)
+if (totalFalhas && /veio (401|undefined)\)|Login do gestor falhou/.test(relatorio)) {
+  console.log("\nDica: se os logins começaram a falhar no meio (401 ou undefined), pode ser o limite de logins a cada 15 minutos.\n" +
+              "Reinicie a API ou coloque LOGIN_LIMITE=200 no .env do desenvolvimento e rode de novo.");
+}
 const pasta = path.join(__dirname, "..", "resultados-testes"); // fica na raiz do back-end, junto dos relatórios antigos
 fs.mkdirSync(pasta, { recursive: true });
 const nome = `${agora.toISOString().slice(0, 16).replace(/[:T]/g, "-")}.txt`;

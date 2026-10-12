@@ -12,9 +12,12 @@ const HASH_FALSO = bcrypt.hashSync("senha-falsa-para-igualar-o-tempo", 10);
 module.exports = (pool) => {
   const router = express.Router();
 
+  // 20 tentativas a cada 15 minutos por IP. No desenvolvimento, LOGIN_LIMITE no .env pode aumentar o valor:
+  // o npm test faz cerca de 16 logins por execução e estouraria o limite na segunda rodada.
+  // Em produção (NODE_ENV=production) o valor é sempre 20.
   const limiteLogin = rateLimit({
     windowMs: 15 * 60 * 1000,
-    limit: 20,
+    limit: process.env.NODE_ENV === "production" ? 20 : Number(process.env.LOGIN_LIMITE) || 20,
     standardHeaders: true,
     legacyHeaders: false,
     message: { erro: "Muitas tentativas de login. Tente novamente em alguns minutos." },

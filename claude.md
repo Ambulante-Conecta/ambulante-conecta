@@ -144,5 +144,6 @@ Seg 26: corrigir o que os testes acharam e **fim de funcionalidades novas**. Ter
 
 - Artigo: a cópia que li ainda mostrava "23.10" na Tabela 4 (conferir se o original foi corrigido); a data "06.08" de Ideação provavelmente é 06.06; o texto fala em React Native/PWA, mas o front é HTML/CSS/JS puro e o PWA (RNF04) não está implementado; cita Google Maps, mas a decisão é Leaflet.
 - Segurança: não versionar `.env`; trocar `JWT_SECRET` e `DB_PASSWORD` se algum valor real foi compartilhado.
+- O `npm test` faz ~16 logins por execução: rodar duas vezes em 15 minutos estoura o limite (logins viram 429 e os testes falham com 401/undefined). No desenvolvimento use `LOGIN_LIMITE=200` no `.env` (ignorado com `NODE_ENV=production`) ou reinicie a API.
 - Limite de 20 logins por 15 minutos: atrás do proxy de um serviço de hospedagem, sem `trust proxy`, todos os testadores compartilham esse limite.
 - `Sair` apaga a sessão e o estado local; a sessão fica só na aba (`sessionStorage`).
