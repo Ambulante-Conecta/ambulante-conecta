@@ -102,7 +102,7 @@ Exporte os dados de qualquer teste de usabilidade **antes** de rodar o `demo`.
 ### Semana 0 (concluída)
 Commits, senha do gestor trocada, `npm test` verde, Tabela 4 do artigo e RN03 implementada.
 
-### Semana 1 (13 a 16/10): fluxo completo no navegador, sem Thunder Client — **concluída em 11/10** (falta só o commit e o push)
+### Semana 1 (13 a 16/10): fluxo completo no navegador, sem Thunder Client — **concluída em 11/10** (só falta a decisão da numeração das RNs para ajustar README e `api.md`)
 
 - [x] Passo 0: inventário das rotas e CORS.
 - [x] Base compartilhada: já existia (`api.js` e `app.js`). Não crie outra.
@@ -118,7 +118,7 @@ Commits, senha do gestor trocada, `npm test` verde, Tabela 4 do artigo e RN03 im
 - [x] **`data-exige-login`**: situacao e comunicacao (ambulante), painel (gestor), cadastro (`visitante`, novo valor: logado vai para o início). index, mapa e formalizacao ficam públicas de propósito. **Testado pelo usuário (11/10).**
 - [x] **Teste ponta a ponta só pelo navegador (feito pelo usuário em 11/10):** cadastro, login sem MEI com aviso de Formalização (422), login com MEI e solicitação (Pendente), mensagem "em análise" não lida, segundo ambulante pede o mesmo ponto, gestor aprova um e o outro é recusado, recusa sem justificativa é bloqueada e com justificativa passa, ambulante vê status, motivo e mensagens, logout e acesso direto a `painel.html` redireciona.
 - [x] `npm test` verde: 74 verificações, 0 problemas (`resultados-testes/2026-10-11-23-33.txt`). O `npm test` agora roda `src/testar-tudo.js` e para antes se a API estiver desligada.
-- [ ] Commit (ex.: `feat(front): fluxo de solicitação, mensagens e painel do gestor`) e push.
+- [x] Commit e push (`e05a188` + `4f0ad44`, que incluiu os arquivos que tinham ficado de fora).
 - [ ] Ajustar README e `api.md` (nomes das rotas e numeração das RNs, depois que o usuário decidir). **Fica aguardando a decisão das RNs; não bloqueia a Semana 2.**
 
 ### Fim de semana 17 e 18/10
@@ -129,7 +129,7 @@ Sem código: termo de consentimento simples, questionário SUS e 3 tarefas dos t
 - Seg 19: **mapa Leaflet** (index e `mapa.html`) com `GET /api/pontos`, cor por status e botão "Solicitar este ponto" levando a `situacao.html?ponto=ID#nova` (a `situacao.js` já lê o parâmetro `ponto`). Tirar as menções a Google Maps do site.
 - [x] **Formalização com API feita em 11/10 (adiantada), testada pelo usuário:** `GET`/`PATCH /api/ambulantes/me`, `js/formalizacao.js`, `testar-formalizacao.js` (16 verificações OK), `npm start` criado. Os botões "Entrar" do topo e do menu do celular voltam para a página atual depois do login.
 - Ter 20: **formalização mínima com API**: `PATCH /api/ambulantes/me` (valida o CNPJ com módulo 11, atualiza `possui_mei` e `cnpj_mei`) e campo de CNPJ na Formalização. Hoje marcar a etapa só grava no navegador, então o 422 continua, o que deixa um beco sem saída na demonstração. Tarde: melhorias de front (estados de tela, 404, mostrar regras da senha, aviso de CPF já existente, revisão do português). **Feito em 11/10**, mais o turno salvo de verdade (decisão do usuário: banco completo para o TCC; migração 004 aplicada no banco local).
-- [ ] **Deploy adiantado para 11/10 — decidido: GitHub Pages (front) + Render grátis (API) + Neon grátis (banco com PostGIS; não expira).** Código pronto: `DATABASE_URL` com SSL em `database.js`, `trust proxy` com `NODE_ENV=production`, `engines` Node 20+, `.env.example` documentado e `scripts/preparar-banco-publicado.js` (testado em banco temporário local). `preparar-demo.js` agora lê o host da `DATABASE_URL` (antes poderia apagar o banco publicado achando que era local). Falta: usuário criar contas Neon e Render, configurar variáveis, trocar `API_BASE` em `api.js`, `CORS_ORIGINS`.
+- [x] **Deploy concluído em 12/10 e testado (CORS, páginas, 404, API no Render lendo o Neon). Repositório transferido para a organização Ambulante-Conecta.** Deploy adiantado para 11/10 — decidido: GitHub Pages (front) + Render grátis (API) + Neon grátis (banco com PostGIS; não expira).** Código pronto: `DATABASE_URL` com SSL em `database.js`, `trust proxy` com `NODE_ENV=production`, `engines` Node 20+, `.env.example` documentado e `scripts/preparar-banco-publicado.js` (testado em banco temporário local). `preparar-demo.js` agora lê o host da `DATABASE_URL` (antes poderia apagar o banco publicado achando que era local). Falta: usuário criar contas Neon e Render, configurar variáveis, trocar `API_BASE` em `api.js`, `CORS_ORIGINS`.
 - Qua 21: **deploy em 1 dia só** (back-end e banco em serviço gratuito, front no GitHub Pages ou Vercel). No fim do dia, decidir: se não subiu, os testes e a demonstração são locais. Antes: `app.set('trust proxy', 1)` no Express, endereço do front em `CORS_ORIGINS`, `API_BASE` real em `api.js`, `deploy.yml` em `.github/workflows/`, e conferir se o serviço escolhido tem PostGIS (a API usa `ST_AsGeoJSON`).
 - Qui 22 e sex 23: testes de usabilidade e Lighthouse (evidência do RNF06 no artigo).
 
