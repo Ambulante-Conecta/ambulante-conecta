@@ -1,9 +1,9 @@
 /* Ambulante Conecta — acesso à API e sessão do usuário. Carregue antes de app.js */
 
-// Em desenvolvimento usa a API local. Ao publicar o back-end, troque a segunda URL.
+// Em desenvolvimento (Live Server) usa a API local; publicado (GitHub Pages) usa a API no Render.
 const API_BASE = ["localhost", "127.0.0.1"].includes(location.hostname)
   ? "http://localhost:3000/api"
-  : "https://SEU-BACKEND-PUBLICADO/api";
+  : "https://ambulante-conecta.onrender.com/api";
 
 // A sessão fica só na aba (sessionStorage): some ao fechá-la.
 const Sessao = {
