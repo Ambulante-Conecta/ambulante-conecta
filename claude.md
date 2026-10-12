@@ -8,7 +8,7 @@ Sistema web que ajuda a prefeitura a mapear e gerir vendedores ambulantes: forma
 ## Como trabalhar neste projeto
 
 - Entregue código completo e funcional, sem trechos omitidos.
-- Antes de mexer em rota ou regra, rode `npm test` na pasta `backend-ambulante` e mantenha a suíte verde. Última execução registrada: 74 verificações, 0 problemas (11/10, 19:33).
+- Antes de mexer em rota ou regra, rode `npm test` na pasta `backend-ambulante` e mantenha a suíte verde. Última execução registrada: 92 verificações, 0 problemas (11/10, 20:01, já com `testar-formalizacao.js`).
 - Antes de criar qualquer tela, leia uma página que já funciona (`frontend/situacao.html` e `frontend/js/situacao.js`) e siga o mesmo padrão. Não invente classes de CSS nem funções que já existem.
 - Nunca leia, copie, mostre nem versione o conteúdo do `.env`. Se achar um arquivo `_env` ou `.env` com valores reais em algum lugar compartilhado, avise para trocar `JWT_SECRET` e `DB_PASSWORD`.
 - Para dados vindos da API use `escHtml()` ou `textContent`, nunca HTML cru.
