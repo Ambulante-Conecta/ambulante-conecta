@@ -53,7 +53,9 @@ CREATE TABLE public.ambulantes (
     cnpj_mei character varying(20),
     criado_em timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
     local_pretendido character varying(255),
-    consentimento_em timestamp without time zone
+    consentimento_em timestamp without time zone,
+    turno character varying(20),
+    CONSTRAINT ambulantes_turno_check CHECK (((turno IS NULL) OR ((turno)::text = ANY ((ARRAY['Manhã'::character varying, 'Tarde'::character varying, 'Noite'::character varying, 'Dia todo'::character varying])::text[]))))
 );
 
 

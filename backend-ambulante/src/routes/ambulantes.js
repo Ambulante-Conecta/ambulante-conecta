@@ -4,6 +4,7 @@ const bcrypt = require("bcryptjs");
 const { soDigitos, cpfValido, cnpjValido, dataValida, maiorDeIdade, paraBooleano } = require("../utils/validacoes");
 const { autenticar, exigirPerfil } = require("../middlewares/auth");
 
+const TURNOS = ["Manhã", "Tarde", "Noite", "Dia todo"];
 const senhaValida = (s) => s.length >= 8 && s.length <= 72 && /[A-Za-z]/.test(s) && /\d/.test(s);
 
 module.exports = (pool) => {
@@ -21,6 +22,7 @@ module.exports = (pool) => {
     const possuiMei = paraBooleano(b.possui_mei);
     const cnpj = soDigitos(b.cnpj_mei) || null;
     const local = String(b.local_pretendido ?? "").trim().slice(0, 255) || null;
+    const turno = String(b.turno ?? "").trim();
     const senha = String(b.senha ?? "");
 
     const erros = {};
@@ -31,6 +33,7 @@ module.exports = (pool) => {
     if (telefone.length !== 11) erros.telefone = "O telefone deve ter 11 dígitos, com DDD.";
     if (email && !/^\S+@\S+\.\S+$/.test(email)) erros.email = "E-mail inválido.";
     if (!atividade) erros.tipo_atividade = "Informe o tipo de atividade.";
+    if (!TURNOS.includes(turno)) erros.turno = `Informe o turno de trabalho (${TURNOS.join(", ")}).`;
     if (possuiMei === null) erros.possui_mei = "Informe se possui MEI (true ou false).";
     if (possuiMei === true && !cnpjValido(cnpj)) erros.cnpj_mei = "Informe um CNPJ válido do MEI.";
     if (!senhaValida(senha)) erros.senha = "A senha deve ter de 8 a 72 caracteres, com letras e números.";
@@ -44,10 +47,10 @@ module.exports = (pool) => {
       const amb = await client.query(
         `INSERT INTO ambulantes
            (nome_completo, cpf, data_nascimento, telefone, email, tipo_atividade, possui_mei, cnpj_mei,
-            local_pretendido, criado_em, consentimento_em)
-         VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9, NOW(), NOW())
+            local_pretendido, turno, criado_em, consentimento_em)
+         VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10, NOW(), NOW())
          RETURNING id, nome_completo`,
-        [nome, cpf, nascimento, telefone, email, atividade, possuiMei, possuiMei ? cnpj : null, local]
+        [nome, cpf, nascimento, telefone, email, atividade, possuiMei, possuiMei ? cnpj : null, local, turno]
       );
       await client.query(
         "INSERT INTO usuarios (cpf, senha_hash, perfil, ambulante_id) VALUES ($1, $2, 'ambulante', $3)",
@@ -70,7 +73,7 @@ module.exports = (pool) => {
   router.get("/ambulantes/me", autenticar, exigirPerfil("ambulante"), async (req, res) => {
     try {
       const r = await pool.query(
-        "SELECT id, nome_completo, possui_mei, cnpj_mei FROM ambulantes WHERE id = $1",
+        "SELECT id, nome_completo, possui_mei, cnpj_mei, turno FROM ambulantes WHERE id = $1",
         [req.usuario.ambulante_id]
       );
       if (!r.rowCount) return res.status(404).json({ erro: "Ambulante não encontrado." });
@@ -89,7 +92,7 @@ module.exports = (pool) => {
     }
     try {
       const r = await pool.query(
-        "UPDATE ambulantes SET possui_mei = TRUE, cnpj_mei = $1 WHERE id = $2 RETURNING id, nome_completo, possui_mei, cnpj_mei",
+        "UPDATE ambulantes SET possui_mei = TRUE, cnpj_mei = $1 WHERE id = $2 RETURNING id, nome_completo, possui_mei, cnpj_mei, turno",
         [cnpj, req.usuario.ambulante_id]
       );
       if (!r.rowCount) return res.status(404).json({ erro: "Ambulante não encontrado." });

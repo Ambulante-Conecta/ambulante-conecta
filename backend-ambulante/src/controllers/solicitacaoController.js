@@ -19,6 +19,7 @@ const getSolicitacoesComDetalhes = async (req, res) => {
         s.data_avaliacao,
         a.id AS ambulante_id,
         a.nome_completo AS ambulante,
+        a.turno AS ambulante_turno,
         '***.' || substr(regexp_replace(a.cpf, '\\D', '', 'g'), 4, 3) || '.' ||
                   substr(regexp_replace(a.cpf, '\\D', '', 'g'), 7, 3) || '-**' AS ambulante_cpf,
         p.descricao_local AS ponto,

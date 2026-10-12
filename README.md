@@ -263,6 +263,7 @@ definitivo/
 │   │   ├── 001_cadastro.sql
 │   │   ├── 002_auth_mensagens.sql
 │   │   ├── 003_fk_avaliador.sql
+│   │   ├── 004_turno.sql
 │   │   └── migracao_cadastro.sql
 │   ├── resetar_pontos.sql
 │   ├── schema.sql

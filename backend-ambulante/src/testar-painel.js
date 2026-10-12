@@ -34,7 +34,7 @@ const soma = (lista, campo) => lista.reduce((t, x) => t + x[campo], 0);
   const antes = await chamar("GET", "/painel", null, tokenG); // foto do painel antes do cadastro de teste
   const cpf = gerarCpf();
   const cad = await chamar("POST", "/ambulantes", { nome_completo: "Teste Painel Lima", cpf, data_nascimento: "1989-11-20", telefone: "92933334444",
-    tipo_atividade: "Vestuário", possui_mei: false, local_pretendido: "Centro", senha: SENHA, consentimento: true });
+    tipo_atividade: "Vestuário", possui_mei: false, local_pretendido: "Centro", turno: "Manhã", senha: SENHA, consentimento: true });
   const tokenA = (await chamar("POST", "/auth/login", { cpf, senha: SENHA })).dados.token;
 
   console.log("--- Permissões ---");

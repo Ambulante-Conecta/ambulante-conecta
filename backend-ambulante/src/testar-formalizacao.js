@@ -38,7 +38,7 @@ function conferir(rotulo, obtido, esperado) {
   console.log("--- Preparação: ambulante sem MEI ---");
   let r = await chamar("POST", "/ambulantes", {
     nome_completo: "Paulo Teste Formalizacao", cpf, data_nascimento: "1988-03-15", telefone: "92987654321",
-    tipo_atividade: "Bebidas", possui_mei: false, cnpj_mei: null, senha: SENHA, consentimento: true
+    tipo_atividade: "Bebidas", possui_mei: false, cnpj_mei: null, turno: "Manhã", senha: SENHA, consentimento: true
   });
   conferir("cadastro sem MEI", r.status, 201);
   const token = (await chamar("POST", "/auth/login", { cpf, senha: SENHA })).dados.token;
@@ -49,6 +49,7 @@ function conferir(rotulo, obtido, esperado) {
   conferir("GET /ambulantes/me", r.status, 200);
   conferir("começa sem MEI", r.dados.possui_mei, false);
   conferir("não devolve o CPF", "cpf" in r.dados, false);
+  conferir("turno salvo no cadastro", r.dados.turno, "Manhã");
 
   console.log("--- Antes de informar o MEI ---");
   r = await chamar("GET", "/pontos?status=disponivel");

@@ -26,7 +26,7 @@ function conferir(rotulo, obtido, esperado) {
   const cpfA = gerarCpf(), cpfB = gerarCpf();
   const base = { nome_completo: "Maria Teste Santos", cpf: cpfA, data_nascimento: "1990-05-10", telefone: "92912345678",
     tipo_atividade: "Alimentação", possui_mei: true, cnpj_mei: "11.222.333/0001-81", local_pretendido: "Centro",
-    senha: SENHA, consentimento: true };
+    turno: "Manhã", senha: SENHA, consentimento: true };
 
   console.log("--- Cadastro ---");
   conferir("cadastro válido", (await chamar("POST", "/ambulantes", base)).status, 201);
@@ -34,6 +34,8 @@ function conferir(rotulo, obtido, esperado) {
   conferir("CPF inválido", (await chamar("POST", "/ambulantes", { ...base, cpf: "111.111.111-11" })).status, 400);
   conferir("sem senha", (await chamar("POST", "/ambulantes", { ...base, cpf: gerarCpf(), senha: "" })).status, 400);
   conferir("senha fraca (só letras)", (await chamar("POST", "/ambulantes", { ...base, cpf: gerarCpf(), senha: "somenteletras" })).status, 400);
+  conferir("sem turno", (await chamar("POST", "/ambulantes", { ...base, cpf: gerarCpf(), turno: "" })).status, 400);
+  conferir("turno fora da lista", (await chamar("POST", "/ambulantes", { ...base, cpf: gerarCpf(), turno: "Madrugada" })).status, 400);
   conferir("sem consentimento LGPD", (await chamar("POST", "/ambulantes", { ...base, cpf: gerarCpf(), consentimento: false })).status, 400);
   conferir("cadastro sem MEI", (await chamar("POST", "/ambulantes", { ...base, cpf: cpfB, possui_mei: false, cnpj_mei: null })).status, 201);
 

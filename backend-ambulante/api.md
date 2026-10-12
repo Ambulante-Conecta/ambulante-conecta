@@ -19,7 +19,7 @@ Rotas protegidas exigem o cabeçalho `Authorization: Bearer <token>` (token do l
 | # | Método | Caminho da Rota | Autenticação | Campos do Corpo (Body JSON) | Respostas Principais |
 |---|:---:|:---|:---|:---|:---|
 | 1 | `GET` | `/` | Pública | Nenhum | `200` (Servidor no ar) |
-| 2 | `POST` | `/api/ambulantes` | Pública | `nome_completo`, `cpf`, `data_nascimento`, `telefone`, `tipo_atividade`, `possui_mei`, `cnpj_mei`, `local_pretendido`, `senha`, `consentimento` | `201` (Criado), `400` (Erro validação/LGPD), `409` (CPF duplicado) |
+| 2 | `POST` | `/api/ambulantes` | Pública | `nome_completo`, `cpf`, `data_nascimento`, `telefone`, `tipo_atividade`, `possui_mei`, `cnpj_mei`, `local_pretendido`, `turno` (Manhã, Tarde, Noite ou Dia todo), `senha`, `consentimento` | `201` (Criado), `400` (Erro validação/LGPD), `409` (CPF duplicado) |
 | 3 | `POST` | `/api/auth/login` | Pública | `cpf`, `senha` | `200` (Retorna token JWT), `401` (Credenciais inválidas) |
 | 4 | `GET` | `/api/auth/me` | Bearer Token | Nenhum | `200` (Dados do usuário logado), `401` (Sem token) |
 | 5 | `GET` | `/api/pontos` | Pública | Nenhum *(Filtros query: `?status=disponivel`, `?bairro=Centro`)* | `200` (Lista pontos em GeoJSON) |
@@ -34,7 +34,7 @@ Rotas protegidas exigem o cabeçalho `Authorization: Bearer <token>` (token do l
 | 14 | `PATCH` | `/api/mensagens/:id/lida` | Bearer Token | Nenhum | `200` (Marca mensagem como lida), `404` (Não encontrada) |
 | 15 | `PATCH` | `/api/mensagens/lidas` | Bearer (Gestor) | `ambulante_id` | `200` (Marca conversas de um ambulante como lidas) |
 | 16 | `GET` | `/api/painel` | Bearer (Gestor) | Nenhum | `200` (Métricas do painel administrativo), `403` (Bloqueado) |
-| 17 | `GET` | `/api/ambulantes/me` | Bearer (Ambulante) | Nenhum | `200` (`id`, `nome_completo`, `possui_mei`, `cnpj_mei`; sem CPF), `403` (Gestor bloqueado) |
+| 17 | `GET` | `/api/ambulantes/me` | Bearer (Ambulante) | Nenhum | `200` (`id`, `nome_completo`, `possui_mei`, `cnpj_mei`, `turno`; sem CPF), `403` (Gestor bloqueado) |
 | 18 | `PATCH` | `/api/ambulantes/me` | Bearer (Ambulante) | `cnpj_mei` (com ou sem máscara) | `200` (`possui_mei` passa a `true`), `400` (CNPJ inválido, em `campos.cnpj_mei`), `403` (Gestor bloqueado) |
 ## Códigos de resposta
 

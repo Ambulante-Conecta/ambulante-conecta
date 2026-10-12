@@ -4,11 +4,11 @@
 TRUNCATE solicitacao, pontos_venda, ambulantes RESTART IDENTITY CASCADE;
 
 -- CPF e CNPJ fictícios, porém válidos; CPF e telefone só com dígitos (como a API grava)
-INSERT INTO ambulantes (nome_completo, cpf, data_nascimento, telefone, email, tipo_atividade, possui_mei, cnpj_mei, local_pretendido)
+INSERT INTO ambulantes (nome_completo, cpf, data_nascimento, telefone, email, tipo_atividade, possui_mei, cnpj_mei, local_pretendido, turno)
 VALUES
-('João da Silva',  '52998224725', '1985-05-12', '92991112222', 'joao.silva@email.com',     'Alimentação', TRUE,  '11222333000181', 'Centro'),
-('Maria Oliveira', '11144477735', '1990-08-20', '92988887777', 'maria.oliveira@email.com', 'Artesanato', FALSE, NULL,              'Centro'),
-('Ana Souza',      '93541134780', '1992-03-03', '92977776666', 'ana.souza@email.com',      'Vestuário',   TRUE,  '11444777000161', 'Centro');
+('João da Silva',  '52998224725', '1985-05-12', '92991112222', 'joao.silva@email.com',     'Alimentação', TRUE,  '11222333000181', 'Centro', 'Manhã'),
+('Maria Oliveira', '11144477735', '1990-08-20', '92988887777', 'maria.oliveira@email.com', 'Artesanato', FALSE, NULL,              'Centro', 'Tarde'),
+('Ana Souza',      '93541134780', '1992-03-03', '92977776666', 'ana.souza@email.com',      'Vestuário',   TRUE,  '11444777000161', 'Centro', 'Dia todo');
 
 -- Pontos de venda. Coordenadas: ST_MakePoint(LONGITUDE, LATITUDE). Valores aproximados: confira no Google Maps.
 -- Ocupados (ambulante_id preenchido)

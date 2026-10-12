@@ -29,7 +29,7 @@ function conferir(rotulo, obtido, esperado) {
 async function novoAmbulante() {
   const cpf = gerarCpf();
   await chamar("POST", "/ambulantes", { nome_completo: "Teste Avaliacao Silva", cpf, data_nascimento: "1991-04-02", telefone: "92911112222",
-    tipo_atividade: "Serviços", possui_mei: true, cnpj_mei: "11.444.777/0001-61", local_pretendido: "Centro", senha: SENHA, consentimento: true });
+    tipo_atividade: "Serviços", possui_mei: true, cnpj_mei: "11.444.777/0001-61", local_pretendido: "Centro", turno: "Manhã", senha: SENHA, consentimento: true });
   const r = await chamar("POST", "/auth/login", { cpf, senha: SENHA });
   return r.dados.token;
 }

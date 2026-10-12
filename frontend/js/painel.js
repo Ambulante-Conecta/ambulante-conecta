@@ -53,7 +53,7 @@
       ? `<span class="status orange">${concorrentes} pedidos para este ponto</span>` : "";
     return `<tr>
       <td data-label="Pedido nº"><div>${Number(s.id)}</div></td>
-      <td data-label="Ambulante"><div><strong>${escHtml(s.ambulante)}</strong><br><span class="muted">CPF ${escHtml(s.ambulante_cpf)}</span></div></td>
+      <td data-label="Ambulante"><div><strong>${escHtml(s.ambulante)}</strong><br><span class="muted">CPF ${escHtml(s.ambulante_cpf)}${s.ambulante_turno ? " · " + escHtml(s.ambulante_turno) : ""}</span></div></td>
       <td data-label="Ponto"><div>${escHtml(s.ponto || "Ponto " + s.ponto_id)}${s.bairro ? `<br><span class="muted">${escHtml(s.bairro)}</span>` : ""}${disputa ? "<br>" + disputa : ""}</div></td>
       <td data-label="Solicitado em"><div>${formatarData(s.data_solicitacao)}</div></td>
       <td class="acoes">

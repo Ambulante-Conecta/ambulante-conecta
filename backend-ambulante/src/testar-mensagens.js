@@ -28,7 +28,7 @@ function conferir(rotulo, obtido, esperado) {
 async function novoAmbulante() {
   const cpf = gerarCpf();
   const c = await chamar("POST", "/ambulantes", { nome_completo: "Teste Mensagens Souza", cpf, data_nascimento: "1992-07-15", telefone: "92922223333",
-    tipo_atividade: "Artesanato", possui_mei: false, local_pretendido: "Centro", senha: SENHA, consentimento: true });
+    tipo_atividade: "Artesanato", possui_mei: false, local_pretendido: "Centro", turno: "Manhã", senha: SENHA, consentimento: true });
   const token = (await chamar("POST", "/auth/login", { cpf, senha: SENHA })).dados.token;
   return { id: c.dados.id, token };
 }

@@ -235,6 +235,7 @@ form.addEventListener("submit", async (e) => {
     possui_mei: meiSim(),
     cnpj_mei: meiSim() ? digitos(fd.get("cnpj")) : null,
     local_pretendido: fd.get("local"),
+    turno: fd.get("turno"),
     senha: fd.get("senha"),
     consentimento: true // o formulário só chega aqui com a caixa marcada
   };
