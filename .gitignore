@@ -1,2 +1,5 @@
 node_modules/
 .env
+# Só o back-end usa npm: lockfiles na raiz ou no front são sobra de npm install na pasta errada
+/package-lock.json
+/frontend/package-lock.json
