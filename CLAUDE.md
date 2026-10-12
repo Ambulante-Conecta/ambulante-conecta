@@ -4,8 +4,32 @@ Repositório: https://github.com/Ambulante-Conecta/ambulante-conecta (organizaç
 
 Sistema web que ajuda a prefeitura a mapear e gerir vendedores ambulantes: formalização (MEI/CNPJ), solicitação e concessão de pontos de venda em vias públicas. TCC de Análise e Desenvolvimento de Sistemas, de Manaus/AM.
 
-**Prazo crítico: pré-banca em 30/10/2026.** Hoje é 11/10/2026. A segunda 12/10 é feriado.
+**Prazo crítico: pré-banca em 30/10/2026.** Projeto em dupla: os dois usam o Claude Code com este arquivo como contexto.
 **Idioma: responda sempre em português do Brasil, sem termos de Portugal.**
+
+## Situação atual (atualize esta seção ao concluir qualquer item)
+
+Atualizado em 12/10/2026.
+
+- **Pronto e publicado:** fluxo completo da Semana 1 (solicitação, mensagens, painel do gestor), mapa Leaflet, Formalização com API (MEI pelo CNPJ), turno no cadastro, página 404 e deploy (GitHub Pages + Render + Neon). `npm test`: 95 verificações, 0 problemas.
+- **Próximos passos, em ordem:**
+  1. **17 e 18/10 (sem código):** termo de consentimento, questionário SUS e as 3 tarefas do teste de usabilidade; recrutar 5 a 8 pessoas.
+  2. **19 a 23/10:** testes de usabilidade no site publicado e Lighthouse (evidência do RNF06).
+  3. **26/10:** corrigir o que os testes acharem. Depois disso, **nenhuma funcionalidade nova**.
+  4. **27 a 30/10:** artigo (Resultados, Resumo, Abstract), slides, roteiro da demonstração, vídeo de reserva, ensaios e pré-banca.
+- **Decisões pendentes:** numeração das RNs (sugestão: concorrência de pontos como **RN07**, mantendo o artigo como referência) e, depois dela, ajustar README e `api.md`.
+- **Fora do código:** trocar no artigo e nos slides o link antigo (`franksbjr4-eng.github.io`) pelo do site novo e tirar as menções a Google Maps.
+
+## Trabalho em dupla
+
+- Antes de começar: `git pull`. Ao terminar: commits pequenos e `git push` logo em seguida. Configure `git config --global pull.rebase true` para não gerar commits de merge.
+- **Todo push na `main` publica o site** (GitHub Actions) e, se mexer no back-end, a API no Render. Teste localmente antes.
+- Ao concluir um item do plano, marque `[x]` aqui e atualize a "Situação atual" no mesmo commit, para o outro saber.
+- `npm install` só dentro de `backend-ambulante` (é a única pasta com `package.json`).
+- No `.env` do desenvolvimento, use `LOGIN_LIMITE=200` (o `npm test` faz ~16 logins por execução).
+- Cada um tem o próprio `.env`, banco local e `JWT_SECRET`. Nunca compartilhe a `DATABASE_URL` do Neon nem segredos do Render em grupo de mensagens.
+- Se o Claude Code ligar a API para rodar testes, ele deve desligá-la depois (no Windows, conferir a porta 3000: o `node server.js` pode continuar vivo).
+- Um Live Server por vez: a API só aceita o front na porta 5500.
 
 ## Como trabalhar neste projeto
 
@@ -25,7 +49,7 @@ Sistema web que ajuda a prefeitura a mapear e gerir vendedores ambulantes: forma
 - Testes: scripts Node (`npm test` roda `src/testar-tudo.js`, pede `TESTE_GESTOR_CPF` e `TESTE_GESTOR_SENHA`, que salva o relatório em `resultados-testes/`).
 - O front roda pelo Live Server (porta 5500). O CORS aceita só `localhost:5500` e `127.0.0.1:5500`. A API roda em `http://localhost:3000`.
 
-## Estrutura (pasta `definitivo`)
+## Estrutura do repositório
 
 ```
 backend-ambulante/  server.js, api.md, package.json, scripts/ (preparar-demo.js, criar-gestor.js), src/{routes,middlewares,controllers,utils,config}, testar-*.js
@@ -107,7 +131,7 @@ Commits, senha do gestor trocada, `npm test` verde, Tabela 4 do artigo e RN03 im
 - [x] Passo 0: inventário das rotas e CORS.
 - [x] Base compartilhada: já existia (`api.js` e `app.js`). Não crie outra.
 - [x] `situacao.html` + `js/situacao.js`: lista pontos disponíveis, envia, trata 201/409/422 (aviso de MEI com caminho para a Formalização), mostra status e motivo da recusa, atualiza ao voltar para a aba. **Testado pelo usuário e funcionando.**
-- [x] **`comunicacao.html` ligada à API (ambulante).** Feito em `js/comunicacao.js`. **Testado pelo usuário e funcionando (11/10).** Hoje é protótipo em `localStorage` (`paginas.js`, com destinatário "Sindicato", que a API não tem). Fazer: `data-exige-login="ambulante"`, caixa de entrada vinda de `GET /api/mensagens`, abrir mensagem marca como lida (`PATCH /:id/lida`) e atualiza o badge do menu, formulário de envio (`POST /api/mensagens`), e os três estados de tela. A mensagem de RN03 deve aparecer como não lida. Remover `paginaComunicacao` do `paginas.js`.
+- [x] **`comunicacao.html` ligada à API (ambulante).** Feito em `js/comunicacao.js`. **Testado pelo usuário e funcionando (11/10).**
 - [x] **`painel.html` + `js/painel.js` (gestor, `data-exige-login="gestor"`).** Feito. Conflito (409/404) aparece dentro do diálogo, fixo. **Testado pelo usuário e funcionando, inclusive o 409 com duas abas (11/10).**
   - Números de `GET /api/painel`.
   - Pendentes de `GET /api/solicitacoes?status=Pendente`: tabela no desktop, cartões no celular.
@@ -124,20 +148,19 @@ Commits, senha do gestor trocada, `npm test` verde, Tabela 4 do artigo e RN03 im
 ### Fim de semana 17 e 18/10
 Sem código: termo de consentimento simples, questionário SUS e 3 tarefas dos testes de usabilidade (cadastrar-se, pedir um ponto, ler uma mensagem). Recrutar 5 a 8 pessoas, de preferência ambulantes.
 
-### Semana 2 (19 a 23/10)
-- [x] **Feito em 11/10 (adiantado), testado pelo usuário:** `js/mapa.js` com Leaflet 1.9.4 (SRI), filtro, legenda, lista acessível e login que preserva `?ponto=`. Google Maps removido do site e do README (falta no artigo).
-- Seg 19: **mapa Leaflet** (index e `mapa.html`) com `GET /api/pontos`, cor por status e botão "Solicitar este ponto" levando a `situacao.html?ponto=ID#nova` (a `situacao.js` já lê o parâmetro `ponto`). Tirar as menções a Google Maps do site.
-- [x] **Formalização com API feita em 11/10 (adiantada), testada pelo usuário:** `GET`/`PATCH /api/ambulantes/me`, `js/formalizacao.js`, `testar-formalizacao.js` (16 verificações OK), `npm start` criado. Os botões "Entrar" do topo e do menu do celular voltam para a página atual depois do login.
-- Ter 20: **formalização mínima com API**: `PATCH /api/ambulantes/me` (valida o CNPJ com módulo 11, atualiza `possui_mei` e `cnpj_mei`) e campo de CNPJ na Formalização. Hoje marcar a etapa só grava no navegador, então o 422 continua, o que deixa um beco sem saída na demonstração. Tarde: melhorias de front (estados de tela, 404, mostrar regras da senha, aviso de CPF já existente, revisão do português). **Feito em 11/10**, mais o turno salvo de verdade (decisão do usuário: banco completo para o TCC; migração 004 aplicada no banco local).
-- [x] **Deploy concluído em 12/10 e testado (CORS, páginas, 404, API no Render lendo o Neon). Repositório transferido para a organização Ambulante-Conecta.** Deploy adiantado para 11/10 — decidido: GitHub Pages (front) + Render grátis (API) + Neon grátis (banco com PostGIS; não expira).** Código pronto: `DATABASE_URL` com SSL em `database.js`, `trust proxy` com `NODE_ENV=production`, `engines` Node 20+, `.env.example` documentado e `scripts/preparar-banco-publicado.js` (testado em banco temporário local). `preparar-demo.js` agora lê o host da `DATABASE_URL` (antes poderia apagar o banco publicado achando que era local). Falta: usuário criar contas Neon e Render, configurar variáveis, trocar `API_BASE` em `api.js`, `CORS_ORIGINS`.
-- Qua 21: **deploy em 1 dia só** (back-end e banco em serviço gratuito, front no GitHub Pages ou Vercel). No fim do dia, decidir: se não subiu, os testes e a demonstração são locais. Antes: `app.set('trust proxy', 1)` no Express, endereço do front em `CORS_ORIGINS`, `API_BASE` real em `api.js`, `deploy.yml` em `.github/workflows/`, e conferir se o serviço escolhido tem PostGIS (a API usa `ST_AsGeoJSON`).
-- Qui 22 e sex 23: testes de usabilidade e Lighthouse (evidência do RNF06 no artigo).
+### Semana 2 (19 a 23/10) — funcionalidades adiantadas em 11 e 12/10
+- [x] **Mapa Leaflet** em index e `mapa.html` (`js/mapa.js`, Leaflet 1.9.4 com SRI): cor por status, filtro, legenda, lista acessível e "Solicitar este ponto" levando a `situacao.html?ponto=ID#nova` (o login preserva o ponto). Google Maps removido do site e do README.
+- [x] **Formalização com API:** `GET`/`PATCH /api/ambulantes/me` (CNPJ pelo módulo 11), `js/formalizacao.js`, `testar-formalizacao.js`. Licença municipal e documentos seguem só no navegador.
+- [x] **Melhorias de front:** `cadastro.js` usa `chamarApi` (endereço da API só em `api.js`), página 404, textos neutros, regras da senha e aviso de CPF repetido.
+- [x] **Turno de trabalho salvo** (decisão: banco completo para o TCC): migração `004_turno.sql`, obrigatório no cadastro, aparece no painel do gestor.
+- [x] **Deploy** (12/10): GitHub Pages (front) + Render grátis (API, dorme após 15 min e leva ~1 min para acordar) + Neon grátis (banco com PostGIS, não expira). `scripts/preparar-banco-publicado.js` monta o banco publicado. Repositório na organização Ambulante-Conecta.
+- [ ] **Qui 22 e sex 23:** testes de usabilidade e Lighthouse (evidência do RNF06 no artigo).
 
 ### Semana 3 (26 a 30/10)
 Seg 26: corrigir o que os testes acharam e **fim de funcionalidades novas**. Ter 27: Resultados, Resumo e Abstract do artigo, e primeira versão dos slides. Qua 28: slides finais, roteiro da demonstração e vídeo de reserva. Qui 29: ensaio completo cronometrado 2 vezes, backup do banco e do `.env`. Sex 30: pré-banca.
 
 ### Ordem de corte se o tempo apertar
-1. Formalização com API (vira limitação no artigo). 2. Deploy (demonstrar local com o vídeo de reserva). 3. Reduzir os testes de usabilidade para 3 pessoas.
+Formalização com API e deploy já estão prontos. Se apertar: reduzir os testes de usabilidade para 3 pessoas; se o Render falhar no dia, demonstrar localmente com o vídeo de reserva.
 **Não cortar:** o fluxo completo da Semana 1, os slides e o ensaio.
 
 ## Pontos de atenção já identificados
