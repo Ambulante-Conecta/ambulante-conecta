@@ -17,6 +17,7 @@ Atualizado em 12/10/2026.
   2. **19 a 23/10:** testes de usabilidade no site publicado e Lighthouse (evidência do RNF06).
   3. **26/10:** corrigir o que os testes acharem. Depois disso, **nenhuma funcionalidade nova**.
   4. **27 a 30/10:** artigo (Resultados, Resumo, Abstract), slides, roteiro da demonstração, vídeo de reserva, ensaios e pré-banca.
+- **Em andamento (14/10): novo visual "Amazônico acolhedor"** (heurísticas de Nielsen, WCAG 2.1 AA e e-MAG). Feito: base visual, ícones, camada de rede e as telas de Cadastro, Meu pedido e Mensagens. Falta redesenhar: Início, Login, Mapa, Formalização e Painel (já usam a base nova, mas com o layout antigo). Meta: tudo pronto antes dos testes de usabilidade.
 - **Decisões pendentes:** numeração das RNs (sugestão: concorrência de pontos como **RN07**, mantendo o artigo como referência) e, depois dela, ajustar README e `api.md`.
 - **Fora do código:** trocar no artigo e nos slides o link antigo (`franksbjr4-eng.github.io`) pelo do site novo e tirar as menções a Google Maps.
 
@@ -100,14 +101,18 @@ Atenção ao nome dos arquivos e das pastas: sem acento nem espaço (`situacao.j
 
 ## Convenções do front-end (já existem, reutilize)
 
-- Esqueleto de página: `<body data-pagina="x" data-exige-login="ambulante|gestor|qualquer">`, com `.app` > `aside.sidebar` (com `nav#nav`) + `.main` (com `header.topbar` e `main.content`), `nav#mobileNav`, `div#toast`. Scripts, nesta ordem: `js/api.js`, `js/app.js`, `js/<pagina>.js`.
-- `api.js`: `API_BASE` (localhost em desenvolvimento; `https://ambulante-conecta.onrender.com/api` publicado), `Sessao` (guarda token e usuário em `sessionStorage`), `ErroApi` (`status` 0 = sem conexão; `campos`) e `chamarApi(caminho, {metodo, corpo})`. Ele **lança** `ErroApi` em respostas não-OK e leva ao login em 401.
-- Pendência para o deploy: `cadastro.js` tem o próprio `API_URL`, duplicando o `API_BASE` do `api.js`.
-- `app.js`: `itensMenu` e `menusPorPerfil` (o menu do gestor já aponta para `painel.html` e `painel.html#mensagens`), `perfilAtual()`, `protegerPagina()` (usa `data-exige-login`), `renderTopo()`, `renderMenu()`, `atualizarNaoLidas()` (badge no menu), `mostrarAviso(msg)` (toast) e `escHtml()`.
-- Classes de CSS que existem: `card`, `form-card`, `section-title`, `page-head`, `field`, `msg-erro`, `btn btn-primary`, `btn btn-ghost`, `btn-row`, `status green|orange|red|gray`, `notice`, `detalhes`, `msg-list`, `details.msg(.nova)`, `vazio`, `mt`, `muted`. Os estilos de `situacao` (cartões `solic-card`, avisos `notice-*`) estão no fim do `style.css`.
-- `style.css` precisa ter `[hidden]{display:none !important}` (o `.notice` com `display:flex` anulava o atributo `hidden`). **Confirme que a linha existe.**
-- Todo estado de tela é tratado: carregando, vazio e erro com botão "Tentar de novo".
-- `paginas.js` foi removido. Só a licença municipal e a lista de documentos da Formalização continuam em `localStorage` (`js/formalizacao.js`).
+- Esqueleto de página: `<body data-pagina="x" data-exige-login="ambulante|gestor|qualquer|visitante">`, com `.app` > `aside.sidebar` (com `nav#nav`) + `.main` (com `header.topbar` e `main.content`), `nav#mobileNav`, `div#toast`. Um só CSS: `css/style.css` (o `responsivo.css` foi incorporado). Scripts, nesta ordem: `js/api.js`, `js/icones.js`, `js/app.js`, `js/<pagina>.js`.
+- **Visual (style.css):** paleta em variáveis (`--floresta-*` para marca e ações, `--tucuma-*` para destaque e anel de foco, `--sucesso/--atencao/--erro/--info/--neutro` com `-fundo`). Contraste conferido: texto >= 4,5:1, bordas de campo e foco >= 3:1. **Nenhum texto abaixo de 16 px**; corpo com 18 px; botões com 48 px de altura (`.btn-sm` 44 px). Fonte do sistema (sem baixar fontes, por causa da rede móvel). Breakpoints 1024 / 768 / 390 / 360.
+- **Cor nunca sozinha:** `.status green|orange|red|blue|gray` e `.notice notice-ok|alerta|recusa|info` já desenham ícone + texto via CSS. Use "Em análise / Aprovado / Recusado" para o ambulante (a API diz Pendente/Aprovada/Recusada).
+- **Ícones:** `icone("nome")` no JS ou `<svg class="ico" aria-hidden="true"><use href="#i-nome"/></svg>` no HTML (lista em `js/icones.js`). São decorativos: sempre com texto ao lado.
+- **Componentes:** `.btn btn-primary|btn-ghost|btn-destaque|btn-perigo|btn-link|btn-sm`, `.btn.carregando` (girando), `.card`, `.page-head` (faixa verde com título), `.field` + `.msg-erro` + `.muted-note` (ajuda), `.grupo` (fieldset de opções), `.choices` (opções em botão), `.ajuda` (details "O que é...?"), `.opcao-card` (opção grande em cartão), `.linha-tempo`, `.etapas` (formulário em etapas), `.balao` (conversa), `.vazio`, `.vazio-convite`.
+- **Estados de tela (app.js):** `mostrarCarregando(container, blocos, texto)` (esqueleto) e `mostrarErroCarga(container, erro, tentar)` (erro + "Tentar de novo", que roda sozinho quando a internet volta). Todo carregamento trata carregando, vazio e erro.
+- **Rede (api.js):** `chamarApi` tem tempo limite (20 s com o servidor acordado, 75 s se o Render pode estar dormindo), repete GET uma vez e mostra a faixa "sem internet / servidor acordando / conexão de volta". `ErroApi` tem `status` (0 = sem conexão), `tipo` (`offline`, `tempo`, `rede`) e `campos`.
+- `api.js`: `API_BASE` (localhost em desenvolvimento; `https://ambulante-conecta.onrender.com/api` publicado), `Sessao` (token e usuário em `sessionStorage`) e `chamarApi(caminho, {metodo, corpo})`, que **lança** `ErroApi` em respostas não-OK e leva ao login em 401.
+- `app.js`: `itensMenu` e `menusPorPerfil` (`topo`: menu horizontal do computador, até 5 itens; `lateral`: gaveta do celular; `movel`: 3 atalhos + botão "Menu"). O item selecionado considera a âncora (`painel.html#mensagens` seleciona "Mensagens"), `perfilAtual()`, `protegerPagina()`, `renderTopo()`, `renderMenu()`, `atualizarNaoLidas()`, `mostrarAviso(msg)` (toast de 5 s) e `escHtml()`.
+- Para dados vindos da API use `escHtml()` ou `textContent`, nunca HTML cru (inclusive em balões e tooltips do Leaflet).
+- Mensagens do ambulante: ver a conversa marca as recebidas como lidas (`PATCH /api/mensagens/lidas`).
+- Só a licença municipal da Formalização continua em `localStorage` (`js/formalizacao.js`). A lista "Documentos para separar" foi retirada a pedido do usuário (14/10).
 
 ## Contas de teste
 
@@ -150,7 +155,7 @@ Sem código: termo de consentimento simples, questionário SUS e 3 tarefas dos t
 
 ### Semana 2 (19 a 23/10) — funcionalidades adiantadas em 11 e 12/10
 - [x] **Mapa Leaflet** em index e `mapa.html` (`js/mapa.js`, Leaflet 1.9.4 com SRI): cor por status, filtro, legenda, lista acessível e "Solicitar este ponto" levando a `situacao.html?ponto=ID#nova` (o login preserva o ponto). Google Maps removido do site e do README.
-- [x] **Formalização com API:** `GET`/`PATCH /api/ambulantes/me` (CNPJ pelo módulo 11), `js/formalizacao.js`, `testar-formalizacao.js`. Licença municipal e documentos seguem só no navegador.
+- [x] **Formalização com API:** `GET`/`PATCH /api/ambulantes/me` (CNPJ pelo módulo 11), `js/formalizacao.js`, `testar-formalizacao.js`. Licença municipal segue só no navegador.
 - [x] **Melhorias de front:** `cadastro.js` usa `chamarApi` (endereço da API só em `api.js`), página 404, textos neutros, regras da senha e aviso de CPF repetido.
 - [x] **Turno de trabalho salvo** (decisão: banco completo para o TCC): migração `004_turno.sql`, obrigatório no cadastro, aparece no painel do gestor.
 - [x] **Deploy** (12/10): GitHub Pages (front) + Render grátis (API, dorme após 15 min e leva ~1 min para acordar) + Neon grátis (banco com PostGIS, não expira). `scripts/preparar-banco-publicado.js` monta o banco publicado. Repositório na organização Ambulante-Conecta.
