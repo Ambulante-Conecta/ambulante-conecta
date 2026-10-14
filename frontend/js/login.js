@@ -11,7 +11,7 @@ const digitos = (v) => String(v ?? "").replace(/\D/g, "");
 // ex.: o gestor que clicou em "Entrar" na Formalização vai para o início, e não fica numa página de ambulante.
 const PAGINAS_DO_PERFIL = {
   ambulante: ["index", "mapa", "formalizacao", "situacao", "comunicacao"],
-  gestor: ["index", "mapa", "painel"]
+  gestor: ["index", "painel"] // o gestor que entra a partir do mapa vai para o início (pedido do usuário, 14/10)
 };
 
 // Só aceita voltar para uma página do próprio site (ex.: situacao.html ou situacao.html?ponto=5#nova)
