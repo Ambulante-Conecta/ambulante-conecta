@@ -1,6 +1,6 @@
 /* Ambulante Conecta — formalização (RF02).
    Depende de js/api.js e js/app.js (carregue-os antes).
-   MEI: ligado à API (GET e PATCH /ambulantes/me). Licença municipal e documentos: ainda só no navegador (localStorage). */
+   MEI: ligado à API (GET e PATCH /ambulantes/me). Licença municipal: ainda só no navegador (localStorage). */
 
 (function () {
   const porId = (id) => document.getElementById(id);
@@ -116,8 +116,7 @@
     atualizarContagem();
   }
 
-  /* ---------- Licença municipal e documentos (só no navegador) ---------- */
-  const docs = ["Documento com foto e CPF", "Comprovante de residência", "Comprovante de inscrição no MEI (CCMEI)", "Foto do seu ponto ou carrinho"];
+  /* ---------- Licença municipal (só no navegador) ---------- */
 
   function renderLicenca() {
     marcarStatus("status-licenca", estado.formalizacao.licenca);
@@ -129,14 +128,6 @@
     estado.formalizacao.licenca = !estado.formalizacao.licenca;
     salvarEstado(estado);
     renderLicenca();
-  });
-
-  porId("docs").innerHTML = docs.map((d, i) =>
-    `<li><label class="check"><input type="checkbox" data-i="${i}" ${estado.docs.includes(i) ? "checked" : ""}> ${escHtml(d)}</label></li>`).join("");
-  porId("docs").addEventListener("change", (e) => {
-    const i = Number(e.target.dataset.i);
-    estado.docs = e.target.checked ? [...new Set([...estado.docs, i])] : estado.docs.filter((x) => x !== i);
-    salvarEstado(estado);
   });
 
   renderLicenca();

@@ -300,11 +300,30 @@
   formResposta.texto.addEventListener("input", () => mostrarErro("resp-texto", ""));
 
   /* ---------- Início ---------- */
-  carregarPendentes();
-  carregarConversas().then(() => {
-    // Veio pelo menu "Mensagens" (painel.html#mensagens): rola até a seção depois de carregar
-    if (location.hash === "#mensagens") porId("mensagens").scrollIntoView({ block: "start" });
-  });
+  // Menu "Mensagens" (painel.html#mensagens) ou cartão "Pendentes" (#pendentes): leva até a seção e põe o foco no título,
+  // para quem usa teclado ou leitor de tela continuar dali. Espera as duas listas carregarem, senão a tela "pula" depois.
+  function irParaSecao() {
+    const alvo = { "#mensagens": "t-mensagens", "#pendentes": "t-pendentes" }[location.hash];
+    let titulo = alvo && porId(alvo);
+    if (!titulo) return;
+
+    // Mensagens: abre sozinha a primeira conversa da lista. A API já ordena com as que têm não lidas primeiro e,
+    // depois, pela mensagem mais recente. Se o gestor já abriu uma conversa, ela continua aberta.
+    const primeira = listaConversas.querySelector(".conversa-item");
+    if (location.hash === "#mensagens" && primeira && !conversaAtual) {
+      abrirConversa(Number(primeira.dataset.id), primeira.dataset.nome);
+      // No celular a conversa fica embaixo da lista: leva direto a ela
+      if (window.innerWidth < 1024) titulo = porId("t-conversa");
+    }
+
+    // Rola até a seção inteira (título + lista) ou, no celular, até o cartão da conversa aberta
+    const destino = titulo.id === "t-conversa" ? painelConversa : titulo.closest("section");
+    destino.scrollIntoView({ behavior: "smooth", block: "start" });
+    titulo.setAttribute("tabindex", "-1");
+    titulo.focus({ preventScroll: true });
+  }
+  Promise.allSettled([carregarPendentes(), carregarConversas()]).then(irParaSecao);
+  window.addEventListener("hashchange", irParaSecao);
 
   // Se chegaram pedidos ou mensagens enquanto a aba ficou aberta, aparecem ao voltar para ela
   document.addEventListener("visibilitychange", () => {
