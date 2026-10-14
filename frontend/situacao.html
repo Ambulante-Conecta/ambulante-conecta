@@ -3,61 +3,66 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Solicitação — Ambulante Conecta</title>
-  <link rel="icon" href="img/logo.png">
+  <title>Meu pedido — Ambulante Conecta</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2317624A'/%3E%3Cg transform='translate%284 4%29' fill='none' stroke='white' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 9 4.5 4h15L21 9'/%3E%3Cpath d='M3 9h18v1.5a3 3 0 0 1-6 0 3 3 0 0 1-6 0 3 3 0 0 1-6 0Z'/%3E%3Cpath d='M5 13.5V21h14v-7.5'/%3E%3Cpath d='M10 21v-5h4v5'/%3E%3C/g%3E%3C/svg%3E">
   <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/responsivo.css">
 </head>
 <body data-pagina="situacao" data-exige-login="ambulante">
   <a class="skip" href="#conteudo">Ir para o conteúdo</a>
   <div class="app">
     <aside class="sidebar">
       <a class="brand" href="index.html" aria-label="Ambulante Conecta, página inicial">
-        <img class="logo" src="img/logo.png" alt="Ambulante Conecta">
+        <span class="marca-icone"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 9 4.5 4h15L21 9"/><path d="M3 9h18v1.5a3 3 0 0 1-6 0 3 3 0 0 1-6 0 3 3 0 0 1-6 0Z"/><path d="M5 13.5V21h14v-7.5"/><path d="M10 21v-5h4v5"/></svg></span><span class="marca-nome">Ambulante <strong>Conecta</strong></span>
       </a>
       <nav class="nav" aria-label="Principal" id="nav"></nav>
       <p class="sidebar-footer">Seus dados pessoais são tratados conforme a LGPD.</p>
     </aside>
     <div class="main">
       <header class="topbar">
-        <img class="topbar-logo" src="img/logo.png" alt="Ambulante Conecta">
-        <h1 class="topbar-title">Solicitação</h1>
+        <a class="topbar-marca" href="index.html" aria-label="Ambulante Conecta, página inicial"><span class="marca-icone"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 9 4.5 4h15L21 9"/><path d="M3 9h18v1.5a3 3 0 0 1-6 0 3 3 0 0 1-6 0 3 3 0 0 1-6 0Z"/><path d="M5 13.5V21h14v-7.5"/><path d="M10 21v-5h4v5"/></svg></span><span class="marca-nome">Ambulante <strong>Conecta</strong></span></a>
+        <h1 class="topbar-title">Meu pedido</h1>
       </header>
       <main class="content" id="conteudo">
 
-        <div class="section-title page-head"><div><h2>Solicitação de ponto</h2><p class="muted">Escolha um ponto de venda disponível e acompanhe o andamento por aqui.</p></div></div>
+        <div class="page-head">
+          <h2>Pedido de ponto de venda</h2>
+          <p>Acompanhe aqui a resposta da prefeitura e faça novos pedidos.</p>
+        </div>
+
+        <!-- Situação dos pedidos: o mais importante aparece primeiro -->
+        <section class="mt" aria-labelledby="t-minhas">
+          <div class="section-title"><h2 id="t-minhas">Meus pedidos</h2>
+            <button type="button" class="btn btn-ghost btn-sm" id="btnAtualizar"><svg class="ico" aria-hidden="true"><use href="#i-recarregar"/></svg>Atualizar</button>
+          </div>
+          <div class="solic-lista" id="minhas" aria-live="polite"></div>
+        </section>
 
         <!-- RN02: aparece quando a API responde 422 (ambulante sem MEI) -->
-        <div class="card notice notice-alerta" id="avisoMei" role="alert" hidden>
-          <span class="icon-circle orange" aria-hidden="true">!</span>
+        <div class="notice notice-alerta mt" id="avisoMei" role="alert" tabindex="-1" hidden>
           <div>
-            <strong>Para pedir um ponto, você precisa ter o MEI ativo.</strong>
-            <p class="muted">Se você já tem MEI, informe o CNPJ na Formalização. Se ainda não tem, lá também mostramos como tirar.</p>
-            <div class="btn-row"><a class="btn btn-primary" href="formalizacao.html#mei">Informar meu MEI</a></div>
+            <strong>Para pedir um ponto, é preciso ter o MEI.</strong>
+            <p>Se você já tem, informe o CNPJ na página Formalização; leva menos de um minuto. Se ainda não tem, lá mostramos como tirar de graça.</p>
+            <div class="btn-row"><a class="btn btn-primary" href="formalizacao.html#mei"><svg class="ico" aria-hidden="true"><use href="#i-selo"/></svg>Informar meu MEI</a></div>
           </div>
         </div>
 
-        <div class="card form-card" id="nova">
-          <h3>Nova solicitação</h3>
-          <form id="formSolicitacao" novalidate>
-            <div class="field mt">
-              <label for="ponto">Ponto de venda disponível *</label>
-              <select id="ponto" name="ponto" aria-describedby="erro-ponto" disabled>
-                <option value="">Carregando pontos...</option>
-              </select>
-              <small class="msg-erro" id="erro-ponto" role="alert"></small>
-            </div>
-            <p class="muted-note">Os pontos que já têm dono não aparecem aqui. Você pode ter só um pedido pendente por ponto.</p>
-            <div class="form-actions">
-              <button class="btn btn-primary" type="submit" id="btnEnviar" disabled>Enviar solicitação</button>
-            </div>
-          </form>
-        </div>
-
-        <section class="mt" aria-labelledby="t-minhas">
-          <div class="section-title"><h2 id="t-minhas">Minhas solicitações</h2></div>
-          <div class="solic-lista" id="minhas" aria-live="polite">
-            <p class="vazio">Carregando suas solicitações...</p>
+        <section class="mt" aria-labelledby="t-nova">
+          <div class="section-title"><h2 id="t-nova">Fazer um novo pedido</h2>
+            <a class="btn btn-ghost btn-sm" href="mapa.html"><svg class="ico" aria-hidden="true"><use href="#i-mapa"/></svg>Ver no mapa</a>
+          </div>
+          <div class="card form-card" id="nova">
+            <form id="formSolicitacao" novalidate>
+              <fieldset class="grupo" aria-describedby="ajuda-ponto erro-ponto">
+                <legend class="label">Escolha um ponto livre *</legend>
+                <p class="muted-note" id="ajuda-ponto">Só aparecem os pontos sem dono. Você pode ter um pedido em análise por ponto.</p>
+                <div class="opcoes-ponto mt" id="listaPontos" aria-live="polite"></div>
+                <small class="msg-erro" id="erro-ponto" role="alert"></small>
+              </fieldset>
+              <p class="escolha-atual" id="escolhaAtual" aria-live="polite" hidden></p>
+              <div class="form-actions">
+                <button class="btn btn-primary" type="submit" id="btnEnviar" disabled><svg class="ico" aria-hidden="true"><use href="#i-enviar"/></svg>Enviar pedido</button>
+              </div>
+            </form>
           </div>
         </section>
       </main>
@@ -66,6 +71,7 @@
   <nav class="mobile-nav" aria-label="Principal (celular)" id="mobileNav"></nav>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
   <script src="js/api.js"></script>
+  <script src="js/icones.js"></script>
   <script src="js/app.js"></script>
   <script src="js/situacao.js"></script>
 </body>

@@ -4,9 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Cadastro — Ambulante Conecta</title>
-  <link rel="icon" href="img/logo.png">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2317624A'/%3E%3Cg transform='translate%284 4%29' fill='none' stroke='white' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 9 4.5 4h15L21 9'/%3E%3Cpath d='M3 9h18v1.5a3 3 0 0 1-6 0 3 3 0 0 1-6 0 3 3 0 0 1-6 0Z'/%3E%3Cpath d='M5 13.5V21h14v-7.5'/%3E%3Cpath d='M10 21v-5h4v5'/%3E%3C/g%3E%3C/svg%3E">
   <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/responsivo.css">
 </head>
 <body data-pagina="cadastro" data-exige-login="visitante">
   <a class="skip" href="#conteudo">Ir para o conteúdo</a>
@@ -14,7 +13,7 @@
   <div class="app">
     <aside class="sidebar">
       <a class="brand" href="index.html" aria-label="Ambulante Conecta, página inicial">
-        <img class="logo" src="img/logo.png" alt="Ambulante Conecta">
+        <span class="marca-icone"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 9 4.5 4h15L21 9"/><path d="M3 9h18v1.5a3 3 0 0 1-6 0 3 3 0 0 1-6 0 3 3 0 0 1-6 0Z"/><path d="M5 13.5V21h14v-7.5"/><path d="M10 21v-5h4v5"/></svg></span><span class="marca-nome">Ambulante <strong>Conecta</strong></span>
       </a>
       <nav class="nav" aria-label="Principal" id="nav"></nav>
       <p class="sidebar-footer">Seus dados pessoais são tratados conforme a LGPD.</p>
@@ -22,137 +21,194 @@
 
     <div class="main">
       <header class="topbar">
-        <img class="topbar-logo" src="img/logo.png" alt="Ambulante Conecta">
+        <a class="topbar-marca" href="index.html" aria-label="Ambulante Conecta, página inicial"><span class="marca-icone"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 9 4.5 4h15L21 9"/><path d="M3 9h18v1.5a3 3 0 0 1-6 0 3 3 0 0 1-6 0 3 3 0 0 1-6 0Z"/><path d="M5 13.5V21h14v-7.5"/><path d="M10 21v-5h4v5"/></svg></span><span class="marca-nome">Ambulante <strong>Conecta</strong></span></a>
         <h1 class="topbar-title">Cadastro</h1>
       </header>
 
       <main class="content content-narrow" id="conteudo">
-        <div class="card form-card" id="cadastroCard">
-          <ol class="progress" id="progress" aria-label="Etapas do cadastro"></ol>
-          <p class="help" id="ajuda">Você pode voltar e corrigir qualquer informação antes de enviar. Campos com * são obrigatórios.</p>
+        <div class="page-head">
+          <h2>Crie sua conta de ambulante</h2>
+          <p>Leva uns 3 minutos. Com a conta, você pede um ponto de venda e recebe os avisos da prefeitura.</p>
+        </div>
 
-          <form id="cadastroForm" novalidate autocomplete="on">
+        <!-- Rascunho recuperado (o CPF e a senha nunca ficam guardados no aparelho) -->
+        <div class="notice notice-info mt" id="avisoRascunho" hidden>
+          <div>
+            <strong>Continuamos de onde você parou</strong>
+            <p>Seus dados ficaram guardados neste aparelho, menos o CPF e a senha.</p>
+            <button type="button" class="btn-link" id="limparRascunho">Apagar tudo e começar de novo</button>
+          </div>
+        </div>
+
+        <div class="card form-card mt" id="cadastroCard">
+          <!-- Onde a pessoa está: texto + barra + lista de etapas -->
+          <div class="etapas">
+            <p class="etapas-texto" id="etapaTexto" aria-live="polite"></p>
+            <div class="etapas-barra" role="progressbar" aria-labelledby="etapaTexto" aria-valuemin="1" aria-valuemax="5" aria-valuenow="1"><span id="etapaBarra"></span></div>
+            <ol class="etapas-lista" id="etapasLista"></ol>
+          </div>
+          <p class="muted-note">Campos com <span aria-hidden="true">*</span><span class="sr-only">asterisco</span> são obrigatórios.</p>
+
+          <form id="cadastroForm" class="mt" novalidate autocomplete="on">
+            <!-- 1. Dados pessoais -->
             <fieldset class="step-panel" data-titulo="Dados pessoais" data-campos="nome,cpf,nascimento">
               <legend>Dados pessoais</legend>
               <div class="field">
                 <label for="nome">Nome completo *</label>
-                <input id="nome" name="nome" autocomplete="name" aria-describedby="erro-nome">
+                <input id="nome" name="nome" autocomplete="name" aria-describedby="ajuda-nome erro-nome">
+                <small class="muted-note" id="ajuda-nome">Como está no seu documento.</small>
                 <small class="msg-erro" id="erro-nome" role="alert"></small>
               </div>
               <div class="grid grid-2">
                 <div class="field">
                   <label for="cpf">CPF *</label>
-                  <input id="cpf" name="cpf" inputmode="numeric" placeholder="000.000.000-00" maxlength="14" aria-describedby="erro-cpf">
+                  <input id="cpf" name="cpf" inputmode="numeric" placeholder="000.000.000-00" maxlength="14" aria-describedby="ajuda-cpf erro-cpf">
+                  <small class="muted-note" id="ajuda-cpf">Só os 11 números; os pontos aparecem sozinhos.</small>
                   <small class="msg-erro" id="erro-cpf" role="alert"></small>
                 </div>
                 <div class="field">
                   <label for="nascimento">Data de nascimento *</label>
-                  <input id="nascimento" name="nascimento" type="date" min="1900-01-01" autocomplete="bday" aria-describedby="erro-nascimento">
+                  <input id="nascimento" name="nascimento" type="date" min="1900-01-01" autocomplete="bday" aria-describedby="ajuda-nascimento erro-nascimento">
+                  <small class="muted-note" id="ajuda-nascimento">É preciso ter 18 anos ou mais.</small>
                   <small class="msg-erro" id="erro-nascimento" role="alert"></small>
                 </div>
               </div>
+              <details class="ajuda">
+                <summary><svg class="ico" aria-hidden="true"><use href="#i-ajuda"/></svg>Por que pedimos o CPF?</summary>
+                <p>É com o CPF e a senha que você vai entrar no sistema. O gestor da prefeitura só vê parte do número (por exemplo, ***.444.777-**).</p>
+              </details>
             </fieldset>
 
-            <fieldset class="step-panel" data-titulo="Contato" data-campos="telefone,email,senha,confirmarSenha" hidden>
-              <legend>Contato e acesso</legend>
+            <!-- 2. Contato e acesso -->
+            <fieldset class="step-panel" data-titulo="Contato e senha" data-campos="telefone,email,senha,confirmarSenha" hidden>
+              <legend>Contato e senha</legend>
               <div class="grid grid-2">
                 <div class="field">
-                  <label for="telefone">Telefone com DDD *</label>
-                  <input id="telefone" name="telefone" type="tel" inputmode="numeric" autocomplete="tel-national" placeholder="(92) 91234-5678" maxlength="15" aria-describedby="erro-telefone">
+                  <label for="telefone">Celular com DDD *</label>
+                  <input id="telefone" name="telefone" type="tel" inputmode="numeric" autocomplete="tel-national" placeholder="(92) 91234-5678" maxlength="15" aria-describedby="ajuda-telefone erro-telefone">
+                  <small class="muted-note" id="ajuda-telefone">Usado só para avisos sobre o seu pedido.</small>
                   <small class="msg-erro" id="erro-telefone" role="alert"></small>
                 </div>
                 <div class="field">
-                  <label for="email">E-mail</label>
+                  <label for="email">E-mail (se tiver)</label>
                   <input id="email" name="email" type="email" autocomplete="email" aria-describedby="erro-email">
                   <small class="msg-erro" id="erro-email" role="alert"></small>
                 </div>
               </div>
-              <div class="grid grid-2">
-                <div class="field">
-                  <label for="senha">Crie uma senha *</label>
-                  <input id="senha" name="senha" type="password" autocomplete="new-password" maxlength="72" aria-describedby="ajuda-senha erro-senha">
-                  <small class="muted-note" id="ajuda-senha">Mínimo de 8 caracteres, com letras e números.</small>
-                  <small class="msg-erro" id="erro-senha" role="alert"></small>
+              <div class="field">
+                <label for="senha">Crie uma senha *</label>
+                <div class="senha-wrap">
+                  <input id="senha" name="senha" type="password" autocomplete="new-password" maxlength="72" aria-describedby="regrasSenha erro-senha">
+                  <button type="button" class="btn btn-link mostrar-senha" data-alvo="senha" aria-pressed="false">Mostrar</button>
                 </div>
-                <div class="field">
-                  <label for="confirmarSenha">Confirme a senha *</label>
-                  <input id="confirmarSenha" name="confirmarSenha" type="password" autocomplete="new-password" maxlength="72" aria-describedby="erro-confirmarSenha">
-                  <small class="msg-erro" id="erro-confirmarSenha" role="alert"></small>
-                </div>
+                <ul class="regras" id="regrasSenha" aria-label="A senha precisa ter">
+                  <li data-regra="tamanho">8 caracteres ou mais</li>
+                  <li data-regra="letra">Pelo menos uma letra</li>
+                  <li data-regra="numero">Pelo menos um número</li>
+                </ul>
+                <small class="msg-erro" id="erro-senha" role="alert"></small>
               </div>
-              <p class="muted-note">Usamos seu contato apenas para avisar sobre a sua solicitação. Para entrar no sistema, você usará o CPF e esta senha.</p>
+              <div class="field">
+                <label for="confirmarSenha">Digite a senha de novo *</label>
+                <div class="senha-wrap">
+                  <input id="confirmarSenha" name="confirmarSenha" type="password" autocomplete="new-password" maxlength="72" aria-describedby="erro-confirmarSenha">
+                  <button type="button" class="btn btn-link mostrar-senha" data-alvo="confirmarSenha" aria-pressed="false">Mostrar</button>
+                </div>
+                <small class="msg-erro" id="erro-confirmarSenha" role="alert"></small>
+              </div>
             </fieldset>
 
-            <fieldset class="step-panel" data-titulo="Atividade" data-campos="atividade,mei,cnpj" hidden>
+            <!-- 3. Atividade -->
+            <fieldset class="step-panel" data-titulo="Sua atividade" data-campos="atividade,mei,cnpj" hidden>
               <legend>Sua atividade</legend>
-              <div class="field">
-                <label for="atividade">Tipo de atividade *</label>
-                <select id="atividade" name="atividade" aria-describedby="erro-atividade">
-                  <option value="">Selecione</option>
-                  <option>Alimentação</option><option>Vestuário</option><option>Artesanato</option><option>Serviços</option><option>Outro</option>
-                </select>
-                <small class="msg-erro" id="erro-atividade" role="alert"></small>
-              </div>
-              <div class="field">
-                <label for="produtos">O que você vende ou oferece?</label>
-                <textarea id="produtos" name="produtos" rows="3" maxlength="200" placeholder="Ex.: tapioca, café e sucos"></textarea>
-              </div>
-              <div class="field" role="radiogroup" aria-labelledby="l-mei" aria-describedby="erro-mei">
-                <span class="label" id="l-mei">Você já tem MEI? *</span>
+              <fieldset class="grupo" aria-describedby="erro-atividade">
+                <legend class="label">O que você vende ou faz? *</legend>
                 <div class="choices">
-                  <label><input type="radio" name="mei" value="Sim"> Sim</label>
-                  <label><input type="radio" name="mei" value="Em andamento"> Em andamento</label>
-                  <label><input type="radio" name="mei" value="Não"> Não</label>
+                  <label><input type="radio" name="atividade" value="Alimentação"> Alimentação</label>
+                  <label><input type="radio" name="atividade" value="Vestuário"> Roupas e calçados</label>
+                  <label><input type="radio" name="atividade" value="Artesanato"> Artesanato</label>
+                  <label><input type="radio" name="atividade" value="Serviços"> Serviços</label>
+                  <label><input type="radio" name="atividade" value="Outro"> Outro</label>
+                </div>
+                <small class="msg-erro" id="erro-atividade" role="alert"></small>
+              </fieldset>
+              <fieldset class="grupo" aria-describedby="erro-mei">
+                <legend class="label">Você já tem MEI? *</legend>
+                <div class="choices">
+                  <label><input type="radio" name="mei" value="Sim"> Sim, já tenho</label>
+                  <label><input type="radio" name="mei" value="Em andamento"> Estou tirando</label>
+                  <label><input type="radio" name="mei" value="Não"> Não tenho</label>
                 </div>
                 <small class="msg-erro" id="erro-mei" role="alert"></small>
-              </div>
-              <div class="field" id="campoCnpj" hidden>
+              </fieldset>
+              <details class="ajuda">
+                <summary><svg class="ico" aria-hidden="true"><use href="#i-ajuda"/></svg>O que é MEI e por que importa?</summary>
+                <p>MEI é o registro de Microempreendedor Individual, feito de graça no portal do governo. Para pedir um ponto de venda, é preciso ter o MEI. Se ainda não tem, pode se cadastrar agora e informar o CNPJ depois, na página Formalização.</p>
+              </details>
+              <div class="field mt" id="campoCnpj" hidden>
                 <label for="cnpj">CNPJ do MEI *</label>
-                <input id="cnpj" name="cnpj" inputmode="numeric" placeholder="00.000.000/0000-00" maxlength="18" aria-describedby="erro-cnpj">
+                <input id="cnpj" name="cnpj" inputmode="numeric" placeholder="00.000.000/0000-00" maxlength="18" aria-describedby="ajuda-cnpj erro-cnpj">
+                <small class="muted-note" id="ajuda-cnpj">Está no Certificado do MEI (CCMEI).</small>
                 <small class="msg-erro" id="erro-cnpj" role="alert"></small>
               </div>
             </fieldset>
 
-            <fieldset class="step-panel" data-titulo="Local" data-campos="local,turno" hidden>
-              <legend>Local de venda pretendido</legend>
+            <!-- 4. Local -->
+            <fieldset class="step-panel" data-titulo="Onde e quando" data-campos="local,turno" hidden>
+              <legend>Onde e quando você trabalha</legend>
               <div class="field">
-                <label for="local">Bairro ou região *</label>
-                <input id="local" name="local" placeholder="Ex.: Centro" aria-describedby="erro-local">
+                <label for="local">Bairro ou região onde quer vender *</label>
+                <input id="local" name="local" list="bairros" autocomplete="off" placeholder="Ex.: Centro" aria-describedby="ajuda-local erro-local">
+                <datalist id="bairros">
+                  <option value="Centro"></option><option value="Adrianópolis"></option><option value="Cidade Nova"></option>
+                  <option value="Compensa"></option><option value="Educandos"></option><option value="Flores"></option>
+                  <option value="Parque 10 de Novembro"></option><option value="Ponta Negra"></option><option value="São José Operário"></option>
+                </datalist>
+                <small class="muted-note" id="ajuda-local">Pode escrever ou escolher da lista.</small>
                 <small class="msg-erro" id="erro-local" role="alert"></small>
               </div>
-              <div class="field">
-                <label for="turno">Turno de trabalho *</label>
-                <select id="turno" name="turno" aria-describedby="erro-turno">
-                  <option value="">Selecione</option>
-                  <option>Manhã</option><option>Tarde</option><option>Noite</option><option>Dia todo</option>
-                </select>
+              <fieldset class="grupo" aria-describedby="erro-turno">
+                <legend class="label">Em que turno você trabalha? *</legend>
+                <div class="choices">
+                  <label><input type="radio" name="turno" value="Manhã"> Manhã</label>
+                  <label><input type="radio" name="turno" value="Tarde"> Tarde</label>
+                  <label><input type="radio" name="turno" value="Noite"> Noite</label>
+                  <label><input type="radio" name="turno" value="Dia todo"> Dia todo</label>
+                </div>
                 <small class="msg-erro" id="erro-turno" role="alert"></small>
-              </div>
+              </fieldset>
             </fieldset>
 
+            <!-- 5. Revisão -->
             <fieldset class="step-panel" data-titulo="Revisão" data-campos="consentimento" hidden>
-              <legend>Revise e envie</legend>
-              <dl class="review" id="revisao"></dl>
-              <div class="field">
-                <label class="check"><input type="checkbox" id="consentimento" name="consentimento" aria-describedby="erro-consentimento"> Concordo que a Prefeitura e o Ambulante Conecta usem meus dados para analisar minha solicitação, conforme a LGPD. *</label>
+              <legend>Confira antes de enviar</legend>
+              <div class="revisao" id="revisao"></div>
+              <div class="field consentimento">
+                <label class="check"><input type="checkbox" id="consentimento" name="consentimento" aria-describedby="erro-consentimento"> Concordo que a Prefeitura de Manaus e o Ambulante Conecta usem meus dados para analisar meus pedidos, conforme a LGPD. *</label>
                 <small class="msg-erro" id="erro-consentimento" role="alert"></small>
               </div>
             </fieldset>
 
+            <p class="msg-erro" id="erroEnvio" role="alert"></p>
             <div class="form-actions">
-              <button type="button" class="btn btn-ghost" id="voltar">Voltar</button>
-              <button type="submit" class="btn btn-primary" id="avancar">Continuar</button>
+              <button type="button" class="btn btn-ghost" id="voltar"><svg class="ico" aria-hidden="true"><use href="#i-voltar"/></svg>Voltar</button>
+              <button type="submit" class="btn btn-primary" id="avancar">Continuar<svg class="ico" aria-hidden="true"><use href="#i-avancar"/></svg></button>
             </div>
           </form>
         </div>
 
-        <div class="card sucesso" id="sucesso" hidden tabindex="-1">
-          <div class="icon-circle green" aria-hidden="true">✓</div>
-          <h2>Cadastro enviado</h2>
-          <p>Recebemos seus dados. Os avisos sobre seus pedidos aparecem em Comunicação.</p>
+        <div class="card sucesso mt" id="sucesso" hidden tabindex="-1">
+          <span class="sucesso-icone"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg></span>
+          <h2>Conta criada!</h2>
+          <p>Agora é só entrar com o seu CPF e a senha que você criou.</p>
+          <ol class="passos">
+            <li>Entre na sua conta</li>
+            <li>Informe o CNPJ do seu MEI em Formalização (se ainda não informou)</li>
+            <li>Escolha um ponto de venda e faça o pedido</li>
+          </ol>
           <div class="hero-actions">
-            <a class="btn btn-primary" href="login.html">Entrar na minha conta</a>
-            <a class="btn btn-ghost" href="index.html">Voltar ao início</a>
+            <a class="btn btn-primary" href="login.html"><svg class="ico" aria-hidden="true"><use href="#i-entrar"/></svg>Entrar agora</a>
+            <a class="btn btn-ghost" href="mapa.html">Ver pontos de venda</a>
           </div>
         </div>
       </main>
@@ -163,6 +219,7 @@
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
   <script src="js/api.js"></script>
+  <script src="js/icones.js"></script>
   <script src="js/app.js"></script>
   <script src="js/cadastro.js"></script>
 </body>

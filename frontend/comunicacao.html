@@ -3,63 +3,68 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Comunicação — Ambulante Conecta</title>
-  <link rel="icon" href="img/logo.png">
+  <title>Mensagens — Ambulante Conecta</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2317624A'/%3E%3Cg transform='translate%284 4%29' fill='none' stroke='white' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 9 4.5 4h15L21 9'/%3E%3Cpath d='M3 9h18v1.5a3 3 0 0 1-6 0 3 3 0 0 1-6 0 3 3 0 0 1-6 0Z'/%3E%3Cpath d='M5 13.5V21h14v-7.5'/%3E%3Cpath d='M10 21v-5h4v5'/%3E%3C/g%3E%3C/svg%3E">
   <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/responsivo.css">
 </head>
 <body data-pagina="comunicacao" data-exige-login="ambulante">
   <a class="skip" href="#conteudo">Ir para o conteúdo</a>
   <div class="app">
     <aside class="sidebar">
       <a class="brand" href="index.html" aria-label="Ambulante Conecta, página inicial">
-        <img class="logo" src="img/logo.png" alt="Ambulante Conecta">
+        <span class="marca-icone"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 9 4.5 4h15L21 9"/><path d="M3 9h18v1.5a3 3 0 0 1-6 0 3 3 0 0 1-6 0 3 3 0 0 1-6 0Z"/><path d="M5 13.5V21h14v-7.5"/><path d="M10 21v-5h4v5"/></svg></span><span class="marca-nome">Ambulante <strong>Conecta</strong></span>
       </a>
       <nav class="nav" aria-label="Principal" id="nav"></nav>
       <p class="sidebar-footer">Seus dados pessoais são tratados conforme a LGPD.</p>
     </aside>
     <div class="main">
       <header class="topbar">
-        <img class="topbar-logo" src="img/logo.png" alt="Ambulante Conecta">
-        <h1 class="topbar-title">Comunicação</h1>
+        <a class="topbar-marca" href="index.html" aria-label="Ambulante Conecta, página inicial"><span class="marca-icone"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 9 4.5 4h15L21 9"/><path d="M3 9h18v1.5a3 3 0 0 1-6 0 3 3 0 0 1-6 0 3 3 0 0 1-6 0Z"/><path d="M5 13.5V21h14v-7.5"/><path d="M10 21v-5h4v5"/></svg></span><span class="marca-nome">Ambulante <strong>Conecta</strong></span></a>
+        <h1 class="topbar-title">Mensagens</h1>
       </header>
-      <main class="content" id="conteudo">
+      <main class="content content-narrow" id="conteudo">
 
-        <div class="section-title page-head"><div><h2>Mensagens</h2><p class="muted">Converse com a prefeitura e receba os avisos sobre os seus pedidos.</p></div><button class="btn btn-primary" id="btnNova" type="button" aria-expanded="false" aria-controls="formMsgCard">Nova mensagem</button></div>
+        <div class="page-head">
+          <h2>Conversa com a prefeitura</h2>
+          <p>Os avisos sobre os seus pedidos também chegam aqui.</p>
+        </div>
 
-        <div class="card form-card" id="formMsgCard" hidden>
-          <h3>Nova mensagem</h3>
-          <p class="muted-note">Para: Prefeitura de Manaus</p>
-          <form id="formMsg" novalidate>
-            <div class="field mt">
-              <label for="assunto">Assunto *</label>
-              <input id="assunto" name="assunto" maxlength="120" aria-describedby="erro-assunto">
-              <small class="msg-erro" id="erro-assunto" role="alert"></small>
-            </div>
+        <section class="card conversa mt" aria-labelledby="t-conversa">
+          <div class="conversa-topo">
+            <h2 id="t-conversa" class="conversa-titulo"><svg class="ico" aria-hidden="true"><use href="#i-mensagem"/></svg>Prefeitura de Manaus</h2>
+            <button type="button" class="btn btn-ghost btn-sm" id="btnAtualizar"><svg class="ico" aria-hidden="true"><use href="#i-recarregar"/></svg>Atualizar</button>
+          </div>
+          <!-- Mensagens em ordem de chegada; a mais nova fica embaixo, perto da caixa de escrever -->
+          <div class="conversa-lista-msg" id="mensagens" role="log" aria-live="off" aria-label="Mensagens da conversa" tabindex="0"></div>
+
+          <form class="escrever" id="formMsg" novalidate>
+            <fieldset class="grupo">
+              <legend class="label">Sobre o que você quer falar? <span class="muted">(opcional)</span></legend>
+              <div class="choices choices-compactas">
+                <label><input type="radio" name="assunto" value="Dúvida sobre meu pedido"> Meu pedido</label>
+                <label><input type="radio" name="assunto" value="Problema no ponto de venda"> Problema no ponto</label>
+                <label><input type="radio" name="assunto" value="Formalização e MEI"> MEI</label>
+                <label><input type="radio" name="assunto" value="Outro assunto"> Outro</label>
+              </div>
+            </fieldset>
             <div class="field">
-              <label for="texto">Mensagem *</label>
-              <textarea id="texto" name="texto" rows="4" maxlength="1000" aria-describedby="dica-texto erro-texto"></textarea>
-              <small class="muted-note" id="dica-texto">Até 1000 caracteres.</small>
+              <label for="texto">Sua mensagem *</label>
+              <textarea id="texto" name="texto" rows="3" maxlength="1000" aria-describedby="contaTexto erro-texto" placeholder="Escreva aqui. Ex.: Quando sai a resposta do meu pedido?"></textarea>
+              <small class="muted-note" id="contaTexto" aria-live="polite">0 de 1000 caracteres</small>
               <small class="msg-erro" id="erro-texto" role="alert"></small>
             </div>
-            <div class="form-actions"><button class="btn btn-ghost" type="button" id="cancelaMsg">Cancelar</button><button class="btn btn-primary" type="submit" id="btnEnviar">Enviar mensagem</button></div>
+            <div class="form-actions">
+              <button class="btn btn-primary" type="submit" id="btnEnviar"><svg class="ico" aria-hidden="true"><use href="#i-enviar"/></svg>Enviar mensagem</button>
+            </div>
           </form>
-        </div>
-
-        <div id="caixa" aria-live="polite">
-          <p class="vazio">Carregando suas mensagens...</p>
-        </div>
-
-        <div id="listas" hidden>
-          <section class="mt" aria-labelledby="t-rec"><h3 id="t-rec">Recebidas</h3><div class="msg-list" id="recebidas"></div></section>
-          <section class="mt" aria-labelledby="t-env"><h3 id="t-env">Enviadas</h3><div class="msg-list" id="enviadas"></div></section>
-        </div>
+        </section>
       </main>
     </div>
   </div>
   <nav class="mobile-nav" aria-label="Principal (celular)" id="mobileNav"></nav>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
   <script src="js/api.js"></script>
+  <script src="js/icones.js"></script>
   <script src="js/app.js"></script>
   <script src="js/comunicacao.js"></script>
 </body>
