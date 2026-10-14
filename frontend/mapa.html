@@ -4,24 +4,23 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Pontos de venda — Ambulante Conecta</title>
-  <link rel="icon" href="img/logo.png">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2317624A'/%3E%3Cg transform='translate%284 4%29' fill='none' stroke='white' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 9 4.5 4h15L21 9'/%3E%3Cpath d='M3 9h18v1.5a3 3 0 0 1-6 0 3 3 0 0 1-6 0 3 3 0 0 1-6 0Z'/%3E%3Cpath d='M5 13.5V21h14v-7.5'/%3E%3Cpath d='M10 21v-5h4v5'/%3E%3C/g%3E%3C/svg%3E">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
   <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/responsivo.css">
 </head>
 <body data-pagina="mapa">
   <a class="skip" href="#conteudo">Ir para o conteúdo</a>
   <div class="app">
     <aside class="sidebar">
       <a class="brand" href="index.html" aria-label="Ambulante Conecta, página inicial">
-        <img class="logo" src="img/logo.png" alt="Ambulante Conecta">
+        <span class="marca-icone"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 9 4.5 4h15L21 9"/><path d="M3 9h18v1.5a3 3 0 0 1-6 0 3 3 0 0 1-6 0 3 3 0 0 1-6 0Z"/><path d="M5 13.5V21h14v-7.5"/><path d="M10 21v-5h4v5"/></svg></span><span class="marca-nome">Ambulante <strong>Conecta</strong></span>
       </a>
       <nav class="nav" aria-label="Principal" id="nav"></nav>
       <p class="sidebar-footer">Seus dados pessoais são tratados conforme a LGPD.</p>
     </aside>
     <div class="main">
       <header class="topbar">
-        <img class="topbar-logo" src="img/logo.png" alt="Ambulante Conecta">
+        <a class="topbar-marca" href="index.html" aria-label="Ambulante Conecta, página inicial"><span class="marca-icone"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 9 4.5 4h15L21 9"/><path d="M3 9h18v1.5a3 3 0 0 1-6 0 3 3 0 0 1-6 0 3 3 0 0 1-6 0Z"/><path d="M5 13.5V21h14v-7.5"/><path d="M10 21v-5h4v5"/></svg></span><span class="marca-nome">Ambulante <strong>Conecta</strong></span></a>
         <h1 class="topbar-title">Pontos de venda</h1>
       </header>
       <main class="content" id="conteudo">
@@ -50,6 +49,7 @@
   <nav class="mobile-nav" aria-label="Principal (celular)" id="mobileNav"></nav>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
   <script src="js/api.js"></script>
+  <script src="js/icones.js"></script>
   <script src="js/app.js"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   <script src="js/mapa.js"></script>
