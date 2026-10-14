@@ -70,7 +70,13 @@ const escHtml = (t) => String(t ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;
 // Para exigir login numa página: <body data-exige-login="ambulante"> (ou "gestor", ou "qualquer").
 // "visitante" faz o contrário: a página é só para quem não entrou (ex.: cadastro).
 // É só conveniência da tela: quem protege os dados de verdade é a API.
+// Página pública mas sem sentido para algum perfil: <body data-perfis="visitante,ambulante"> (o gestor vai para o início).
 function protegerPagina() {
+  const perfis = document.body.dataset.perfis;
+  if (perfis && !perfis.split(",").includes(perfilAtual())) {
+    location.replace("index.html");
+    return false;
+  }
   const exigido = document.body.dataset.exigeLogin;
   if (!exigido) return true;
   const usuario = Sessao.usuario();
