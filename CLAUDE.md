@@ -9,19 +9,26 @@ Sistema web que ajuda a prefeitura a mapear e gerir vendedores ambulantes: forma
 
 ## Situação atual (atualize esta seção ao concluir qualquer item)
 
-Atualizado em 15/10/2026 (tarde).
+Atualizado em 15/10/2026 (noite).
 
-- **Pronto e publicado:** fluxo completo da Semana 1 (solicitação, mensagens, painel do gestor), mapa Leaflet, Formalização com API (MEI pelo CNPJ), turno no cadastro, página 404 e deploy (GitHub Pages + Render + Neon). `npm test`: 120 verificações, 0 problemas.
-- **Próximos passos, em ordem:**
-  1. **17 e 18/10 (sem código):** termo de consentimento, questionário SUS e as 3 tarefas do teste de usabilidade; recrutar 5 a 8 pessoas.
-  2. **19 a 23/10:** testes de usabilidade no site publicado e Lighthouse (evidência do RNF06).
-  3. **26/10:** corrigir o que os testes acharem. Depois disso, **nenhuma funcionalidade nova**.
-  4. **27 a 30/10:** artigo (Resultados, Resumo, Abstract), slides, roteiro da demonstração, vídeo de reserva, ensaios e pré-banca.
-- **Em andamento: novo visual "Amazônico acolhedor"** (heurísticas de Nielsen, WCAG 2.1 AA e e-MAG). **Concluído em 15/10**: todas as telas redesenhadas (Início, Login, Cadastro, Meu pedido, Mensagens, Formalização, Mapa e Painel), fundo em degradê de verde opaco, menu horizontal no topo, logo como ícone e marca, camada de rede. Formalização: a etapa 2 mostra a situação real do pedido de ponto (saiu o "marcar como concluída" do navegador).
-- **Concluído (15/10): "Esqueci minha senha"** pelo próprio site (CPF + nascimento + celular OU e-mail, à escolha do ambulante): rotas, migração 005 (aplicada no Neon), `testar-recuperacao.js` (25 verificações), `recuperar-senha.html` e link no login. Limitação para o artigo: não há envio de código por SMS/e-mail.
-- **Decidido (15/10):** a numeração segue a **Tabela 4 do artigo**: RN05 = concorrência de pontos e RN06 = acesso ao painel exclusivo do gestor. A LGPD (consentimento, CPF mascarado, dados agregados) é o **RNF05**, e não uma RN.
-- **Documentação desatualizada:** README ainda cita `responsivo.css` e `logo.png` (o `img/logo.png` antigo não é mais usado; apagar quando o usuário confirmar).
-- **Fora do código:** trocar no artigo e nos slides o link antigo (`franksbjr4-eng.github.io`) pelo do site novo e tirar as menções a Google Maps.
+- **Sistema pronto e publicado:** todos os RF01 a RF07, recuperação de senha, novo visual em todas as telas (Nielsen, WCAG 2.1 AA, e-MAG), camada de rede para conexão instável e deploy (GitHub Pages + Render + Neon). `npm test`: 120 verificações, 0 problemas.
+- **Slides da pré-banca: prontos** (confirmado pelo usuário em 15/10).
+- **Regras de negócio:** numeração igual à Tabela 4 do artigo (RN05 = concorrência de pontos, RN06 = painel exclusivo do gestor; LGPD = RNF05).
+- **Combinado em 15/10:** Resumo, Resultados e Discussões, Considerações Finais (e Abstract) **só depois da pré-banca**.
+
+### Falta até a pré-banca (30/10), em ordem
+1. **Correções no artigo** (texto já existente, desatualizado em relação ao sistema): link do GitHub na referência ALVES; seção 3.5 (identidade visual verde/tucumã, Leaflet "já usa", hospedagem já feita em GitHub Pages + Render + Neon); Kanban (mapa, hospedagem, formalização com API e telas já concluídos); tirar "ou sindicato" do RF05 e do Diagrama de Atividade; Matriz GUT (rótulos 1a/1b no texto, riscos 1e/1f citados e ausentes, linha 1c com produto 75 em vez de 125); "Minha Situação" → "Meu pedido" na 3.3.6 e no Diagrama de Componentes; citar a recuperação de senha no RNF02.
+2. **Teste de usabilidade (opcional antes da pré-banca, mas os dados alimentam os Resultados):** materiais em 17 e 18/10 (termo de consentimento, questionário SUS, roteiro das 3 tarefas: cadastrar-se, pedir um ponto, ler uma mensagem) e aplicação de 19 a 23/10 com 5 a 8 pessoas, no site publicado.
+3. **Lighthouse** do site publicado (desempenho e acessibilidade): evidência do RNF06 e do RNF01.
+4. **26/10: fim de mudanças no código.** Só correções do que os testes acharem.
+5. **Preparar a demonstração:** recriar as contas de demonstração no Neon com senha conhecida (`DEMO_SENHA`), roteiro da demo, vídeo de reserva (o usuário já está gravando), abrir o site uns minutos antes (o Render dorme após 15 min).
+6. **29/10:** dois ensaios cronometrados com os slides e a demo; backup do banco do Neon e do `.env`.
+7. **Pequenos itens de documentação:** README ainda cita `responsivo.css` (não existe mais) e não lista os arquivos novos (`icones.js`, `inicio.js`, `recuperar.js`, `recuperar-senha.html`); `img/logo.png` antigo sem uso (apagar quando o usuário confirmar).
+
+### Depois da pré-banca (até a banca final)
+- Aplicar as observações da banca.
+- Escrever **Resumo, Abstract, Resultados e Discussões** (testes automatizados: 120 verificações; testes de usabilidade: taxa de conclusão, tempo, erros e nota SUS; Lighthouse) e **Considerações Finais** (limitações: sem integração com Portal do Empreendedor e Semef Atende; recuperação de senha sem envio de código; licença municipal representada pelo pedido de ponto aprovado; amostra pequena).
+- Entrega final do produto e banca final.
 
 ## Trabalho em dupla
 
@@ -158,22 +165,29 @@ Commits, senha do gestor trocada, `npm test` verde, Tabela 4 do artigo e RN03 im
 - [x] README e `api.md` com a numeração das RNs igual à Tabela 4 do artigo (15/10).
 
 ### Fim de semana 17 e 18/10
-Sem código: termo de consentimento simples, questionário SUS e 3 tarefas dos testes de usabilidade (cadastrar-se, pedir um ponto, ler uma mensagem). Recrutar 5 a 8 pessoas, de preferência ambulantes.
+Sem código: termo de consentimento simples, questionário SUS e roteiro das 3 tarefas do teste de usabilidade (cadastrar-se, pedir um ponto, ler uma mensagem). Recrutar 5 a 8 pessoas, de preferência ambulantes. Corrigir os trechos desatualizados do artigo (lista na "Situação atual").
 
-### Semana 2 (19 a 23/10) — funcionalidades adiantadas em 11 e 12/10
-- [x] **Mapa Leaflet** em index e `mapa.html` (`js/mapa.js`, Leaflet 1.9.4 com SRI): cor por status, filtro, legenda, lista acessível e "Solicitar este ponto" levando a `situacao.html?ponto=ID#nova` (o login preserva o ponto). Google Maps removido do site e do README.
-- [x] **Formalização com API:** `GET`/`PATCH /api/ambulantes/me` (CNPJ pelo módulo 11), `js/formalizacao.js`, `testar-formalizacao.js`. Licença municipal segue só no navegador.
-- [x] **Melhorias de front:** `cadastro.js` usa `chamarApi` (endereço da API só em `api.js`), página 404, textos neutros, regras da senha e aviso de CPF repetido.
-- [x] **Turno de trabalho salvo** (decisão: banco completo para o TCC): migração `004_turno.sql`, obrigatório no cadastro, aparece no painel do gestor.
-- [x] **Deploy** (12/10): GitHub Pages (front) + Render grátis (API, dorme após 15 min e leva ~1 min para acordar) + Neon grátis (banco com PostGIS, não expira). `scripts/preparar-banco-publicado.js` monta o banco publicado. Repositório na organização Ambulante-Conecta.
-- [ ] **Qui 22 e sex 23:** testes de usabilidade e Lighthouse (evidência do RNF06 no artigo).
+### Semana 2 (19 a 23/10) — funcionalidades adiantadas em 11 a 15/10
+- [x] **Mapa Leaflet** em index e `mapa.html` (`js/mapa.js`, Leaflet 1.9.4 com SRI), Google Maps removido.
+- [x] **Formalização com API:** `GET`/`PATCH /api/ambulantes/me` (CNPJ pelo módulo 11).
+- [x] **Turno de trabalho salvo** (migração 004).
+- [x] **Deploy** (12/10): GitHub Pages + Render + Neon; repositório na organização Ambulante-Conecta.
+- [x] **Novo visual em todas as telas** (14 e 15/10) e **recuperação de senha** (15/10, migração 005).
+- [ ] **19 a 23/10:** testes de usabilidade no site publicado e Lighthouse.
 
 ### Semana 3 (26 a 30/10)
-Seg 26: corrigir o que os testes acharam e **fim de funcionalidades novas**. Ter 27: Resultados, Resumo e Abstract do artigo, e primeira versão dos slides. Qua 28: slides finais, roteiro da demonstração e vídeo de reserva. Qui 29: ensaio completo cronometrado 2 vezes, backup do banco e do `.env`. Sex 30: pré-banca.
+- [x] Slides da pré-banca (prontos em 15/10).
+- [ ] Seg 26: corrigir o que os testes acharem e **fim de mudanças no código**.
+- [ ] Ter 27 e qua 28: preparar a demonstração (contas de demo no Neon com `DEMO_SENHA`, roteiro, vídeo de reserva).
+- [ ] Qui 29: dois ensaios cronometrados; backup do banco do Neon e do `.env`.
+- [ ] Sex 30: **pré-banca**.
+
+### Depois da pré-banca
+Resumo, Abstract, Resultados e Discussões, Considerações Finais; observações da banca; entrega final e banca final.
 
 ### Ordem de corte se o tempo apertar
-Formalização com API e deploy já estão prontos. Se apertar: reduzir os testes de usabilidade para 3 pessoas; se o Render falhar no dia, demonstrar localmente com o vídeo de reserva.
-**Não cortar:** o fluxo completo da Semana 1, os slides e o ensaio.
+Reduzir os testes de usabilidade para 3 pessoas (ou fazê-los logo após a pré-banca, já que os Resultados só serão escritos depois). Se o Render falhar no dia, demonstrar localmente com o vídeo de reserva.
+**Não cortar:** os ensaios e o vídeo de reserva.
 
 ## Pontos de atenção já identificados
 
