@@ -27,8 +27,8 @@
 
   // O banco grava "disponível" (com acento) e "ocupado". As cores são as de --green e --red do style.css.
   const STATUS = {
-    disponivel: { rotulo: "Disponível", classe: "green", cor: "#057A55" },
-    ocupado:    { rotulo: "Ocupado",    classe: "red",   cor: "#DC2626" }
+    disponivel: { rotulo: "Livre",   classe: "green", cor: "#146C43" },
+    ocupado:    { rotulo: "Ocupado", classe: "red",   cor: "#B42318" }
   };
   const infoStatus = (chave, original) => STATUS[chave] || { rotulo: original || "Sem status", classe: "gray", cor: "#6B7280" };
 
@@ -48,7 +48,7 @@
   const marcadores = new Map(); // id -> marcador, para o "Ver no mapa" da lista
 
   const linkSolicitar = (p) =>
-    `<a class="btn btn-primary btn-sm" href="situacao.html?ponto=${Number(p.id)}#nova">Solicitar este ponto</a>`;
+    `<a class="btn btn-primary btn-sm" href="situacao.html?ponto=${Number(p.id)}#nova">${icone("pedido")}Pedir este ponto</a>`;
 
   function conteudoPopup(p) {
     const st = infoStatus(p.chave, p.status);
@@ -60,16 +60,19 @@
 
   function criarCartao(p) {
     const st = infoStatus(p.chave, p.status);
-    return `<article class="card solic-card">
-      <div class="solic-top">
-        <div><h3>${escHtml(p.descricao_local || "Ponto " + p.id)}</h3>${p.bairro ? `<p class="muted">${escHtml(p.bairro)}</p>` : ""}</div>
+    // Linha compacta: marcador da cor do status, nome, bairro, selo (cor + ícone + texto) e ações
+    return `<li class="ponto-linha">
+      <span class="ponto-marcador ${st.classe}">${icone("mapa")}</span>
+      <div class="ponto-texto">
+        <strong>${escHtml(p.descricao_local || "Ponto " + p.id)}</strong>
+        ${p.bairro ? `<span class="muted">${escHtml(p.bairro)}</span>` : ""}
         <span class="status ${st.classe}">${escHtml(st.rotulo)}</span>
       </div>
-      <div class="btn-row">
-        <button type="button" class="btn btn-ghost btn-sm" data-ver="${Number(p.id)}">Ver no mapa</button>
+      <div class="ponto-acoes">
+        <button type="button" class="btn btn-link" data-ver="${Number(p.id)}">Ver no mapa</button>
         ${p.chave === "disponivel" && podeSolicitar ? linkSolicitar(p) : ""}
       </div>
-    </article>`;
+    </li>`;
   }
 
   function desenhar({ enquadrar = true } = {}) {
@@ -88,7 +91,7 @@
 
     const conta = (chave) => pontos.filter((p) => p.chave === chave).length;
     legenda.getContainer().innerHTML =
-      `<span><i class="ponto-cor" style="background:${STATUS.disponivel.cor}"></i>Disponível (${conta("disponivel")})</span>
+      `<span><i class="ponto-cor" style="background:${STATUS.disponivel.cor}"></i>Livre (${conta("disponivel")})</span>
        <span><i class="ponto-cor" style="background:${STATUS.ocupado.cor}"></i>Ocupado (${conta("ocupado")})</span>`;
 
     if (enquadrar && visiveis.length) {
@@ -137,8 +140,6 @@
     m.openPopup();
   });
 
-  // O gestor não pede ponto: some o botão do topo da página do mapa
-  if (!podeSolicitar) document.querySelector('.page-head a[href^="situacao.html"]')?.setAttribute("hidden", "");
 
   carregar();
 })();

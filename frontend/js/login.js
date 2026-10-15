@@ -1,4 +1,7 @@
-/* Ambulante Conecta — tela de login */
+/* Ambulante Conecta — tela de login.
+   Depende de js/api.js e js/icones.js (carregue-os antes).
+   Heurísticas: erro embaixo do campo certo e dizendo o que fazer (9), mostrar senha (3), "Entrando..." enquanto
+   espera (1), aviso de sessão terminada (1), caminho para criar conta e voltar ao início sempre visíveis (3 e 6). */
 
 const form = document.getElementById("loginForm");
 const campoCpf = form.elements.cpf;
@@ -28,36 +31,54 @@ function destino(perfil) {
 if (Sessao.token()) location.replace(destino(Sessao.usuario()?.perfil));
 if (new URLSearchParams(location.search).get("expirou")) document.getElementById("avisoSessao").hidden = false;
 
+function mostrarErro(campo, msg) {
+  document.getElementById("erro-" + campo).textContent = msg;
+  const el = form.elements[campo];
+  el.setAttribute("aria-invalid", msg ? "true" : "false");
+  el.classList.toggle("invalido", !!msg);
+}
+
 campoCpf.addEventListener("input", () => {
   campoCpf.value = digitos(campoCpf.value).slice(0, 11)
     .replace(/(\d{3})(\d)/, "$1.$2").replace(/(\d{3})(\d)/, "$1.$2").replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+  mostrarErro("cpf", "");
+  erroLogin.textContent = "";
 });
+campoSenha.addEventListener("input", () => { mostrarErro("senha", ""); erroLogin.textContent = ""; });
 
 document.getElementById("verSenha").addEventListener("click", (e) => {
   const mostrar = campoSenha.type === "password";
   campoSenha.type = mostrar ? "text" : "password";
   e.currentTarget.textContent = mostrar ? "Ocultar" : "Mostrar";
-  e.currentTarget.setAttribute("aria-pressed", mostrar);
+  e.currentTarget.setAttribute("aria-pressed", mostrar ? "true" : "false");
 });
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
   erroLogin.textContent = "";
-  if (digitos(campoCpf.value).length !== 11) { erroLogin.textContent = "Informe os 11 números do CPF."; return campoCpf.focus(); }
-  if (!campoSenha.value) { erroLogin.textContent = "Digite sua senha."; return campoSenha.focus(); }
+  const cpfOk = digitos(campoCpf.value).length === 11;
+  mostrarErro("cpf", cpfOk ? "" : "Informe os 11 números do seu CPF.");
+  mostrarErro("senha", campoSenha.value ? "" : "Digite a sua senha.");
+  if (!cpfOk) return campoCpf.focus();
+  if (!campoSenha.value) return campoSenha.focus();
 
   botao.disabled = true;
+  botao.classList.add("carregando");
   botao.textContent = "Entrando...";
   try {
     const r = await chamarApi("/auth/login", { metodo: "POST", corpo: { cpf: digitos(campoCpf.value), senha: campoSenha.value } });
     Sessao.salvar(r.token, r.usuario);
     location.href = destino(r.usuario.perfil);
   } catch (erro) {
-    erroLogin.textContent = erro.status === 401 ? "CPF ou senha incorretos." : erro.message;
+    // 401: não diz qual dos dois está errado (segurança); 429: muitas tentativas; 0: sem conexão
+    erroLogin.textContent = erro.status === 401
+      ? "CPF ou senha incorretos. Confira os números do CPF e tente a senha de novo."
+      : erro.message;
     campoSenha.value = "";
     campoSenha.focus();
   } finally {
     botao.disabled = false;
-    botao.textContent = "Entrar";
+    botao.classList.remove("carregando");
+    botao.innerHTML = `${icone("entrar")}Entrar`;
   }
 });

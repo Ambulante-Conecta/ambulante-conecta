@@ -26,25 +26,32 @@
         <h1 class="topbar-title">Pontos de venda</h1>
       </header>
       <main class="content" id="conteudo">
-
-        <div class="section-title page-head"><div><h2>Pontos de venda</h2><p class="muted">Veja onde há pontos em Manaus e peça o local que combina com sua atividade.</p></div><a class="btn btn-primary" href="situacao.html#nova">Solicitar ponto</a></div>
-        <fieldset class="filtro-mapa" id="filtroStatus">
-          <legend class="label">Mostrar</legend>
-          <div class="choices">
-            <label><input type="radio" name="status" value="todos" checked> Todos</label>
-            <label><input type="radio" name="status" value="disponivel"> Disponíveis</label>
-            <label><input type="radio" name="status" value="ocupado"> Ocupados</label>
-          </div>
-        </fieldset>
-        <div class="card map-card">
-          <!-- Leaflet + OpenStreetMap, montado por js/mapa.js -->
-          <div class="map-slot map-slot-grande" id="map" role="region" aria-label="Mapa de pontos de venda. A mesma informação está na lista abaixo."></div>
+        <div class="page-head">
+          <h2>Pontos de venda</h2>
+          <p>Veja onde estão os pontos livres e peça o que combina com você.</p>
         </div>
 
-        <section class="mt" aria-labelledby="t-lista">
-          <div class="section-title"><h2 id="t-lista">Lista de pontos</h2></div>
-          <div class="solic-lista" id="listaPontos"></div>
-        </section>
+        <div class="mapa-layout mt">
+          <div class="card map-card mapa-coluna-mapa">
+            <!-- Leaflet + OpenStreetMap, montado por js/mapa.js -->
+            <div class="map-slot map-slot-grande" id="map" role="region" aria-label="Mapa de pontos de venda. A mesma informação está na lista de pontos."></div>
+          </div>
+
+          <section class="mapa-coluna-lista" aria-labelledby="t-lista">
+            <div class="mapa-lista-topo">
+              <h2 class="inicio-titulo" id="t-lista">Lista de pontos</h2>
+              <fieldset class="filtro-mapa" id="filtroStatus">
+                <legend class="sr-only">Mostrar</legend>
+                <div class="choices choices-compactas">
+                  <label><input type="radio" name="status" value="todos" checked> Todos</label>
+                  <label><input type="radio" name="status" value="disponivel"> Livres</label>
+                  <label><input type="radio" name="status" value="ocupado"> Ocupados</label>
+                </div>
+              </fieldset>
+            </div>
+            <ul class="pontos-lista" id="listaPontos" aria-live="polite"></ul>
+          </section>
+        </div>
       </main>
     </div>
   </div>

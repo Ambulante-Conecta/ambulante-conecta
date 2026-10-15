@@ -225,61 +225,28 @@ function mostrarErroCarga(container, erro, tentar) {
   document.addEventListener("conexao:voltou", repetir);
 }
 
-/* ---------- Resumo da página inicial ---------- */
+/* ---------- Indicadores do painel do gestor (#stats em painel.html) ---------- */
+// A página inicial tem o próprio script (js/inicio.js); aqui ficam só os números do painel.
 async function renderResumo() {
   const lista = document.getElementById("stats");
-  if (!lista) return;
-  const usuario = Sessao.usuario();
-  const etapas = Object.values(lerEstado().formalizacao).filter(Boolean).length;
-  const formalizacao = { rotulo: "Formalização", valor: etapas ? `${etapas} de 2` : "Não iniciada",
-    status: etapas === 2 ? "Concluída" : etapas ? "Em andamento" : "Veja os passos",
-    cor: etapas === 2 ? "green" : etapas ? "blue" : "gray", icone: "selo", href: "formalizacao.html" };
-
-  let cards;
-  if (!usuario) {
-    cards = [
-      { rotulo: "Cadastro", valor: "Não iniciado", status: "Comece por aqui", cor: "blue", icone: "ficha", href: "cadastro.html" },
-      formalizacao,
-      { rotulo: "Solicitação", valor: "Entre para ver", status: "Faça login", cor: "gray", icone: "pedido", href: "login.html?voltar=situacao.html" },
-      { rotulo: "Mensagens", valor: "Entre para ver", status: "Faça login", cor: "gray", icone: "mensagem", href: "login.html?voltar=comunicacao.html" }
-    ];
-  } else if (usuario.perfil === "gestor") {
-    let p = null;
-    try { p = await chamarApi("/painel"); } catch (_) {}
-    const n = (valor) => (p ? valor : "—");
-    cards = [
-      { rotulo: "Solicitações pendentes", valor: n(p?.solicitacoes.pendentes), status: "Aguardando decisão", cor: p?.solicitacoes.pendentes ? "orange" : "gray", icone: "relogio", href: "painel.html#pendentes" },
-      { rotulo: "Pontos disponíveis", valor: n(p?.pontos.disponiveis), status: "Para novas solicitações", cor: "green", icone: "mapa", href: "mapa.html" },
-      { rotulo: "Ambulantes", valor: n(p?.ambulantes.total), status: p ? `${p.ambulantes.com_mei} com MEI` : "", cor: "blue", icone: "usuario" },
-      { rotulo: "Mensagens", valor: n(p?.mensagens_nao_lidas), status: "Não lidas", cor: p?.mensagens_nao_lidas ? "red" : "gray", icone: "mensagem", href: "painel.html#mensagens" }
-    ];
-  } else {
-    let minhas = [];
-    try { minhas = await chamarApi("/solicitacoes/minhas"); } catch (_) {}
-    const ultima = minhas[0];
-    const corStatus = { Pendente: "orange", Aprovada: "green", Recusada: "red" };
-    cards = [
-      { rotulo: "Cadastro", valor: "Concluído", status: "Tudo certo", cor: "green", icone: "check" },
-      formalizacao,
-      { rotulo: "Solicitação", valor: ultima ? ultima.status : "Nenhuma", status: ultima ? "Última solicitação" : "Faça seu pedido",
-        cor: ultima ? corStatus[ultima.status] || "blue" : "gray", icone: "pedido", href: "situacao.html" },
-      { rotulo: "Mensagens", valor: totalNaoLidas ? `${totalNaoLidas} ${totalNaoLidas > 1 ? "novas" : "nova"}` : "Nenhuma nova",
-        status: totalNaoLidas ? "Leia agora" : "Tudo em dia", cor: totalNaoLidas ? "red" : "gray", icone: "mensagem", href: "comunicacao.html" }
-    ];
-  }
-
-  lista.innerHTML = cards.map((s) => {
-    const miolo = `<span class="stat-top"><span>${s.rotulo}</span><span class="icon-circle">${icone(s.icone)}</span></span>
-      <span class="stat-number">${escHtml(s.valor)}</span><span class="status ${s.cor}">${escHtml(s.status)}</span>`;
-    return `<li>${s.href ? `<a class="card stat-link" href="${s.href}">${miolo}</a>` : `<div class="card stat-link">${miolo}</div>`}</li>`;
+  if (!lista || perfilAtual() !== "gestor") return;
+  let p = null;
+  try { p = await chamarApi("/painel"); } catch (_) {}
+  const n = (valor) => (p ? valor : "—");
+  const itens = [
+    { rotulo: "Pedidos aguardando", valor: n(p?.solicitacoes.pendentes), status: p?.solicitacoes.pendentes ? "Decidir" : "Em dia",
+      cor: p?.solicitacoes.pendentes ? "orange" : "green", icone: "relogio", href: "#pendentes" },
+    { rotulo: "Mensagens não lidas", valor: n(p?.mensagens_nao_lidas), status: p?.mensagens_nao_lidas ? "Responder" : "Em dia",
+      cor: p?.mensagens_nao_lidas ? "orange" : "green", icone: "mensagem", href: "#mensagens" },
+    { rotulo: "Pontos livres", valor: n(p?.pontos.disponiveis), status: p ? `${p.pontos.ocupados} ocupados` : "", cor: "blue", icone: "mapa", href: "mapa.html" },
+    { rotulo: "Ambulantes", valor: n(p?.ambulantes.total), status: p ? `${p.ambulantes.com_mei} com MEI` : "", cor: "gray", icone: "usuario" }
+  ];
+  lista.innerHTML = itens.map((s) => {
+    const miolo = `<span class="kpi-icone">${icone(s.icone)}</span>
+      <span class="kpi-texto"><span class="kpi-rotulo">${s.rotulo}</span><span class="kpi-numero">${escHtml(s.valor)}</span></span>
+      ${s.status ? `<span class="status ${s.cor}">${escHtml(s.status)}</span>` : ""}`;
+    return `<li>${s.href ? `<a class="kpi" href="${s.href}">${miolo}</a>` : `<div class="kpi">${miolo}</div>`}</li>`;
   }).join("");
-
-  // Ajustes da página inicial conforme o perfil
-  if (usuario) document.querySelector('.hero-actions a[href="cadastro.html"]')?.setAttribute("hidden", "");
-  if (usuario?.perfil === "gestor") {
-    document.querySelector(".hero-actions")?.setAttribute("hidden", "");              // botões de ambulante
-    document.querySelector('[aria-labelledby="t-acoes"]')?.setAttribute("hidden", ""); // ações rápidas de ambulante
-  }
 }
 
 function mostrarAviso(msg) {

@@ -26,16 +26,19 @@
       </header>
       <main class="content" id="conteudo">
 
-        <div class="section-title page-head"><div><h2>Painel do gestor</h2><p class="muted">Avalie os pedidos de ponto e responda às mensagens dos ambulantes.</p></div></div>
+        <div class="page-head">
+          <h2>Painel do gestor</h2>
+          <p>Avalie os pedidos de ponto e responda às mensagens dos ambulantes.</p>
+        </div>
 
         <!-- Números de GET /api/painel (montados por renderResumo, em app.js) -->
-        <section aria-label="Resumo">
-          <ul class="grid grid-4 stats" id="stats"></ul>
+        <section class="mt" aria-label="Resumo do dia">
+          <ul class="kpis" id="stats"></ul>
         </section>
 
         <section class="mt" id="pendentes" aria-labelledby="t-pendentes">
-          <div class="section-title"><h2 id="t-pendentes">Solicitações pendentes</h2></div>
-          <p class="muted-note">Ao aprovar um pedido, o ponto fica ocupado e os outros pedidos pendentes para o mesmo ponto são recusados automaticamente.</p>
+          <div class="section-title"><h2 id="t-pendentes">Pedidos aguardando decisão</h2></div>
+          <div class="notice notice-info"><div><p>Ao aprovar um pedido, o ponto fica ocupado e os <strong>outros pedidos para o mesmo ponto são recusados automaticamente</strong>, com aviso aos ambulantes.</p></div></div>
           <div class="mt" id="listaPendentes" aria-live="polite">
             <p class="vazio">Carregando solicitações...</p>
           </div>
