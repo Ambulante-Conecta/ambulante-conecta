@@ -84,7 +84,9 @@ button { cursor: pointer; }
   color: var(--floresta-900); text-decoration: none; }
 .brand:hover { color: var(--floresta-900); }
 .marca-icone { width: 40px; height: 40px; flex: none; display: grid; place-items: center; border-radius: 10px; background: var(--floresta-700); color: #fff; }
-.marca-icone .ico { width: 24px; height: 24px; }
+.marca-icone img { display: block; width: 32px; height: 32px; object-fit: contain; }
+/* Em fundo branco (menu do celular e login) o alfinete do logo aparece sem moldura; no topo verde-escuro, num quadrado branco */
+.brand .marca-icone { background: none; }
 .marca-nome { font-size: 18px; font-weight: 500; line-height: 1.15; }
 .marca-nome strong { display: block; font-weight: 800; }
 .nav { display: flex; flex-direction: column; gap: 4px; }
