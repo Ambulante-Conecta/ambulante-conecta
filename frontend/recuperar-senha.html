@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Recuperar senha — Ambulante Conecta</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="img/icone-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="img/icone-192.png">
+  <link rel="apple-touch-icon" href="img/icone-180.png">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="login-page">
+  <a class="skip" href="#cpf">Ir para o formulário</a>
+
+  <main class="login-layout login-unica" id="conteudo">
+    <section class="login-form" aria-labelledby="t-rec">
+      <a class="login-logo" href="index.html" aria-label="Ambulante Conecta, página inicial">
+        <img src="img/logo-horizontal.png" alt="" width="320" height="127">
+      </a>
+      <h1 id="t-rec">Recuperar a senha</h1>
+      <p class="muted">Confirme alguns dados do seu cadastro e crie uma senha nova.</p>
+
+      <div class="etapas mt" id="etapasRec">
+        <p class="etapas-texto" id="etapaTexto" aria-live="polite"><strong>Etapa 1 de 2:</strong> confirmar seus dados</p>
+        <div class="etapas-barra" role="progressbar" aria-labelledby="etapaTexto" aria-valuemin="1" aria-valuemax="2" aria-valuenow="1"><span id="etapaBarra" style="width:50%"></span></div>
+      </div>
+
+      <!-- Etapa 1: CPF + nascimento + celular OU e-mail (a pessoa escolhe) -->
+      <form id="formDados" novalidate>
+        <div class="field">
+          <label for="cpf">CPF</label>
+          <input id="cpf" name="cpf" inputmode="numeric" autocomplete="username" placeholder="000.000.000-00" maxlength="14" aria-describedby="erro-cpf">
+          <small class="msg-erro" id="erro-cpf" role="alert"></small>
+        </div>
+        <div class="field">
+          <label for="nascimento">Data de nascimento</label>
+          <input id="nascimento" name="nascimento" type="date" min="1900-01-01" autocomplete="bday" aria-describedby="erro-nascimento">
+          <small class="msg-erro" id="erro-nascimento" role="alert"></small>
+        </div>
+        <fieldset class="grupo" aria-describedby="ajuda-meio">
+          <legend class="label">Confirmar com</legend>
+          <div class="choices">
+            <label><input type="radio" name="meio" value="celular" checked> Celular</label>
+            <label><input type="radio" name="meio" value="email"> E-mail</label>
+          </div>
+          <small class="muted-note" id="ajuda-meio">Use o mesmo que você informou no cadastro.</small>
+        </fieldset>
+        <div class="field">
+          <label for="contato" id="rotuloContato">Celular do cadastro, com DDD</label>
+          <input id="contato" name="contato" type="tel" inputmode="numeric" autocomplete="tel-national" placeholder="(92) 91234-5678" maxlength="15" aria-describedby="erro-contato">
+          <small class="msg-erro" id="erro-contato" role="alert"></small>
+        </div>
+        <p class="msg-erro" id="erroDados" role="alert"></p>
+        <button class="btn btn-primary btn-bloco" type="submit" id="btnDados">Confirmar meus dados<svg class="ico" aria-hidden="true"><use href="#i-avancar"/></svg></button>
+      </form>
+
+      <!-- Etapa 2: senha nova (o token vale 10 minutos) -->
+      <form id="formSenha" novalidate hidden>
+        <div class="notice notice-ok" tabindex="-1" id="dadosOk">
+          <div><strong>Dados confirmados.</strong><p>Agora crie a sua senha nova. Você tem 10 minutos para isso.</p></div>
+        </div>
+        <div class="field mt">
+          <label for="novaSenha">Senha nova</label>
+          <div class="senha-wrap">
+            <input id="novaSenha" name="novaSenha" type="password" autocomplete="new-password" maxlength="72" aria-describedby="regrasSenha erro-novaSenha">
+            <button type="button" class="btn btn-link mostrar-senha" data-alvo="novaSenha" aria-pressed="false">Mostrar</button>
+          </div>
+          <ul class="regras" id="regrasSenha" aria-label="A senha precisa ter">
+            <li data-regra="tamanho">8 caracteres ou mais</li>
+            <li data-regra="letra">Pelo menos uma letra</li>
+            <li data-regra="numero">Pelo menos um número</li>
+          </ul>
+          <small class="msg-erro" id="erro-novaSenha" role="alert"></small>
+        </div>
+        <div class="field">
+          <label for="repetirSenha">Digite a senha nova de novo</label>
+          <div class="senha-wrap">
+            <input id="repetirSenha" name="repetirSenha" type="password" autocomplete="new-password" maxlength="72" aria-describedby="erro-repetirSenha">
+            <button type="button" class="btn btn-link mostrar-senha" data-alvo="repetirSenha" aria-pressed="false">Mostrar</button>
+          </div>
+          <small class="msg-erro" id="erro-repetirSenha" role="alert"></small>
+        </div>
+        <p class="msg-erro" id="erroSenha" role="alert"></p>
+        <button class="btn btn-primary btn-bloco" type="submit" id="btnSenha"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Salvar senha nova</button>
+      </form>
+
+      <!-- Pronto -->
+      <div class="sucesso" id="sucesso" tabindex="-1" hidden>
+        <span class="sucesso-icone"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg></span>
+        <h2>Senha alterada!</h2>
+        <p>Por segurança, quem estava com a sua conta aberta em outro aparelho precisa entrar de novo.</p>
+        <a class="btn btn-primary btn-bloco" href="login.html"><svg class="ico" aria-hidden="true"><use href="#i-entrar"/></svg>Entrar com a senha nova</a>
+      </div>
+
+      <details class="ajuda mt" id="ajudaDados">
+        <summary><svg class="ico" aria-hidden="true"><use href="#i-ajuda"/></svg>Não lembro desses dados</summary>
+        <p>Se você trocou de celular e não informou e-mail no cadastro, procure o atendimento da prefeitura com um documento com foto.</p>
+      </details>
+
+      <a class="link-seta login-voltar" href="login.html"><svg class="ico" aria-hidden="true"><use href="#i-voltar"/></svg>Voltar para o login</a>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="js/api.js"></script>
+  <script src="js/icones.js"></script>
+  <script src="js/recuperar.js"></script>
+</body>
+</html>
