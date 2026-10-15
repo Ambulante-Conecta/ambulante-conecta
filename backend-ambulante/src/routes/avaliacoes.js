@@ -85,7 +85,7 @@ module.exports = (pool) => {
         // O ponto passa a ocupado e recebe o ambulante
         await client.query("UPDATE pontos_venda SET status = 'ocupado', ambulante_id = $1 WHERE id = $2", [s.id_ambulante, s.id_ponto]);
 
-        // RN07 (concorrência): os outros pedidos pendentes para o mesmo ponto são recusados e avisados
+        // RN05 (concorrência de pontos): os outros pedidos pendentes para o mesmo ponto são recusados e avisados
         const motivo = "Ponto concedido a outro solicitante.";
         const outras = await client.query(
           `UPDATE solicitacao

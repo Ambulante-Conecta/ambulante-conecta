@@ -31,5 +31,5 @@ CREATE TABLE IF NOT EXISTS mensagens (
 );
 CREATE INDEX IF NOT EXISTS idx_mensagens_ambulante ON mensagens (ambulante_id, criado_em DESC);
 
--- 3) Registro do aceite da LGPD no cadastro (RN05)
+-- 3) Registro do aceite da LGPD no cadastro (RNF05)
 ALTER TABLE ambulantes ADD COLUMN IF NOT EXISTS consentimento_em TIMESTAMP;

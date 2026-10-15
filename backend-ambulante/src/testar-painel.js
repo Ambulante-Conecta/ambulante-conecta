@@ -48,7 +48,7 @@ const soma = (lista, campo) => lista.reduce((t, x) => t + x[campo], 0);
   conferir("por_bairro soma o total de pontos", soma(p.por_bairro, "total"), p.pontos.total);
   conferir("disponíveis + ocupados não passam do total", p.pontos.disponiveis + p.pontos.ocupados <= p.pontos.total, true);
   conferir("status das solicitações não passam do total", p.solicitacoes.pendentes + p.solicitacoes.aprovadas + p.solicitacoes.recusadas <= p.solicitacoes.total, true);
-  conferir("nenhum dado pessoal no painel (RN06)", /"(cpf|nome_completo|email|telefone|senha)"/.test(JSON.stringify(p)), false);
+  conferir("nenhum dado pessoal no painel (RNF05, LGPD)", /"(cpf|nome_completo|email|telefone|senha)"/.test(JSON.stringify(p)), false);
 
   console.log("--- O painel acompanha os dados ---");
   conferir("cadastro de teste criado", cad.status, 201);

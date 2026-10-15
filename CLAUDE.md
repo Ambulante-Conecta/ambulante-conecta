@@ -19,7 +19,7 @@ Atualizado em 15/10/2026 (tarde).
   4. **27 a 30/10:** artigo (Resultados, Resumo, Abstract), slides, roteiro da demonstração, vídeo de reserva, ensaios e pré-banca.
 - **Em andamento: novo visual "Amazônico acolhedor"** (heurísticas de Nielsen, WCAG 2.1 AA e e-MAG). **Concluído em 15/10**: todas as telas redesenhadas (Início, Login, Cadastro, Meu pedido, Mensagens, Formalização, Mapa e Painel), fundo em degradê de verde opaco, menu horizontal no topo, logo como ícone e marca, camada de rede. Formalização: a etapa 2 mostra a situação real do pedido de ponto (saiu o "marcar como concluída" do navegador).
 - **Concluído (15/10): "Esqueci minha senha"** pelo próprio site (CPF + nascimento + celular OU e-mail, à escolha do ambulante): rotas, migração 005 (aplicada no Neon), `testar-recuperacao.js` (25 verificações), `recuperar-senha.html` e link no login. Limitação para o artigo: não há envio de código por SMS/e-mail.
-- **Decidido (15/10):** concorrência de pontos = **RN07** (artigo como referência). Falta só acrescentar a RN07 na tabela de regras do artigo.
+- **Decidido (15/10):** a numeração segue a **Tabela 4 do artigo**: RN05 = concorrência de pontos e RN06 = acesso ao painel exclusivo do gestor. A LGPD (consentimento, CPF mascarado, dados agregados) é o **RNF05**, e não uma RN.
 - **Documentação desatualizada:** README ainda cita `responsivo.css` e `logo.png` (o `img/logo.png` antigo não é mais usado; apagar quando o usuário confirmar).
 - **Fora do código:** trocar no artigo e nos slides o link antigo (`franksbjr4-eng.github.io`) pelo do site novo e tirar as menções a Google Maps.
 
@@ -73,11 +73,12 @@ Atenção ao nome dos arquivos e das pastas: sem acento nem espaço (`situacao.j
 - RN02: ambulante sem MEI recebe **422** ao solicitar.
 - RN03: toda solicitação nasce `Pendente` e cria sozinha uma mensagem "Solicitação recebida" para o ambulante (remetente `sistema`).
 - RN04: só o gestor avalia. **A recusa exige justificativa** (mínimo 5, máximo 500 caracteres).
-- RN05: consentimento LGPD registrado (`ambulantes.consentimento_em`).
-- RN06: o gestor vê dados agregados e o CPF mascarado.
-- RN07 (concorrência de pontos): quando o gestor aprova, o ponto vira `ocupado` e os outros pedidos pendentes do mesmo ponto são recusados automaticamente com a justificativa "Ponto concedido a outro solicitante."
+- RN05 (concorrência de pontos): quando o gestor aprova, o ponto vira `ocupado` e os outros pedidos pendentes do mesmo ponto são recusados automaticamente com a justificativa "Ponto concedido a outro solicitante."
 
-**Numeração decidida em 15/10:** o artigo é a referência (RN01 a RN06) e a concorrência de pontos é a **RN07**. README, `api.md` e código já seguem isso. No artigo, falta acrescentar a RN07 na tabela de regras.
+- RN06 (acesso ao painel): o painel de gestão é exclusivo do perfil gestor.
+- RNF05 (LGPD, requisito não funcional): consentimento registrado, senhas com hash, CPF mascarado para o gestor e painel só com dados agregados.
+
+**Numeração (15/10):** segue a Tabela 4 do artigo. README, `api.md`, comentários do código e rótulos dos testes já usam RN05 = concorrência e RN06 = painel. Não renumere sem combinar com o artigo.
 
 ## API: 19 rotas em `/api` mais `GET /`
 
@@ -154,7 +155,7 @@ Commits, senha do gestor trocada, `npm test` verde, Tabela 4 do artigo e RN03 im
 - [x] **Teste ponta a ponta só pelo navegador (feito pelo usuário em 11/10):** cadastro, login sem MEI com aviso de Formalização (422), login com MEI e solicitação (Pendente), mensagem "em análise" não lida, segundo ambulante pede o mesmo ponto, gestor aprova um e o outro é recusado, recusa sem justificativa é bloqueada e com justificativa passa, ambulante vê status, motivo e mensagens, logout e acesso direto a `painel.html` redireciona.
 - [x] `npm test` verde: 74 verificações, 0 problemas (`resultados-testes/2026-10-11-23-33.txt`). O `npm test` agora roda `src/testar-tudo.js` e para antes se a API estiver desligada.
 - [x] Commit e push (`e05a188` + `4f0ad44`, que incluiu os arquivos que tinham ficado de fora).
-- [x] README e `api.md` com a numeração das RNs (15/10: concorrência de pontos = RN07; RN06 acrescentada no README).
+- [x] README e `api.md` com a numeração das RNs igual à Tabela 4 do artigo (15/10).
 
 ### Fim de semana 17 e 18/10
 Sem código: termo de consentimento simples, questionário SUS e 3 tarefas dos testes de usabilidade (cadastrar-se, pedir um ponto, ler uma mensagem). Recrutar 5 a 8 pessoas, de preferência ambulantes.

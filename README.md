@@ -112,13 +112,14 @@ Apoiar a formalização e a organização dos trabalhadores ambulantes de Manaus
 
 ### Regras de negócio destacadas
 
-- **RN01:** somente usuário autenticado pode enviar uma solicitação de ponto.
-- **RN02:** para solicitar um ponto, o ambulante deve possuir CNPJ/MEI conforme a regra do sistema.
-- **RN03:** uma solicitação nova começa com status **Pendente**.
-- **RN04:** uma recusa exige justificativa.
-- **RN05:** o consentimento é registrado com a data correspondente.
-- **RN06:** o gestor vê dados agregados no painel e o CPF dos ambulantes mascarado (ex.: ***.444.777-**).
-- **RN07 (concorrência de pontos):** quando o gestor aprova um pedido, o ponto passa a ocupado e os outros pedidos pendentes para o mesmo ponto são recusados automaticamente, com a justificativa "Ponto concedido a outro solicitante." e aviso aos ambulantes. A decisão acontece numa transação, com bloqueio das linhas, para que duas avaliações ao mesmo tempo não concedam o mesmo ponto.
+- **RN01 – Autenticação obrigatória:** a solicitação de pontos exige ambulante cadastrado e com sessão iniciada.
+- **RN02 – MEI ativo:** o sistema só registra a solicitação se o ambulante tiver MEI/CNPJ ativo; caso contrário, o pedido é rejeitado (HTTP 422).
+- **RN03 – Estado inicial e aviso:** toda solicitação nasce como **Pendente** e gera um aviso automático informando que o pedido está em análise.
+- **RN04 – Avaliação exclusiva do gestor:** apenas o gestor aprova ou recusa solicitações; a recusa exige justificativa.
+- **RN05 – Concorrência de pontos:** quando o gestor aprova um pedido, o ponto passa a ocupado e os outros pedidos pendentes para o mesmo ponto são recusados automaticamente, com a justificativa "Ponto concedido a outro solicitante." e aviso aos ambulantes. A decisão acontece numa transação, com bloqueio das linhas, para que duas avaliações ao mesmo tempo não concedam o mesmo ponto.
+- **RN06 – Acesso ao painel:** o painel de gestão é exclusivo do perfil gestor.
+
+A LGPD é tratada como requisito não funcional (**RNF05**): o consentimento é registrado com a data, as senhas ficam com hash, o CPF aparece mascarado para o gestor (ex.: ***.444.777-**) e o painel mostra só dados agregados.
 
 ---
 
@@ -130,7 +131,7 @@ O back-end implementa regras de negócio do sistema, além das funções de aute
 
 O PostgreSQL com PostGIS armazena pontos como geometrias `Point`, utilizando o sistema de referência espacial **SRID 4326**. A API pode retornar essas informações em GeoJSON para apresentação no mapa do front-end.
 
-### 🔒 Decisão transacional e concorrência (RN07)
+### 🔒 Decisão transacional e concorrência (RN05)
 
 No fluxo de aprovação, a aplicação trata a mudança de status do ponto e das solicitações concorrentes dentro de uma transação, com bloqueio das linhas envolvidas. A regra busca evitar que duas avaliações simultâneas aprovem solicitações incompatíveis para o mesmo ponto. As solicitações afetadas e as notificações correspondentes são tratadas pelo fluxo implementado.
 

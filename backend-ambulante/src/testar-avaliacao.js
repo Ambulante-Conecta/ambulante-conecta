@@ -69,7 +69,7 @@ async function novoAmbulante() {
   const minhasA = (await chamar("GET", "/solicitacoes/minhas", null, tokenA)).dados;
   conferir("A vê a sua como Aprovada", minhasA.find((s) => s.id === solA)?.status, "Aprovada");
   const minhasC = (await chamar("GET", "/solicitacoes/minhas", null, tokenC)).dados;
-  conferir("C: pedido concorrente recusado automaticamente", minhasC.find((s) => s.id === solC1)?.status, "Recusada");
+  conferir("RN05: pedido concorrente recusado automaticamente", minhasC.find((s) => s.id === solC1)?.status, "Recusada");
   conferir("C: recusa traz a justificativa", Boolean(minhasC.find((s) => s.id === solC2)?.justificativa), true);
   const ocupados = (await chamar("GET", "/pontos?status=ocupado")).dados.features?.map((f) => f.properties.id) ?? [];
   conferir("ponto aprovado ficou ocupado", ocupados.includes(p1), true);

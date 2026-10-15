@@ -1,4 +1,4 @@
-// RF07 — Painel do gestor: números agregados, sem nenhum dado pessoal (RN06)
+// RF07 — Painel do gestor, exclusivo do perfil gestor (RN06): números agregados, sem nenhum dado pessoal (RNF05, LGPD)
 const express = require("express");
 const { autenticar, exigirPerfil } = require("../middlewares/auth");
 

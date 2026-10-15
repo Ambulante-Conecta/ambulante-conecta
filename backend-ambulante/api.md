@@ -52,9 +52,10 @@ Rotas protegidas exigem o cabeçalho `Authorization: Bearer <token>` (token do l
 | RN02 só quem tem MEI com CNPJ válido solicita | cadastro e `PATCH /ambulantes/me` validam o CNPJ (módulo 11); solicitação confere `possui_mei` e `cnpj_mei` |
 | RN03 a solicitação nasce Pendente | `POST /solicitacoes` |
 | RN04 recusa exige justificativa | `PATCH /solicitacoes/:id` |
-| RN05 consentimento LGPD registrado | `ambulantes.consentimento_em` |
-| RN06 gestor vê dados agregados e CPF mascarado | `GET /painel` e `GET /solicitacoes` |
-| RN07 concorrência: aprovar um pedido recusa os outros pendentes do mesmo ponto | `PATCH /solicitacoes/:id` (transação com `FOR UPDATE`; justificativa "Ponto concedido a outro solicitante." e aviso em Mensagens) |
+| RN05 concorrência de pontos: aprovar um pedido recusa os outros pendentes do mesmo ponto | `PATCH /solicitacoes/:id` (transação com `FOR UPDATE`; justificativa "Ponto concedido a outro solicitante." e aviso em Mensagens) |
+| RN06 o painel de gestão é exclusivo do perfil gestor | `exigirPerfil("gestor")` em `GET /painel`, `GET /solicitacoes`, `PATCH /solicitacoes/:id` e `GET /mensagens/conversas` |
+
+**RNF05 (LGPD), no código:** consentimento registrado em `ambulantes.consentimento_em`, senhas com hash bcrypt, CPF mascarado em `GET /solicitacoes` e só números agregados em `GET /painel`.
 
 ## Segurança
 

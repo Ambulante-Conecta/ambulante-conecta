@@ -1,4 +1,4 @@
-// Autenticação por token JWT e controle de perfil (RN01 e RN06)
+// Autenticação por token JWT (RN01) e controle de perfil (RN04 e RN06: o que é exclusivo do gestor)
 const jwt = require("jsonwebtoken");
 const pool = require("../config/database");
 
