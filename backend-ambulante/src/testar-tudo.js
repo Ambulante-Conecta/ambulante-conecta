@@ -17,7 +17,7 @@ if (ligada.status !== 0) {
   process.exit(1);
 }
 
-const roteiros = ["testar-api.js", "testar-avaliacao.js", "testar-mensagens.js", "testar-painel.js", "testar-formalizacao.js"];
+const roteiros = ["testar-api.js", "testar-avaliacao.js", "testar-mensagens.js", "testar-painel.js", "testar-formalizacao.js", "testar-recuperacao.js"];
 const agora = new Date();
 let relatorio = `Teste completo da API - ${agora.toLocaleString("pt-BR")}\n`;
 let totalOk = 0, totalFalhas = 0;
@@ -34,6 +34,14 @@ for (const roteiro of roteiros) {
 
 relatorio += `\nResumo: ${totalOk} verificações corretas, ${totalFalhas} problema(s)\n`;
 
+// Dicas para as causas mais comuns de falha em cadeia
+if (totalFalhas && /veio 429\)/.test(relatorio)) {
+  console.log("\nDica: apareceu 429 (limite de tentativas). Coloque LOGIN_LIMITE=200 no .env do desenvolvimento e reinicie a API.");
+}
+if (totalFalhas && /Login do gestor falhou|login do gestor \(esperado 200, veio 401\)/.test(relatorio)) {
+  console.log("\nDica: o login do gestor foi recusado (401). Confira TESTE_GESTOR_CPF e TESTE_GESTOR_SENHA neste terminal;" +
+              " se precisar, redefina a senha com: node scripts/criar-gestor.js <CPF> <senha>");
+}
 // Logins que passam a falhar no meio da suíte costumam ser o limite de 20 logins a cada 15 minutos (429)
 if (totalFalhas && /veio (401|undefined)\)|Login do gestor falhou/.test(relatorio)) {
   console.log("\nDica: se os logins começaram a falhar no meio (401 ou undefined), pode ser o limite de logins a cada 15 minutos.\n" +

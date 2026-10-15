@@ -1,11 +1,10 @@
 // RF01 — Cadastro do ambulante, com criação do acesso (usuário e senha) e registro do consentimento LGPD
 const express = require("express");
 const bcrypt = require("bcryptjs");
-const { soDigitos, cpfValido, cnpjValido, dataValida, maiorDeIdade, paraBooleano } = require("../utils/validacoes");
+const { soDigitos, cpfValido, cnpjValido, dataValida, maiorDeIdade, paraBooleano, senhaValida } = require("../utils/validacoes");
 const { autenticar, exigirPerfil } = require("../middlewares/auth");
 
 const TURNOS = ["Manhã", "Tarde", "Noite", "Dia todo"];
-const senhaValida = (s) => s.length >= 8 && s.length <= 72 && /[A-Za-z]/.test(s) && /\d/.test(s);
 
 module.exports = (pool) => {
   const router = express.Router();

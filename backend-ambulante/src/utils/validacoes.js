@@ -49,4 +49,7 @@ function paraBooleano(v) {
   return null;
 }
 
-module.exports = { soDigitos, cpfValido, cnpjValido, dataValida, maiorDeIdade, paraBooleano };
+// Senha: de 8 a 72 caracteres (limite do bcrypt), com pelo menos uma letra e um número
+const senhaValida = (s) => typeof s === "string" && s.length >= 8 && s.length <= 72 && /[A-Za-z]/.test(s) && /\d/.test(s);
+
+module.exports = { soDigitos, cpfValido, cnpjValido, dataValida, maiorDeIdade, paraBooleano, senhaValida };

@@ -484,6 +484,7 @@ CREATE TABLE public.usuarios (
     perfil character varying(20) NOT NULL,
     ambulante_id integer,
     criado_em timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    senha_alterada_em timestamp with time zone,
     CONSTRAINT usuarios_perfil_check CHECK (((perfil)::text = ANY ((ARRAY['ambulante'::character varying, 'gestor'::character varying])::text[]))),
     CONSTRAINT usuarios_perfil_vinculo_chk CHECK (((((perfil)::text = 'ambulante'::text) AND (ambulante_id IS NOT NULL)) OR (((perfil)::text = 'gestor'::text) AND (ambulante_id IS NULL))))
 );

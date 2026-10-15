@@ -8,7 +8,7 @@ const path = require("path");
 const { Pool } = require("pg");
 
 const PASTA = path.join(__dirname, "..", "..", "database");
-const MIGRACOES = ["001_cadastro.sql", "002_auth_mensagens.sql", "003_fk_avaliador.sql", "004_turno.sql"];
+const MIGRACOES = ["001_cadastro.sql", "002_auth_mensagens.sql", "003_fk_avaliador.sql", "004_turno.sql", "005_senha_alterada.sql"];
 
 // O schema.sql é um pg_dump do banco local. No Neon o dono das tabelas não é "postgres" e o comentário
 // da extensão exige ser o dono dela: essas linhas saem. As tabelas continuam com o nome completo (public.x).

@@ -36,6 +36,8 @@ Rotas protegidas exigem o cabeçalho `Authorization: Bearer <token>` (token do l
 | 16 | `GET` | `/api/painel` | Bearer (Gestor) | Nenhum | `200` (Métricas do painel administrativo), `403` (Bloqueado) |
 | 17 | `GET` | `/api/ambulantes/me` | Bearer (Ambulante) | Nenhum | `200` (`id`, `nome_completo`, `possui_mei`, `cnpj_mei`, `turno`; sem CPF), `403` (Gestor bloqueado) |
 | 18 | `PATCH` | `/api/ambulantes/me` | Bearer (Ambulante) | `cnpj_mei` (com ou sem máscara) | `200` (`possui_mei` passa a `true`), `400` (CNPJ inválido, em `campos.cnpj_mei`), `403` (Gestor bloqueado) |
+| 19 | `POST` | `/api/auth/recuperar-senha/verificar` | Pública | `cpf`, `data_nascimento`, `meio` ("celular" ou "email"), `contato` | `200` (`token` de recuperação, vale 10 min), `400` (campos), `401` (dados não conferem; mensagem única), `429` (5 tentativas a cada 15 min) |
+| 20 | `POST` | `/api/auth/recuperar-senha/nova` | Token de recuperação | `token`, `nova_senha` | `200` (senha trocada, sessões antigas encerradas, aviso em Mensagens), `400` (senha fraca), `401` (token vencido ou já usado) |
 ## Códigos de resposta
 
 `200` ou `201` sucesso · `400` dados inválidos (a lista `campos` indica o campo) · `401` sem login ou sessão expirada ·
@@ -62,6 +64,6 @@ token JWT com validade, CPF nunca devolvido por completo, credenciais fora do c�
 
 `testar-api.js` (cadastro, login, permissões, solicitação), `testar-avaliacao.js` (aprovação e recusa),
 `testar-mensagens.js` (conversas e isolamento), `testar-painel.js` (painel agregado), `testar-formalizacao.js`
-(MEI pela Formalização: 422 antes, 201 depois) e `testar-tudo.js`
+(MEI pela Formalização: 422 antes, 201 depois), `testar-recuperacao.js` (recuperação de senha) e `testar-tudo.js`
 (roda todos e salva o relatório em `resultados-testes/`).
 
