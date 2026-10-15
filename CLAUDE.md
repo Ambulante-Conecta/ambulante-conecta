@@ -9,7 +9,7 @@ Sistema web que ajuda a prefeitura a mapear e gerir vendedores ambulantes: forma
 
 ## Situação atual (atualize esta seção ao concluir qualquer item)
 
-Atualizado em 12/10/2026.
+Atualizado em 15/10/2026.
 
 - **Pronto e publicado:** fluxo completo da Semana 1 (solicitação, mensagens, painel do gestor), mapa Leaflet, Formalização com API (MEI pelo CNPJ), turno no cadastro, página 404 e deploy (GitHub Pages + Render + Neon). `npm test`: 95 verificações, 0 problemas.
 - **Próximos passos, em ordem:**
@@ -17,8 +17,9 @@ Atualizado em 12/10/2026.
   2. **19 a 23/10:** testes de usabilidade no site publicado e Lighthouse (evidência do RNF06).
   3. **26/10:** corrigir o que os testes acharem. Depois disso, **nenhuma funcionalidade nova**.
   4. **27 a 30/10:** artigo (Resultados, Resumo, Abstract), slides, roteiro da demonstração, vídeo de reserva, ensaios e pré-banca.
-- **Em andamento (14/10): novo visual "Amazônico acolhedor"** (heurísticas de Nielsen, WCAG 2.1 AA e e-MAG). Feito: base visual, ícones, camada de rede e as telas de Cadastro, Meu pedido e Mensagens. Falta redesenhar: Início, Login, Mapa, Formalização e Painel (já usam a base nova, mas com o layout antigo). Meta: tudo pronto antes dos testes de usabilidade.
+- **Em andamento: novo visual "Amazônico acolhedor"** (heurísticas de Nielsen, WCAG 2.1 AA e e-MAG). Feito e publicado: base visual, fundo em degradê de verde opaco, menu horizontal no topo, ícones, logo (alfinete) como ícone do site e na marca, camada de rede e as telas Início, Cadastro, Meu pedido e Mensagens. **Falta redesenhar: Login, Mapa, Formalização e Painel** (já usam a base nova, mas com o layout antigo). Meta: tudo pronto antes dos testes de usabilidade (19/10).
 - **Decisões pendentes:** numeração das RNs (sugestão: concorrência de pontos como **RN07**, mantendo o artigo como referência) e, depois dela, ajustar README e `api.md`.
+- **Documentação desatualizada:** README ainda cita `responsivo.css` e `logo.png` (o `img/logo.png` antigo não é mais usado; apagar quando o usuário confirmar).
 - **Fora do código:** trocar no artigo e nos slides o link antigo (`franksbjr4-eng.github.io`) pelo do site novo e tirar as menções a Google Maps.
 
 ## Trabalho em dupla
