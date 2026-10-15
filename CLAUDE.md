@@ -23,7 +23,7 @@ Atualizado em 15/10/2026 (noite).
 4. **26/10: fim de mudanças no código.** Só correções do que os testes acharem.
 5. **Preparar a demonstração:** recriar as contas de demonstração no Neon com senha conhecida (`DEMO_SENHA`), roteiro da demo, vídeo de reserva (o usuário já está gravando), abrir o site uns minutos antes (o Render dorme após 15 min).
 6. **29/10:** dois ensaios cronometrados com os slides e a demo; backup do banco do Neon e do `.env`.
-7. **Pequenos itens de documentação:** README ainda cita `responsivo.css` (não existe mais) e não lista os arquivos novos (`icones.js`, `inicio.js`, `recuperar.js`, `recuperar-senha.html`); `img/logo.png` antigo sem uso (apagar quando o usuário confirmar).
+7. ~~Pequenos itens de documentação~~ **feito em 15/10:** README reescrito; removidos `img/logo.png`, `scripts/inserir-api-js.js`, `migracoes/migracao_cadastro.sql` e um atalho `.lnk` enviado por engano.
 
 ### Depois da pré-banca (até a banca final)
 - Aplicar as observações da banca.
@@ -67,7 +67,7 @@ database/           schema.sql, seed.sql, migracoes/ (001, 002, 003, 004_turno, 
 frontend/           index, mapa, formalizacao, cadastro, login, situacao, comunicacao .html
                     css/style.css, css/responsivo.css
                     js/api.js, app.js, login.js, cadastro.js, situacao.js, comunicacao.js, painel.js, mapa.js, formalizacao.js
-                    img/logo.png
+                    img/ (logo-horizontal.png e icone-32/64/180/192/512.png)
 ```
 
 Atenção ao nome dos arquivos e das pastas: sem acento nem espaço (`situacao.js`, e não `situação.js`).
