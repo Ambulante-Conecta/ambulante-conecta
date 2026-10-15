@@ -117,6 +117,8 @@ Apoiar a formalização e a organização dos trabalhadores ambulantes de Manaus
 - **RN03:** uma solicitação nova começa com status **Pendente**.
 - **RN04:** uma recusa exige justificativa.
 - **RN05:** o consentimento é registrado com a data correspondente.
+- **RN06:** o gestor vê dados agregados no painel e o CPF dos ambulantes mascarado (ex.: ***.444.777-**).
+- **RN07 (concorrência de pontos):** quando o gestor aprova um pedido, o ponto passa a ocupado e os outros pedidos pendentes para o mesmo ponto são recusados automaticamente, com a justificativa "Ponto concedido a outro solicitante." e aviso aos ambulantes. A decisão acontece numa transação, com bloqueio das linhas, para que duas avaliações ao mesmo tempo não concedam o mesmo ponto.
 
 ---
 
@@ -128,7 +130,7 @@ O back-end implementa regras de negócio do sistema, além das funções de aute
 
 O PostgreSQL com PostGIS armazena pontos como geometrias `Point`, utilizando o sistema de referência espacial **SRID 4326**. A API pode retornar essas informações em GeoJSON para apresentação no mapa do front-end.
 
-### 🔒 Decisão transacional e concorrência
+### 🔒 Decisão transacional e concorrência (RN07)
 
 No fluxo de aprovação, a aplicação trata a mudança de status do ponto e das solicitações concorrentes dentro de uma transação, com bloqueio das linhas envolvidas. A regra busca evitar que duas avaliações simultâneas aprovem solicitações incompatíveis para o mesmo ponto. As solicitações afetadas e as notificações correspondentes são tratadas pelo fluxo implementado.
 

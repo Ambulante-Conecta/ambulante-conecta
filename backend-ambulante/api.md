@@ -54,6 +54,7 @@ Rotas protegidas exigem o cabeçalho `Authorization: Bearer <token>` (token do l
 | RN04 recusa exige justificativa | `PATCH /solicitacoes/:id` |
 | RN05 consentimento LGPD registrado | `ambulantes.consentimento_em` |
 | RN06 gestor vê dados agregados e CPF mascarado | `GET /painel` e `GET /solicitacoes` |
+| RN07 concorrência: aprovar um pedido recusa os outros pendentes do mesmo ponto | `PATCH /solicitacoes/:id` (transação com `FOR UPDATE`; justificativa "Ponto concedido a outro solicitante." e aviso em Mensagens) |
 
 ## Segurança
 
