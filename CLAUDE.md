@@ -11,14 +11,14 @@ Sistema web que ajuda a prefeitura a mapear e gerir vendedores ambulantes: forma
 
 Atualizado em 15/10/2026 (tarde).
 
-- **Pronto e publicado:** fluxo completo da Semana 1 (solicitação, mensagens, painel do gestor), mapa Leaflet, Formalização com API (MEI pelo CNPJ), turno no cadastro, página 404 e deploy (GitHub Pages + Render + Neon). `npm test`: 95 verificações, 0 problemas.
+- **Pronto e publicado:** fluxo completo da Semana 1 (solicitação, mensagens, painel do gestor), mapa Leaflet, Formalização com API (MEI pelo CNPJ), turno no cadastro, página 404 e deploy (GitHub Pages + Render + Neon). `npm test`: 120 verificações, 0 problemas.
 - **Próximos passos, em ordem:**
   1. **17 e 18/10 (sem código):** termo de consentimento, questionário SUS e as 3 tarefas do teste de usabilidade; recrutar 5 a 8 pessoas.
   2. **19 a 23/10:** testes de usabilidade no site publicado e Lighthouse (evidência do RNF06).
   3. **26/10:** corrigir o que os testes acharem. Depois disso, **nenhuma funcionalidade nova**.
   4. **27 a 30/10:** artigo (Resultados, Resumo, Abstract), slides, roteiro da demonstração, vídeo de reserva, ensaios e pré-banca.
 - **Em andamento: novo visual "Amazônico acolhedor"** (heurísticas de Nielsen, WCAG 2.1 AA e e-MAG). **Concluído em 15/10**: todas as telas redesenhadas (Início, Login, Cadastro, Meu pedido, Mensagens, Formalização, Mapa e Painel), fundo em degradê de verde opaco, menu horizontal no topo, logo como ícone e marca, camada de rede. Formalização: a etapa 2 mostra a situação real do pedido de ponto (saiu o "marcar como concluída" do navegador).
-- **Em andamento (15/10): "Esqueci minha senha"** (pedido do usuário; o sistema não tinha recuperação de senha).
+- **Concluído (15/10): "Esqueci minha senha"** pelo próprio site (CPF + nascimento + celular OU e-mail, à escolha do ambulante): rotas, migração 005 (aplicada no Neon), `testar-recuperacao.js` (25 verificações), `recuperar-senha.html` e link no login. Limitação para o artigo: não há envio de código por SMS/e-mail.
 - **Decisões pendentes:** numeração das RNs (sugestão: concorrência de pontos como **RN07**, mantendo o artigo como referência) e, depois dela, ajustar README e `api.md`.
 - **Documentação desatualizada:** README ainda cita `responsivo.css` e `logo.png` (o `img/logo.png` antigo não é mais usado; apagar quando o usuário confirmar).
 - **Fora do código:** trocar no artigo e nos slides o link antigo (`franksbjr4-eng.github.io`) pelo do site novo e tirar as menções a Google Maps.
@@ -37,7 +37,7 @@ Atualizado em 15/10/2026 (tarde).
 ## Como trabalhar neste projeto
 
 - Entregue código completo e funcional, sem trechos omitidos.
-- Antes de mexer em rota ou regra, rode `npm test` na pasta `backend-ambulante` e mantenha a suíte verde. Última execução registrada: 95 verificações, 0 problemas (11/10, 20:38, já com turno e formalização).
+- Antes de mexer em rota ou regra, rode `npm test` na pasta `backend-ambulante` e mantenha a suíte verde. Última execução registrada: 120 verificações, 0 problemas (15/10, 13:51, já com a recuperação de senha).
 - Antes de criar qualquer tela, leia uma página que já funciona (`frontend/situacao.html` e `frontend/js/situacao.js`) e siga o mesmo padrão. Não invente classes de CSS nem funções que já existem.
 - Nunca leia, copie, mostre nem versione o conteúdo do `.env`. Se achar um arquivo `_env` ou `.env` com valores reais em algum lugar compartilhado, avise para trocar `JWT_SECRET` e `DB_PASSWORD`.
 - Para dados vindos da API use `escHtml()` ou `textContent`, nunca HTML cru.
@@ -56,7 +56,7 @@ Atualizado em 15/10/2026 (tarde).
 
 ```
 backend-ambulante/  server.js, api.md, package.json, scripts/ (preparar-demo.js, criar-gestor.js), src/{routes,middlewares,controllers,utils,config}, testar-*.js
-database/           schema.sql, seed.sql, migracoes/ (001, 002, 003, 004_turno)
+database/           schema.sql, seed.sql, migracoes/ (001, 002, 003, 004_turno, 005_senha_alterada)
 frontend/           index, mapa, formalizacao, cadastro, login, situacao, comunicacao .html
                     css/style.css, css/responsivo.css
                     js/api.js, app.js, login.js, cadastro.js, situacao.js, comunicacao.js, painel.js, mapa.js, formalizacao.js
@@ -77,7 +77,7 @@ Atenção ao nome dos arquivos e das pastas: sem acento nem espaço (`situacao.j
 
 **Decisão pendente do usuário:** a numeração das RNs está inconsistente. O artigo usa RN03 = pendente + aviso, RN05 = LGPD (consentimento) e RN06 = painel/CPF mascarado. O contexto do projeto chama a concorrência de RN05. Sugestão: tratar o artigo como referência e registrar a concorrência como RN07, ajustando README e `api.md`. Não renumere nada sem perguntar.
 
-## API: 17 rotas em `/api` mais `GET /`
+## API: 19 rotas em `/api` mais `GET /`
 
 | Rota | Quem | Observações |
 |---|---|---|
@@ -97,6 +97,8 @@ Atenção ao nome dos arquivos e das pastas: sem acento nem espaço (`situacao.j
 | `PATCH /api/mensagens/lidas` | gestor | `{ambulante_id}` |
 | `GET /api/ambulantes/me` | ambulante | `{id, nome_completo, possui_mei, cnpj_mei}`, sem CPF |
 | `PATCH /api/ambulantes/me` | ambulante | `{cnpj_mei}` (módulo 11); 200 com `possui_mei: true`, 400 com `campos.cnpj_mei`. CNPJ repetido entre ambulantes **não** é bloqueado (o cadastro também não bloqueia) |
+| `POST /api/auth/recuperar-senha/verificar` | pública | `{cpf, data_nascimento, meio: "celular"\|"email", contato}` → `{token}` de 10 min; 401 com mensagem única; limite de 5/15 min (dev: `LOGIN_LIMITE`) |
+| `POST /api/auth/recuperar-senha/nova` | token de recuperação | `{token, nova_senha}`; grava `usuarios.senha_alterada_em`, encerra sessões antigas (o `autenticar` recusa tokens emitidos antes) e manda aviso "Senha alterada" em Mensagens. **Não há envio de SMS/e-mail**: os dados são conferidos com o cadastro |
 | `GET /api/painel` | gestor | usado hoje: `solicitacoes.pendentes`, `pontos.disponiveis`, `ambulantes.total`, `ambulantes.com_mei`, `mensagens_nao_lidas` |
 
 **Não confie só nesta tabela para mensagens e painel.** Leia `src/routes/mensagens.js` e `src/routes/painel.js` para ver os nomes exatos dos campos e os limites (tamanho do texto, limite de envios) antes de ligar as telas.
