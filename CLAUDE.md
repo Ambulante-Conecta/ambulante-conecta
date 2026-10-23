@@ -63,7 +63,7 @@ Atualizado em 15/10/2026 (noite).
 
 ```
 backend-ambulante/  server.js, api.md, package.json, scripts/ (preparar-demo.js, criar-gestor.js), src/{routes,middlewares,controllers,utils,config}, testar-*.js
-database/           schema.sql, seed.sql, migracoes/ (001, 002, 003, 004_turno, 005_senha_alterada)
+database/           schema.sql, seed.sql, migracoes/ (001, 002, 003, 004_turno, 005_senha_alterada, 006_fk_solicitacao)
 frontend/           index, mapa, formalizacao, cadastro, login, situacao, comunicacao .html
                     css/style.css, css/responsivo.css
                     js/api.js, app.js, login.js, cadastro.js, situacao.js, comunicacao.js, painel.js, mapa.js, formalizacao.js

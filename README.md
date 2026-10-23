@@ -217,7 +217,7 @@ ambulante-conecta/
 │   ├── schema.sql                   estrutura completa do banco
 │   ├── seed.sql                     pontos de venda e dados de exemplo
 │   ├── resetar_pontos.sql
-│   └── migracoes/                   001 a 005 (005 = recuperação de senha)
+│   └── migracoes/                   001 a 006 (005 = recuperação de senha; 006 = pedidos ligados ao ambulante e ao ponto)
 ├── frontend/
 │   ├── index.html                   início (próximo passo e mapa)
 │   ├── login.html · recuperar-senha.html · cadastro.html

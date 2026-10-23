@@ -766,6 +766,22 @@ ALTER TABLE ONLY public.solicitacao
 
 
 --
+-- Name: solicitacao fk_solicitacao_ambulante; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.solicitacao
+    ADD CONSTRAINT fk_solicitacao_ambulante FOREIGN KEY (id_ambulante) REFERENCES public.ambulantes(id) ON DELETE CASCADE;
+
+
+--
+-- Name: solicitacao fk_solicitacao_ponto; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.solicitacao
+    ADD CONSTRAINT fk_solicitacao_ponto FOREIGN KEY (id_ponto) REFERENCES public.pontos_venda(id) ON DELETE CASCADE;
+
+
+--
 -- Name: historico_solicitacao historico_solicitacao_id_solicitacao_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
