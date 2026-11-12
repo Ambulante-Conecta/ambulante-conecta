@@ -485,7 +485,14 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 - GitHub: [@franksbjr4-eng](https://github.com/franksbjr4-eng)
 
 **Curso:** Análise e Desenvolvimento de Sistemas · **Instituição:** Centro Universitário CEUNI FAMETRO
-**Orientadora:** Luana Magalhães Leal
+
+---
+
+## 👩‍🏫 Orientadora
+
+**Profa. Luana Magalhães Leal**
+
+- GitHub: [@ProfaLuanaLeal](https://github.com/ProfaLuanaLeal)
 
 ---
 
