@@ -1,16 +1,31 @@
 {
-  "name": "definitivo",
+  "name": "ambulante-conecta-api",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "private": true,
+  "description": "API REST do Ambulante Conecta: cadastro de ambulantes, pedido e concessão de pontos de venda e comunicação com a prefeitura (TCC, Manaus/AM).",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ambulante-Conecta/ambulante-conecta.git",
+    "directory": "backend-ambulante"
+  },
+  "homepage": "https://ambulante-conecta.github.io/ambulante-conecta/",
+  "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "test": "node src/testar-tudo.js",
     "demo": "node scripts/preparar-demo.js --sim"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "ambulantes",
+    "mei",
+    "prefeitura",
+    "manaus",
+    "tcc",
+    "express",
+    "postgis"
+  ],
+  "author": "Vagner Matheus Ramos Alves e Frank dos Santos Bezerra Junior",
+  "license": "MIT",
   "type": "commonjs",
   "engines": {
     "node": ">=20"

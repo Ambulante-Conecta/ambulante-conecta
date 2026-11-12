@@ -1,19 +1,21 @@
-name: Deploy Frontend to GitHub Pages
+# Publica a pasta frontend no GitHub Pages a cada push na main.
+# A API (backend-ambulante) é publicada pelo próprio Render, que acompanha a mesma branch.
+name: Publicar front-end no GitHub Pages
 
 on:
   push:
-    branches: [ "main" ] # Altere para 'master' se a sua branch principal for essa
+    branches: ["main"]
+  workflow_dispatch: # permite publicar de novo pela aba Actions
 
-# Permissões necessárias para o GitHub Pages
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# Garante que apenas um deploy rode por vez
+# Um deploy por vez; um push novo cancela o anterior
 concurrency:
   group: "pages"
-  cancel-in-progress: true # CORRIGIDO: Era 'cancel-in-running'
+  cancel-in-progress: true
 
 jobs:
   deploy:
@@ -22,18 +24,17 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4 # Garante que o código seja baixado
+      - name: Baixar o código
+        uses: actions/checkout@v4
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v4 # Configura o ambiente do Pages
+      - name: Configurar o Pages
+        uses: actions/configure-pages@v4
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3 # Prepara o pacote para deploy
+      - name: Empacotar a pasta frontend
+        uses: actions/upload-pages-artifact@v3
         with:
-          # IMPORTANTE: Aponta para a pasta onde seu index.html está
-          path: './frontend' 
+          path: ./frontend
 
-      - name: Deployment
-        id: deployment # Adicionado ID para referenciar a URL
-        uses: actions/deploy-pages@v4 # Executa o deploy propriamente dito
+      - name: Publicar
+        id: deployment
+        uses: actions/deploy-pages@v4

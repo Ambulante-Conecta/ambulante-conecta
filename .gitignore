@@ -1,5 +1,23 @@
+# Dependências
 node_modules/
+
+# Segredos: nunca versionar (só o .env.example vai para o Git)
 .env
+.env.*
+!.env.example
+_env
+
 # Só o back-end usa npm: lockfiles na raiz ou no front são sobra de npm install na pasta errada
 /package-lock.json
 /frontend/package-lock.json
+
+# Sistema operacional e editor
+.DS_Store
+Thumbs.db
+desktop.ini
+*.lnk
+.vscode/
+
+# Logs
+*.log
+npm-debug.log*
