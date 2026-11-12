@@ -187,6 +187,7 @@ button { cursor: pointer; }
 .notice > .icon-circle { display: none; } /* o ícone agora vem do próprio aviso */
 .notice p { margin-top: 4px; }
 .notice strong { display: block; }
+.notice p strong { display: inline; } /* destaque dentro de uma frase não quebra a linha */
 .notice-info   { background: var(--info-fundo);    border-left-color: var(--info);    --icone: var(--ic-info); }
 .notice-info::before   { background: var(--info); }
 .notice-ok     { background: var(--sucesso-fundo); border-left-color: var(--sucesso); --icone: var(--ic-check); }
@@ -346,7 +347,7 @@ details.msg p { padding: 0 18px 18px; color: var(--tinta); white-space: pre-wrap
 /* ---------- Painel do gestor ---------- */
 .tabela-card { padding: 0; overflow-x: auto; }
 .tabela { width: 100%; border-collapse: collapse; font-size: 16px; }
-.tabela caption { padding: 16px 18px 0; text-align: left; color: var(--suave); }
+.tabela caption { display: table-caption; padding: 16px 18px 0; text-align: left; color: var(--suave); } /* vence o display: block de .muted-note */
 .tabela th { padding: 12px 18px; border-bottom: 2px solid var(--linha); text-align: left; font-size: 16px; color: var(--suave); }
 .tabela td { padding: 14px 18px; border-bottom: 1px solid var(--linha); vertical-align: top; }
 .tabela tr:last-child td { border-bottom: 0; }
