@@ -1,0 +1,16 @@
+# Fim de linha LF no repositório, mesmo para quem usa Windows
+* text=auto eol=lf
+
+# PowerShell e .bat precisam de CRLF no Windows
+*.ps1 text eol=crlf
+*.bat text eol=crlf
+
+# Binários: o Git não mexe
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.webp binary
+*.pdf binary
+*.mp4 binary
