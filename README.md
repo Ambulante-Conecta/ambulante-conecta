@@ -158,9 +158,9 @@ Identidade visual **"Amazônico acolhedor"**: verde-floresta, laranja tucumã e 
 
 
 
-### GIF Demonstrativo
+### Vídeo de demonstração
 
-**[Fluxo principal]**
+**[Vídeo no YouTube]**
 
 
 

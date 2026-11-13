@@ -71,7 +71,7 @@ frontend/           index, login, recuperar-senha, cadastro, formalizacao, mapa,
                     js/api.js, icones.js, app.js e um script por página (inicio, login, recuperar, cadastro,
                     formalizacao, mapa, situacao, comunicacao, painel)
                     img/ (logo-horizontal.png e icone-32/64/180/192/512.png)
-README.md           no modelo recomendado pela orientadora (12/11); imagens e GIF da Demonstração são colocados manualmente pelo usuário
+README.md           no modelo recomendado pela orientadora (12/11); imagens e vídeo do YouTube da Demonstração são colocados manualmente pelo usuário
 CONTRIBUTING.md     branches, padrão de commits, formatação, testes e migrações
 .editorconfig, .gitattributes   UTF-8, LF, 2 espaços (SQL com 4), sem espaço no fim da linha
 ```
