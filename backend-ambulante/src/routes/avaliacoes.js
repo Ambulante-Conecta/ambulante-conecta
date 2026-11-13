@@ -1,14 +1,11 @@
-// RF06 — Gestor aprova ou recusa solicitações (RN04) e ambulante acompanha as suas
-// Tabelas: solicitacao, pontos_venda, mensagens
+
 const express = require("express");
 const { autenticar, exigirPerfil } = require("../middlewares/auth");
 
-// Se o seu banco usa outros textos de status (restrição CHECK), troque aqui
 const STATUS = { PENDENTE: "Pendente", APROVADA: "Aprovada", RECUSADA: "Recusada" };
 
 const normalizar = (s) => String(s ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLowerCase();
 
-// Aviso automático na caixa de mensagens do ambulante
 const notificar = (client, ambulanteId, assunto, texto) =>
   client.query(
     "INSERT INTO mensagens (ambulante_id, remetente, assunto, texto) VALUES ($1, 'sistema', $2, $3)",
@@ -18,7 +15,7 @@ const notificar = (client, ambulanteId, assunto, texto) =>
 module.exports = (pool) => {
   const router = express.Router();
 
-  // GET /api/solicitacoes/minhas  (ambulante vê só as próprias)
+  // GET /api/solicitacoes/minhas  
   router.get("/solicitacoes/minhas", autenticar, exigirPerfil("ambulante"), async (req, res) => {
     try {
       const r = await pool.query(
