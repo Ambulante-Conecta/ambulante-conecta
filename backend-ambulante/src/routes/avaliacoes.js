@@ -1,4 +1,3 @@
-
 const express = require("express");
 const { autenticar, exigirPerfil } = require("../middlewares/auth");
 
@@ -15,7 +14,7 @@ const notificar = (client, ambulanteId, assunto, texto) =>
 module.exports = (pool) => {
   const router = express.Router();
 
-  // GET /api/solicitacoes/minhas  
+  // GET /api/solicitacoes/minhas
   router.get("/solicitacoes/minhas", autenticar, exigirPerfil("ambulante"), async (req, res) => {
     try {
       const r = await pool.query(

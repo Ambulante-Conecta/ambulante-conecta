@@ -21,6 +21,7 @@
 
 </div>
 
+
 ---
 
 ## 📋 Sobre o Projeto
@@ -123,7 +124,7 @@ Identidade visual **"Amazônico acolhedor"**: verde-floresta, laranja tucumã e 
 ### Screenshots
 
 **[Tela Inicial]**
-<img src="docs/screenshots/tela-inicial.png" alt="Tela inicial do Ambulante Conecta" width="100%">
+<img src="docs/screenshots/Tela-inicial.png" alt="Tela inicial do Ambulante Conecta" width="100%">
 
 **[Login]**
 <img src="docs/screenshots/Tela-de-Login.png" alt="Tela de login com CPF e senha" width="100%">
@@ -148,9 +149,10 @@ Identidade visual **"Amazônico acolhedor"**: verde-floresta, laranja tucumã e 
 
 **[Versão para celular]**
 <div align="center">
-   <img src="docs/screenshots/Tela-inicial-versão-celular.png" alt="Painel do gestor com pedidos aguardando decisão" width="30%">
+   <img src="docs/screenshots/Tela-inicial-versão-celular.png" alt="Tela inicial na versão para celular" width="30%">
 </div>
-### Vídeo de demostração
+
+### Vídeo de demonstração
 
 **[Fluxo principal]**
 
@@ -505,3 +507,4 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 Feito com 💚 em Manaus por [Vagner](https://github.com/Alvesvagnerr) e [Frank](https://github.com/franksbjr4-eng)
 
 </div>
+
