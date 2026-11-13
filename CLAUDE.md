@@ -32,7 +32,7 @@ Atualizado em 15/10/2026 (noite).
 
 ## Trabalho em dupla
 
-- Antes de começar: `git pull`. Ao terminar: commits pequenos e `git push` logo em seguida. Configure `git config --global pull.rebase true` para não gerar commits de merge.
+- Antes de começar: `git pull`. Ao terminar: commits pequenos e `git push` logo em seguida. Branches, prefixos de commit (`feat:`, `fix:`, `docs:`...) e formatação: ver `CONTRIBUTING.md`. Configure `git config --global pull.rebase true` para não gerar commits de merge.
 - **Todo push na `main` publica o site** (GitHub Actions) e, se mexer no back-end, a API no Render. Teste localmente antes.
 - Ao concluir um item do plano, marque `[x]` aqui e atualize a "Situação atual" no mesmo commit, para o outro saber.
 - `npm install` só dentro de `backend-ambulante` (é a única pasta com `package.json`).
@@ -62,12 +62,18 @@ Atualizado em 15/10/2026 (noite).
 ## Estrutura do repositório
 
 ```
-backend-ambulante/  server.js, api.md, package.json, scripts/ (preparar-demo.js, criar-gestor.js), src/{routes,middlewares,controllers,utils,config}, testar-*.js
-database/           schema.sql, seed.sql, migracoes/ (001, 002, 003, 004_turno, 005_senha_alterada, 006_fk_solicitacao)
-frontend/           index, mapa, formalizacao, cadastro, login, situacao, comunicacao .html
-                    css/style.css, css/responsivo.css
-                    js/api.js, app.js, login.js, cadastro.js, situacao.js, comunicacao.js, painel.js, mapa.js, formalizacao.js
+backend-ambulante/  server.js, api.md, package.json, .env.example, postman/, resultados-testes/
+                    scripts/ (criar-gestor.js, preparar-demo.js, preparar-banco-publicado.js)
+                    src/{routes,middlewares,controllers,utils,config}, src/testar-*.js
+database/           schema.sql, seed.sql, resetar_pontos.sql, migracoes/ (001, 002, 003, 004_turno, 005_senha_alterada, 006_fk_solicitacao)
+frontend/           index, login, recuperar-senha, cadastro, formalizacao, mapa, situacao, comunicacao, painel, 404 .html
+                    css/style.css (único CSS)
+                    js/api.js, icones.js, app.js e um script por página (inicio, login, recuperar, cadastro,
+                    formalizacao, mapa, situacao, comunicacao, painel)
                     img/ (logo-horizontal.png e icone-32/64/180/192/512.png)
+README.md           no modelo recomendado pela orientadora (12/11); imagens e GIF da Demonstração são colocados manualmente pelo usuário
+CONTRIBUTING.md     branches, padrão de commits, formatação, testes e migrações
+.editorconfig, .gitattributes   UTF-8, LF, 2 espaços (SQL com 4), sem espaço no fim da linha
 ```
 
 Atenção ao nome dos arquivos e das pastas: sem acento nem espaço (`situacao.js`, e não `situação.js`).
