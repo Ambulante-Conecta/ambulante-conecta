@@ -210,46 +210,7 @@ PostgreSQL + PostGIS — Neon
 
 ## 🚀 Começando
 
-<<<<<<< HEAD
-```text
-ambulante-conecta/
-├── .github/workflows/deploy.yml     publica a pasta frontend no GitHub Pages
-├── backend-ambulante/
-│   ├── server.js                    API Express (CORS, rotas, erros)
-│   ├── api.md                       documentação de todas as rotas
-│   ├── .env.example                 variáveis de ambiente (sem segredos)
-│   ├── scripts/
-│   │   ├── criar-gestor.js          cria o gestor ou redefine a senha dele
-│   │   ├── preparar-demo.js         contas de demonstração (npm run demo)
-│   │   └── preparar-banco-publicado.js   monta o banco do Neon
-│   ├── resultados-testes/           relatórios do npm test (evidências)
-│   └── src/
-│       ├── config/database.js       conexão (local ou DATABASE_URL)
-│       ├── controllers/             listagem de solicitações do gestor
-│       ├── middlewares/auth.js      JWT, perfis e sessões
-│       ├── routes/                  ambulantes, auth, pontos, solicitacoes, avaliacoes, mensagens, painel
-│       ├── utils/validacoes.js      CPF, CNPJ, data, senha
-│       └── testar-*.js              roteiros de teste (testar-tudo.js roda todos)
-├── database/
-│   ├── schema.sql                   estrutura completa do banco
-│   ├── seed.sql                     pontos de venda e dados de exemplo
-│   ├── resetar_pontos.sql
-│   └── migracoes/                   001 a 006 (005 = recuperação de senha; 006 = pedidos ligados ao ambulante e ao ponto)
-├── frontend/
-│   ├── index.html                   início (próximo passo e mapa)
-│   ├── login.html · recuperar-senha.html · cadastro.html
-│   ├── formalizacao.html · mapa.html · situacao.html (Meu pedido) · comunicacao.html (Mensagens)
-│   ├── painel.html                  painel do gestor
-│   ├── 404.html
-│   ├── css/style.css                todo o visual
-│   ├── img/                         logo e ícones do site
-│   └── js/                          api.js (rede), app.js (menus e estados), icones.js e um script por página
-├── CLAUDE.md                        contexto e cronograma do projeto
-└── README.md
-```
-=======
 ### 📦 Pré-requisitos
->>>>>>> 24be4cf40b1f021a4351b2d7ae14a8d0936d8a80
 
 Antes de começar, certifique-se de ter instalado:
 
@@ -443,7 +404,7 @@ Parâmetros, corpos e códigos de resposta de cada rota: [`backend-ambulante/api
 │   ├── 📄 package.json
 │   └── 📄 .env.example
 ├── 📁 database/
-│   ├── 📁 migracoes/                    # 001 a 005 (005 = recuperação de senha)
+│   ├── 📁 migracoes/                    # 001 a 006 (005 = recuperação de senha; 006 = pedidos ligados ao ambulante e ao ponto)
 │   ├── 📄 schema.sql                    # Estrutura completa do banco
 │   ├── 📄 seed.sql                      # Pontos de venda e dados de exemplo
 │   └── 📄 resetar_pontos.sql
