@@ -125,45 +125,34 @@ Identidade visual **"Amazônico acolhedor"**: verde-floresta, laranja tucumã e 
 **[Tela Inicial]**
 <img src="docs/screenshots/tela-inicial.png" alt="Tela inicial do Ambulante Conecta" width="100%">
 
-
 **[Login]**
-<img src="docs/screenshots/login.png" alt="Tela de login com CPF e senha" width="100%">
-
+<img src="docs/screenshots/Tela-de-Login.png" alt="Tela de login com CPF e senha" width="100%">
 
 **[Cadastro]**
-<img src="docs/screenshots/cadastro.png" alt="Cadastro em 5 etapas" width="100%">
-
+<img src="docs/screenshots/Tela-de-Cadastro.png" alt="Cadastro em 5 etapas" width="100%">
 
 **[Formalização]**
-<img src="docs/screenshots/formalizacao.png" alt="Formalização com o passo a passo do MEI" width="100%">
-
+<img src="docs/screenshots/Tela-de-formalização.png" alt="Formalização com o passo a passo do MEI" width="100%">
 
 **[Mapa de pontos de venda]**
-<img src="docs/screenshots/pontos-de-venda.png" alt="Mapa com pontos livres e ocupados" width="100%">
-
+<img src="docs/screenshots/Tela-de-ponto-de-vendas.png" alt="Mapa com pontos livres e ocupados" width="100%">
 
 **[Meu pedido]**
-<img src="docs/screenshots/meu-pedido.png" alt="Pedidos com linha do tempo e status" width="100%">
-
-
+<img src="docs/screenshots/Tela-de-Meus-Pedidos.png" alt="Pedidos com linha do tempo e status" width="100%">
 
 **[Mensagens]**
-<img src="docs/screenshots/mensagens.png" alt="Conversa com a prefeitura e avisos automáticos" width="100%">
-
+<img src="docs/screenshots/Tela-de-mensagens.png" alt="Conversa com a prefeitura e avisos automáticos" width="100%">
 
 **[Painel do gestor]**
-<img src="docs/screenshots/painel-gestor.png" alt="Painel do gestor com pedidos aguardando decisão" width="100%">
-
+<img src="docs/screenshots/Tela-do-Painel-do-Gestor.png" alt="Painel do gestor com pedidos aguardando decisão" width="100%">
 
 **[Versão para celular]**
-<img src="docs/screenshots/Tela-inicial-versão-celular.png" alt="Painel do gestor com pedidos aguardando decisão" width="100%">
-
-
+<div align="center">
+   <img src="docs/screenshots/Tela-inicial-versão-celular.png" alt="Painel do gestor com pedidos aguardando decisão" width="30%">
+</div>
 ### Vídeo de demostração
 
 **[Fluxo principal]**
-
-
 
 ---
 
